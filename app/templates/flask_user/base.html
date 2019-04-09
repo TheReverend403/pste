@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% from "flask_user/_macros.html" import render_field, render_checkbox_field, render_submit_field %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            {% block form %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
