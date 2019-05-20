@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-flask-user = "*"
+flask-login = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-script = "*"

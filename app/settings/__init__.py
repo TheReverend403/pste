@@ -20,18 +20,6 @@ Copy default.py to local.py and use that instead.
 
 DEBUG = False
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-USER_ENABLE_USERNAME = False
-USER_CONFIRM_EMAIL_EXPIRATION = 7*24*3600  # 7 Days
-USER_RESET_PASSWORD_EXPIRATION = 24*3600  # 1 Day
-USER_INVITE_EXPIRATION = 7*24*3600  # 7 Days
-
-USER_LOGIN_URL = '/user/login'
-USER_LOGOUT_URL = '/user/logout'
-USER_REGISTER_URL = '/user/register'
-USER_CONFIRM_EMAIL_URL = '/user/confirm/<token>'
-USER_EDIT_USER_PROFILE_URL = '/user/edit'
-USER_EMAIL_ACTION_URL = '/user/email/<id>/<action>'
-USER_RESEND_EMAIL_CONFIRMATION_URL = '/user/resend-email-confirmation'
+APP_NAME = 'pste'
 
 SENTRY_DSN = ''

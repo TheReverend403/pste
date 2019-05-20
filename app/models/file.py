@@ -12,7 +12,6 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
-import datetime
 
 from sqlalchemy import func
 

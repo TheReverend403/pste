@@ -15,12 +15,10 @@
 
 from app import BASE_DIR
 from flask import Blueprint, render_template
-from flask_user import login_required
 
 blueprint = Blueprint('web', __name__, template_folder=f'{BASE_DIR}/templates')
 
 
 @blueprint.route('/')
-@login_required
 def index():
     return render_template('main/index.html')

@@ -13,12 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import datetime
-
-from flask_user import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func
+from flask_login import UserMixin
 
-from app import db
+from app import db, login
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 class User(db.Model, UserMixin):
@@ -29,6 +33,10 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=False, server_default='')
     is_admin = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
-    email_confirmed_at = db.Column(db.DateTime(), nullable=True, default=None)
-    reset_password_token = db.Column(db.String(100), nullable=False, server_default='')
     files = db.relationship('File', backref='user', lazy=True)
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)

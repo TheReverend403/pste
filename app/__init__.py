@@ -17,12 +17,13 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_user import UserManager
+from flask_login import LoginManager
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 db = SQLAlchemy()
 migrate = Migrate()
+login = LoginManager()
 
 
 def create_app():
@@ -46,15 +47,9 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+    login.init_app(app)
 
     from app.views import register_blueprints
     register_blueprints(app)
-
-    from app.models import User
-    user_manager = UserManager(app, db, User)
-
-    @app.context_processor
-    def context_processor():
-        return dict(user_manager=user_manager)
 
     return app
