@@ -12,16 +12,15 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 import os
 
 from flask import Flask
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 
@@ -45,9 +44,9 @@ def create_app():
         except ImportError:
             app.logger.warn('SENTRY_ENABLED is True but sentry-sdk is not available. Sentry will not be used.')
 
+    from app.models import db
     db.init_app(app)
     migrate.init_app(app, db)
-    login.init_app(app)
 
     from app.views import register_blueprints
     register_blueprints(app)

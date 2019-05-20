@@ -17,7 +17,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func
 from flask_login import UserMixin
 
-from app import db, login
+from app import login
+from app.models import db
 
 
 @login.user_loader

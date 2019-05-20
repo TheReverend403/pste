@@ -14,8 +14,7 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 from sqlalchemy import func
-
-from app import db
+from app.models import db
 
 
 class File(db.Model):
@@ -31,4 +30,4 @@ class File(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 
     def path(self):
-        return f'storage/{self.user_id}/{self.slug}'
+        return f'storage/uploads/{self.user_id}/{self.slug}'
