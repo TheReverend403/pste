@@ -47,6 +47,7 @@ def create_app():
     from app.models import db
     db.init_app(app)
     migrate.init_app(app, db)
+    login.init_app(app)
 
     from app.views import register_blueprints
     register_blueprints(app)
