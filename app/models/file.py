@@ -14,7 +14,7 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 from sqlalchemy import func
-from app.models import db
+from app import db
 
 
 class File(db.Model):

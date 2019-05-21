@@ -14,7 +14,9 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 from app.views.web import blueprint as web_blueprint
+from app.views.auth import blueprint as auth_blueprint
 
 
 def register_blueprints(app):
     app.register_blueprint(web_blueprint)
+    app.register_blueprint(auth_blueprint)

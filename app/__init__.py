@@ -18,11 +18,13 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 migrate = Migrate()
 login = LoginManager()
+db = SQLAlchemy()
 
 
 def create_app():
@@ -44,10 +46,11 @@ def create_app():
         except ImportError:
             app.logger.warn('SENTRY_ENABLED is True but sentry-sdk is not available. Sentry will not be used.')
 
-    from app.models import db
     db.init_app(app)
     migrate.init_app(app, db)
+
     login.init_app(app)
+    login.login_view = 'auth.login'
 
     from app.views import register_blueprints
     register_blueprints(app)
