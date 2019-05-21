@@ -16,7 +16,7 @@
             <label class="form-check-label" for="remember_me">{{ form.remember_me.label }}</label>
             <div class="float-right">
                 <button type="button" class="btn btn-link"><a href="{{ url_for('auth.register') }}">Register</a></button>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
             </div>
         </div>
     </form>
