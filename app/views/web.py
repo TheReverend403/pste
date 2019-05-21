@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, send_file
 from flask_login import login_required
 
 from app.models import File
@@ -34,4 +34,4 @@ def file(slug):
     if not file:
         abort(404)
 
-    return render_template('main/index.html')
+    raise NotImplementedError
