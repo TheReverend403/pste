@@ -28,7 +28,7 @@ db = SQLAlchemy()
 
 
 def create_app():
-    app = Flask('pste', static_folder=f'{BASE_DIR}/static')
+    app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
     app.config.from_object('app.settings')
 
     try:

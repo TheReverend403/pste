@@ -15,7 +15,6 @@
 
 from werkzeug.urls import url_parse
 
-from app import BASE_DIR
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, logout_user, login_user
 
@@ -24,7 +23,7 @@ from app.forms.auth import RegistrationForm, LoginForm
 from app.models import User
 from app import db
 
-blueprint = Blueprint('auth', __name__, template_folder=f'{BASE_DIR}/templates', url_prefix='/auth')
+blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 @blueprint.route('/login', methods=['GET', 'POST'])

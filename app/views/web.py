@@ -13,14 +13,25 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from app import BASE_DIR
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, abort
 from flask_login import login_required
 
-blueprint = Blueprint('web', __name__, template_folder=f'{BASE_DIR}/templates')
+from app.models import File
+
+blueprint = Blueprint('web', __name__)
 
 
 @blueprint.route('/')
 @login_required
 def index():
+    return render_template('main/index.html')
+
+
+@blueprint.route('/f/<string:slug>')
+@login_required
+def file(slug):
+    file = File.query.filter_by(slug=slug).first()
+    if not file:
+        abort(404)
+
     return render_template('main/index.html')
