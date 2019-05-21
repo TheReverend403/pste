@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
-    <title>{{ config.APP_NAME }} - {% block title %}{% endblock %}</title>
+    <title>{{ config.APP_NAME }}{{ ' - ' + title if title else '' }}</title>
     <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
@@ -26,9 +26,14 @@
                 {%- with messages = get_flashed_messages(with_categories=true) -%}
                     {% if messages %}
                         {% for category, message in messages %}
-                            {% if category=='error' %}
-                                {% set category='danger' %}
+                            {% if category == 'error' %}
+                                {% set category = 'danger' %}
                             {% endif %}
+
+                            {% if category == 'message' %}
+                                {% set category = 'info' %}
+                            {% endif %}
+
                             <div class="alert alert-{{ category }}">{{ message|safe }}</div>
                         {% endfor %}
                     {% endif %}
@@ -36,7 +41,6 @@
             {% endblock %}
         </div>
     </div>
-    {% block content %}{% endblock %}
 </div>
 
 <!-- Bootstrap JS -->
