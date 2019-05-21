@@ -19,6 +19,7 @@ from app import BASE_DIR
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, logout_user, login_user
 
+from app.forms import flash_errors
 from app.forms.auth import RegistrationForm, LoginForm
 from app.models import User
 from app import db
@@ -29,20 +30,24 @@ blueprint = Blueprint('auth', __name__, template_folder=f'{BASE_DIR}/templates',
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
+
     if request.method == 'GET':
         return render_template('auth/login.html', title='Sign in', form=form)
 
     if current_user.is_authenticated:
         return redirect(url_for('web.index'))
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+    if not form.validate_on_submit():
+        flash_errors(form)
+        return redirect(url_for('auth.login'))
 
-        if user is None or not user.check_password(form.password.data):
-            flash('Invalid email or password.', category='error')
-            return redirect(url_for('auth.login'))
+    user = User.query.filter_by(email=form.email.data).first()
 
-        login_user(user, remember=form.remember_me.data)
+    if user is None or not user.check_password(form.password.data):
+        flash('Invalid email or password.', category='error')
+        return redirect(url_for('auth.login'))
+
+    login_user(user, remember=form.remember_me.data)
 
     next_page = request.args.get('next')
     if not next_page or url_parse(next_page).netloc != '':
@@ -63,15 +68,16 @@ def register():
     if request.method == 'GET':
         return render_template('auth/register.html', title='Register', form=form)
 
-    if form.validate_on_submit():
-        user = User()
-        user.email = form.email.data
-        user.set_password(form.password.data)
-        user.generate_api_key()
+    if not form.validate_on_submit():
+        flash_errors(form)
+        return redirect(url_for('auth.register'))
 
-        db.session.add(user)
-        db.session.commit()
+    user = User()
+    user.email = form.email.data
+    user.set_password(form.password.data)
+    user.generate_api_key()
 
-        return redirect(url_for('auth.login'))
+    db.session.add(user)
+    db.session.commit()
 
-
+    return redirect(url_for('auth.login'))

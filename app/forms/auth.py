@@ -21,14 +21,15 @@ from wtforms.fields.html5 import EmailField
 class RegistrationForm(FlaskForm):
     email = EmailField('Email', [validators.Email()])
     password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirm', message='Passwords must match')
+        validators.DataRequired(message='Password is required.'),
+        validators.EqualTo('confirm', message='Passwords must match.')
     ])
     confirm = PasswordField('Confirm password')
+    submit = SubmitField('Register')
 
 
 class LoginForm(FlaskForm):
     email = EmailField('Email', validators=[validators.Email()])
-    password = PasswordField('Password', validators=[validators.DataRequired()])
+    password = PasswordField('Password', validators=[validators.DataRequired(message='Password is required.')])
     remember_me = BooleanField('Remember me')
     submit = SubmitField('Sign in')
