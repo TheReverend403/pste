@@ -12,6 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import PasswordField, validators, BooleanField, SubmitField
 from wtforms.fields.html5 import EmailField

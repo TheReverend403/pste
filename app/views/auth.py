@@ -12,6 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 from werkzeug.urls import url_parse
 
 from app import BASE_DIR
