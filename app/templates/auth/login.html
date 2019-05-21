@@ -6,10 +6,10 @@
     <form action="" method="post" role="form">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email address">
+            <input type="email" class="form-control" id="email" name="email" placeholder="{{ form.email.label.text }}">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <input type="password" class="form-control" id="password" name="password" placeholder="{{ form.password.label.text }}">
         </div>
         <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
