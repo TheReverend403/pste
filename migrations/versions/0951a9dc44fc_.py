@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 865b3f0bb601
+Revision ID: 0951a9dc44fc
 Revises: 
-Create Date: 2019-05-20 17:01:40.339424
+Create Date: 2019-05-21 19:12:23.634432
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '865b3f0bb601'
+revision = '0951a9dc44fc'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,9 +22,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=255, collation='NOCASE'), nullable=False),
     sa.Column('password', sa.String(length=255), server_default='', nullable=False),
+    sa.Column('api_key', sa.String(length=64), nullable=False),
     sa.Column('is_admin', sa.Boolean(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),
     sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('api_key'),
     sa.UniqueConstraint('email')
     )
     op.create_table('files',
@@ -32,7 +34,8 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('name', sa.String(length=255), nullable=False),
     sa.Column('size', sa.BigInteger(), nullable=False),
-    sa.Column('mimetype', sa.String(length=32), nullable=False),
+    sa.Column('client_mimetype', sa.String(length=32), nullable=False),
+    sa.Column('server_mimetype', sa.String(length=32), nullable=False),
     sa.Column('slug', sa.String(length=32), nullable=False),
     sa.Column('file_hash', sa.String(length=64), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=False),

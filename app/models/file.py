@@ -12,8 +12,9 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+import os
 
-from sqlalchemy import func
+from sqlalchemy import func, event
 from app import db
 
 
@@ -24,10 +25,21 @@ class File(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     name = db.Column(db.String(255), nullable=False, unique=True)
     size = db.Column(db.BigInteger, nullable=False)
-    mimetype = db.Column(db.String(32), nullable=False)
+    client_mimetype = db.Column(db.String(32), nullable=False)
+    server_mimetype = db.Column(db.String(32), nullable=False)
     slug = db.Column(db.String(32), nullable=False, unique=True)
     file_hash = db.Column(db.String(64), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 
     def path(self):
-        return f'storage/uploads/{self.user_id}/{self.slug}'
+        return f'{self.user.storage_directory()}/{self.slug}'
+
+
+def after_delete(mapper, connection, target):
+    try:
+        os.remove(target.path())
+    except OSError:
+        pass
+
+
+event.listen(File, 'after_delete', after_delete)

@@ -14,10 +14,11 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import random
+import shutil
 import string
 
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import func
+from sqlalchemy import func, event
 from flask_login import UserMixin
 
 from app import login
@@ -35,7 +36,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.String(255, collation='NOCASE'), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False, server_default='')
-    api_key = db.Column(db.String(64))
+    api_key = db.Column(db.String(64), nullable=False, unique=True)
     is_admin = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
     files = db.relationship('File', backref='user', lazy=True)
@@ -48,4 +49,19 @@ class User(db.Model, UserMixin):
 
     def generate_api_key(self):
         chars = ''.join((string.ascii_letters, string.digits))
-        self.api_key = ''.join(random.choice(chars) for _ in range(64))
+        while True:
+            key = ''.join(random.choice(chars) for _ in range(64))
+            if not User.query.filter_by(api_key=key).first():
+                break
+
+        self.api_key = key
+
+    def storage_directory(self):
+        return f'storage/uploads/{self.user_id}'
+
+
+def after_delete(mapper, connection, target):
+    shutil.rmtree(target.storage_directory(), ignore_errors=True)
+
+
+event.listen(User, 'after_delete', after_delete)
