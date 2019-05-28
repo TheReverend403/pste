@@ -28,8 +28,7 @@ coverage.xml
 instance/
 .webassets-cache
 **/*.sqlite
-app/storage/*
-!app/storage/.gitkeep
+app/storage/
 
 # IPython
 profile_default/
