@@ -17,7 +17,7 @@ import random
 import shutil
 import string
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from passlib.hash import argon2
 from sqlalchemy import func, event
 from flask_login import UserMixin
 
@@ -42,10 +42,13 @@ class User(db.Model, UserMixin):
     files = db.relationship('File', backref='user', lazy=True)
 
     def set_password(self, password):
-        self.password = generate_password_hash(password)
+        self.password = argon2.hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password, password)
+        if argon2.needs_update(self.password, password):
+            self.set_password(password)
+
+        return argon2.verify(password, self.password)
 
     def generate_api_key(self):
         chars = ''.join((string.ascii_letters, string.digits))
