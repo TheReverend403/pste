@@ -55,4 +55,7 @@ def create_app():
     from app.views import register_blueprints
     register_blueprints(app)
 
+    from app.commands import init_app
+    init_app(app)
+
     return app
