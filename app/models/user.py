@@ -27,6 +27,12 @@ from app import login
 from app import db
 
 
+@login.header_loader
+def load_user_from_header(header):
+    api_key = header.replace('Bearer ', '')
+    return User.query.filter_by(api_key=api_key).get()
+
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
