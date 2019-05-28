@@ -23,7 +23,7 @@ class File(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
-    name = db.Column(db.String(255), nullable=False, unique=True)
+    name = db.Column(db.String(255), nullable=False)
     size = db.Column(db.BigInteger, nullable=False)
     client_mimetype = db.Column(db.String(32), nullable=False)
     server_mimetype = db.Column(db.String(32), nullable=False)
