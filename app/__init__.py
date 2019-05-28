@@ -44,7 +44,7 @@ def create_app():
 
             sentry_sdk.init(dsn=app.config['SENTRY_DSN'], integrations=[FlaskIntegration()])
         except ImportError:
-            app.logger.warn('SENTRY_ENABLED is True but sentry-sdk is not available. Sentry will not be used.')
+            app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
 
     db.init_app(app)
     migrate.init_app(app, db)
