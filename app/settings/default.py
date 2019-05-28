@@ -22,6 +22,7 @@ MAIL_PORT = 587
 MAIL_USE_TLS = True
 MAIL_USERNAME = 'postmaster@yourdomain.com'
 MAIL_PASSWORD = ''
+MAIL_DEFAULT_SENDER = 'noreply@yourdomain.com'
 
 # Sentry
 # https://sentry.io
