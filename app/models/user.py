@@ -69,4 +69,9 @@ def after_delete(mapper, connection, target):
     shutil.rmtree(target.storage_directory(), ignore_errors=True)
 
 
+def after_insert(mapper, connection, target):
+    os.makedirs(target.storage_directory())
+
+
 event.listen(User, 'after_delete', after_delete)
+event.listen(User, 'after_insert', after_insert)
