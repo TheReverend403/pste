@@ -91,6 +91,14 @@
             ],
             "version": "==7.0"
         },
+        "environs": {
+            "hashes": [
+                "sha256:9d83321a32e29c963f199bf118d9dae199b42ab22b247b11d909b0d203e068bf",
+                "sha256:ec8c5ddd044a8ed1190cbef50ba0eef277057946b96eae457afd865c38d9e8c5"
+            ],
+            "index": "pypi",
+            "version": "==4.2.0"
+        },
         "flask": {
             "hashes": [
                 "sha256:ad7c6d841e64296b962296c2c2dabc6543752985727af86a975072dea984b6f3",
@@ -190,6 +198,13 @@
             ],
             "version": "==1.1.1"
         },
+        "marshmallow": {
+            "hashes": [
+                "sha256:9cedfc5b6f568d57e8a2cf3d293fbd81b05e5ef557854008d03e25660a39ccfd",
+                "sha256:a4d99922116a76e5abd8f997ec0519086e24814b7e1e1344bebe2a312ba50235"
+            ],
+            "version": "==2.19.5"
+        },
         "passlib": {
             "extras": [
                 "argon2"
@@ -213,6 +228,13 @@
                 "sha256:c89805f6f4d64db21ed966fda138f8a5ed7a4fdbc1a8ee329ce1b74e3c74da9e"
             ],
             "version": "==2.8.0"
+        },
+        "python-dotenv": {
+            "hashes": [
+                "sha256:debd928b49dbc2bf68040566f55cdb3252458036464806f4094487244e2a4093",
+                "sha256:f157d71d5fec9d4bd5f51c82746b6344dffa680ee85217c123f4a0c8117c4544"
+            ],
+            "version": "==0.10.3"
         },
         "python-editor": {
             "hashes": [

@@ -12,6 +12,7 @@ flask-mail = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-wtf = "*"
+environs = "*"
 passlib = {extras = ["argon2"],version = "*"}
 
 [requires]
