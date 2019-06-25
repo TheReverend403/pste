@@ -15,7 +15,7 @@
 
 from werkzeug.urls import url_parse
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, current_app as app
 from flask_login import current_user, logout_user, login_user
 
 from app.utils import flash_errors
@@ -63,6 +63,10 @@ def logout():
 
 @blueprint.route('/register', methods=['GET', 'POST'])
 def register():
+    if not app.config['ENABLE_REGISTRATION']:
+        flash('Registration is disabled.', 'error')
+        return redirect(url_for('auth.login'))
+
     form = RegistrationForm(request.form)
     if request.method == 'GET':
         return render_template('auth/register.html', title='Register', form=form)

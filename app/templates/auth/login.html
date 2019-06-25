@@ -15,7 +15,9 @@
             <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
             <label class="form-check-label" for="remember_me">{{ form.remember_me.label }}</label>
             <div class="float-right">
-                <button type="button" class="btn btn-link"><a href="{{ url_for('auth.register') }}">Register</a></button>
+                {% if config.ENABLE_REGISTRATION %}
+                    <button type="button" class="btn btn-link"><a href="{{ url_for('auth.register') }}">Register</a></button>
+                {% endif %}
                 <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
             </div>
         </div>
