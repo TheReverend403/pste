@@ -20,10 +20,7 @@ from passlib.hash import argon2
 from sqlalchemy import func, event
 from flask_login import UserMixin
 
-import app
-from app import login
-from app import db
-from app import utils
+from app import db, utils, login, BASE_DIR
 
 
 @login.header_loader
@@ -66,7 +63,7 @@ class User(db.Model, UserMixin):
         self.api_key = key
 
     def storage_directory(self):
-        return f'{app.BASE_DIR}/storage/uploads/{self.id}'
+        return f'{BASE_DIR}/storage/uploads/{self.id}'
 
 
 def after_delete(mapper, connection, target):
