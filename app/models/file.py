@@ -19,6 +19,19 @@ from sqlalchemy import func, event
 
 from app import db, utils
 
+# TODO: Figure out why in the name of christ random_string()
+#  is returning None despite working fine in the Python console.
+
+
+def generate_slug(extension='.txt'):
+    length = 3
+
+    while True:
+        slug = utils.random_string(length)
+        if not File.query.filter_by(slug=slug).first():
+            return slug + extension
+        length += 1
+
 
 class File(db.Model):
     __tablename__ = 'files'
@@ -39,17 +52,6 @@ class File(db.Model):
     def response_mimetype(self):
         # TODO: Implement sending of certain file types as text/plain.
         return self.server_mimetype
-
-
-def generate_slug():
-    length = 3
-    while True:
-        slug = utils.random_string(length)
-        if not File.query.filter_by(slug=slug).first():
-            break
-        length += 1
-
-    return slug
 
 
 def after_delete(mapper, connection, target):

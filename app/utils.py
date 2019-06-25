@@ -19,7 +19,7 @@ from flask import flash
 
 
 def random_string(length):
-    chars = ''.join((string.ascii_letters, string.digits))
+    chars = ''.join(string.ascii_letters + string.digits)
     value = ''.join(random.choice(chars) for _ in range(length))
     return value
 

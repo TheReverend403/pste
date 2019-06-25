@@ -13,12 +13,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from app.views.web import blueprint as web_blueprint
-from app.views.auth import blueprint as auth_blueprint
-from app.views.api import blueprint as api_blueprint
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileRequired
+from wtforms import FileField
 
 
-def register_blueprints(app):
-    app.register_blueprint(web_blueprint)
-    app.register_blueprint(auth_blueprint)
-    app.register_blueprint(api_blueprint)
+class UploadForm(FlaskForm):
+    file = FileField(validators=[FileRequired()])
