@@ -31,12 +31,6 @@ def create_app():
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
     app.config.from_object('app.settings')
 
-    try:
-        app.config.from_object('app.settings.local')
-    except ImportError:
-        app.logger.error('pste is not configured. Copy app/settings/default.py to app/settings/local.py and edit it.')
-        os._exit(1)
-
     if app.config['SENTRY_DSN']:
         try:
             import sentry_sdk
