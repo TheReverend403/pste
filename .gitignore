@@ -45,6 +45,3 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
-# Local settings
-app/settings/local.py
