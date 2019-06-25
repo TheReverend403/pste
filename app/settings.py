@@ -16,7 +16,7 @@
 from environs import Env
 
 env = Env()
-env.read_env()  # read .env file, if it exists
+env.read_env()
 
 SECRET_KEY = env.str('SECRET_KEY')
 SQLALCHEMY_DATABASE_URI = env.str('DATABASE_URI')
