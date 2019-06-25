@@ -12,10 +12,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 import os
 
 from sqlalchemy import func, event
-from app import db
+
+from app import db, utils
 
 
 class File(db.Model):
@@ -25,14 +27,29 @@ class File(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     name = db.Column(db.String(255), nullable=False)
     size = db.Column(db.BigInteger, nullable=False)
-    client_mimetype = db.Column(db.String(32), nullable=False)
-    server_mimetype = db.Column(db.String(32), nullable=False)
+    client_mimetype = db.Column(db.String(32))
+    server_mimetype = db.Column(db.String(32))
     slug = db.Column(db.String(32), nullable=False, unique=True)
     file_hash = db.Column(db.String(64), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 
     def path(self):
         return f'{self.user.storage_directory()}/{self.slug}'
+
+    def response_mimetype(self):
+        # TODO: Implement sending of certain file types as text/plain.
+        return self.server_mimetype
+
+
+def generate_slug():
+    length = 3
+    while True:
+        slug = utils.random_string(length)
+        if not File.query.filter_by(slug=slug).first():
+            break
+        length += 1
+
+    return slug
 
 
 def after_delete(mapper, connection, target):

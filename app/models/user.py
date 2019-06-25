@@ -14,9 +14,7 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-import random
 import shutil
-import string
 
 from passlib.hash import argon2
 from sqlalchemy import func, event
@@ -25,6 +23,7 @@ from flask_login import UserMixin
 import app
 from app import login
 from app import db
+from app import utils
 
 
 @login.header_loader
@@ -59,9 +58,8 @@ class User(db.Model, UserMixin):
         return argon2.verify(password, self.password)
 
     def generate_api_key(self):
-        chars = ''.join((string.ascii_letters, string.digits))
         while True:
-            key = ''.join(random.choice(chars) for _ in range(64))
+            key = utils.random_string(64)
             if not User.query.filter_by(api_key=key).first():
                 break
 

@@ -18,7 +18,7 @@ from werkzeug.urls import url_parse
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, logout_user, login_user
 
-from app.forms import flash_errors
+from app.utils import flash_errors
 from app.forms.auth import RegistrationForm, LoginForm
 from app.models import User
 from app import db

@@ -13,13 +13,18 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-"""
-DON'T EDIT THIS FILE
-Copy default.py to local.py and use that instead.
-"""
+import random
+import string
+from flask import flash
 
-DEBUG = False
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-APP_NAME = 'pste'
 
-SENTRY_DSN = ''
+def random_string(length):
+    chars = ''.join((string.ascii_letters, string.digits))
+    value = ''.join(random.choice(chars) for _ in range(length))
+    return value
+
+
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(f'{error}', category='error')
