@@ -71,7 +71,7 @@ def after_delete(mapper, connection, target):
 
 
 def after_insert(mapper, connection, target):
-    os.makedirs(target.storage_directory())
+    os.makedirs(target.storage_directory(), exist_ok=True)
 
 
 event.listen(User, 'after_delete', after_delete)
