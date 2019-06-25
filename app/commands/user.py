@@ -31,16 +31,20 @@
 import re
 
 import click
+import shutil
 from flask.cli import AppGroup
 from sqlalchemy.exc import IntegrityError
 
 from app import db
 from app.models import User
 
+DEFAULT_FG = 'bright_green'
+ERROR_FG = 'bright_red'
+
 
 def validate_email(ctx, param, value):
     if not re.match(r'[^@]+@[^@]+\.[^@]+', value):
-        click.secho('Not a valid email address.', fg='red')
+        click.secho('Not a valid email address.', fg=ERROR_FG)
         value = click.prompt(param.prompt)
         return validate_email(ctx, param, value)
 
@@ -67,7 +71,7 @@ def user_create(email, password, admin):
         db.session.add(user)
         db.session.commit()
     except IntegrityError:
-        click.secho('Email is already in use.', fg='red', err=True)
+        click.secho('Email is already in use.', fg=ERROR_FG, err=True)
         return
 
 
@@ -82,8 +86,41 @@ def user_delete(users):
     for user in user_query:
         db.session.delete(user)
         users.remove(user.email)
+        click.secho(f'Deleted user: {user.email}', fg=DEFAULT_FG)
+
+    # Any user left in `users` doesn't exist.
+    invalid_users = ', '.join(users)
+    click.secho(f'Invalid users: {invalid_users}', fg=ERROR_FG, err=True)
+    db.session.commit()
+
+
+@group.command('list')
+def user_list():
+    """List users."""
+
+    users = User.query.all()
+    if len(users) == 0:
+        click.secho(f'No users registered!', fg=ERROR_FG, err=True)
+        return
+
+    term_width, _ = shutil.get_terminal_size()
+    if term_width > 40:
+        term_width = 40
+
+    seperator = ''.join('-' for _ in range(term_width))
+
+    click.echo(click.style('Total: ', fg=DEFAULT_FG) + str(len(users)))
+    if len(users) == 1:
+        click.echo(seperator)
 
     for user in users:
-        click.secho(f'Invalid user: {user}', fg='red', err=True)
+        if len(users) > 1:
+            click.echo(seperator)
 
-    db.session.commit()
+        click.echo(click.style('ID: ', fg=DEFAULT_FG) + str(user.id))
+        click.echo(click.style('Email: ', fg=DEFAULT_FG) + user.email)
+        click.echo(click.style('Admin: ', fg=DEFAULT_FG) + str(user.is_admin))
+        click.echo(click.style('Created: ', fg=DEFAULT_FG) + str(user.created_at))
+
+    if len(users) > 1:
+        click.echo(seperator)
