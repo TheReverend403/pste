@@ -17,6 +17,7 @@ import random
 import string
 from flask import flash
 
+from app import db
 from app.models.file import File
 
 
@@ -33,16 +34,17 @@ def flash_errors(form):
 
 
 def generate_slug(extension):
-    # TODO: Figure out why in the name of christ this
-    #  is returning None despite working fine in the Python console.
-
     length = 3
+
     if not extension:
         extension = '.txt'
 
-    while True:
-        slug = random_string(length)
-        if not File.query.filter_by(slug=slug).first():
-            return slug + extension
-        length += 1
+    with db.session.no_autoflush:
+        while True:
+            slug = random_string(length)
+            if not File.query.filter_by(slug=slug).first():
+                break
+            length += 1
+
+    return slug + extension
 
