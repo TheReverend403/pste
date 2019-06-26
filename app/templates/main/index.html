@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>It's working!</p>
+<code>curl -X POST -H "Accept: application/json" -H "Authorization: Bearer {{ current_user.api_key }}" -F file=@/path/to/file {{ url_for('api.upload', _external=True) }}</code>
 {% endblock %}
