@@ -78,7 +78,6 @@ def register():
     user = User()
     user.email = form.email.data
     user.set_password(form.password.data)
-    user.generate_api_key()
 
     db.session.add(user)
     db.session.commit()

@@ -34,13 +34,22 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+def generate_api_key():
+    while True:
+        key = utils.random_string(64)
+        if not User.query.filter_by(api_key=key).first():
+            break
+
+    return key
+
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.String(255, collation='NOCASE'), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False, server_default='')
-    api_key = db.Column(db.String(64), nullable=False, unique=True)
+    api_key = db.Column(db.String(64), nullable=False, unique=True, default=generate_api_key)
     is_admin = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
     files = db.relationship('File', backref='user', lazy=True)
@@ -50,14 +59,6 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return argon2.verify(password, self.password)
-
-    def generate_api_key(self):
-        while True:
-            key = utils.random_string(64)
-            if not User.query.filter_by(api_key=key).first():
-                break
-
-        self.api_key = key
 
     def storage_directory(self):
         return f'{BASE_DIR}/storage/uploads/{self.id}'
