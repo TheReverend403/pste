@@ -17,6 +17,8 @@ import random
 import string
 from flask import flash
 
+from app.models.file import File
+
 
 def random_string(length):
     chars = ''.join(string.ascii_letters + string.digits)
@@ -28,3 +30,19 @@ def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
             flash(f'{error}', category='error')
+
+
+def generate_slug(extension):
+    # TODO: Figure out why in the name of christ this
+    #  is returning None despite working fine in the Python console.
+
+    length = 3
+    if not extension:
+        extension = '.txt'
+
+    while True:
+        slug = random_string(length)
+        if not File.query.filter_by(slug=slug).first():
+            return slug + extension
+        length += 1
+

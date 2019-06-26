@@ -12,6 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 import hashlib
 import os
 from pathlib import Path
@@ -23,7 +24,7 @@ from flask_login import login_required, current_user
 from app import db
 from app.forms.api import UploadForm
 from app.models import File
-from app.models.file import generate_slug
+from app import utils
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
@@ -42,7 +43,6 @@ def upload():
 
     file_hash = hashlib.sha256(fd.read()).hexdigest()
     fd.seek(0)
-    extension = Path(fd.filename).suffix
 
     file = File(user=current_user)
     file.name = fd.filename
@@ -50,10 +50,9 @@ def upload():
     file.file_hash = file_hash
     file.client_mimetype = fd.mimetype
     file.server_mimetype = magic.from_buffer(fd.read(), mime=True)
-    file.slug = generate_slug(extension)
+    file.slug = utils.generate_slug(Path(fd.filename).suffix)
 
     fd.seek(0)
     fd.save(file.user.storage_directory(), file.slug)
     db.session.commit()
     return jsonify({'url': url_for('web.file', slug=file.slug)})
-

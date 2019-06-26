@@ -17,20 +17,7 @@ import os
 
 from sqlalchemy import func, event
 
-from app import db, utils
-
-# TODO: Figure out why in the name of christ random_string()
-#  is returning None despite working fine in the Python console.
-
-
-def generate_slug(extension='.txt'):
-    length = 3
-
-    while True:
-        slug = utils.random_string(length)
-        if not File.query.filter_by(slug=slug).first():
-            return slug + extension
-        length += 1
+from app import db
 
 
 class File(db.Model):
