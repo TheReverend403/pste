@@ -88,10 +88,12 @@ def user_delete(users):
         users.remove(user.email)
         click.secho(f'Deleted user: {user.email}', fg=DEFAULT_FG)
 
-    # Any user left in `users` doesn't exist.
-    invalid_users = ', '.join(users)
-    click.secho(f'Invalid users: {invalid_users}', fg=ERROR_FG, err=True)
     db.session.commit()
+
+    # Any user left in `users` doesn't exist.
+    if users:
+        invalid_users = ', '.join(users)
+        click.secho(f'Invalid users: {invalid_users}', fg=ERROR_FG, err=True)
 
 
 @group.command('list')
