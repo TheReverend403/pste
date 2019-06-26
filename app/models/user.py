@@ -49,9 +49,6 @@ class User(db.Model, UserMixin):
         self.password = argon2.hash(password)
 
     def check_password(self, password):
-        if argon2.needs_update(self.password, password):
-            self.set_password(password)
-
         return argon2.verify(password, self.password)
 
     def generate_api_key(self):

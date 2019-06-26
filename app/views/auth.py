@@ -43,7 +43,6 @@ def login():
     user = User.query.filter_by(email=form.email.data).first()
 
     if user is None or not user.check_password(form.password.data):
-        db.session.commit()  # In case password was rehashed in check_password()
         flash('Invalid email or password.', category='error')
         return redirect(url_for('auth.login'))
 
