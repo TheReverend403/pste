@@ -33,15 +33,14 @@ def flash_errors(form):
             flash(f'{error}', category='error')
 
 
-def generate_slug(extension):
+def generate_slug():
     length = 3
 
-    with db.session.no_autoflush:
-        while True:
-            slug = random_string(length)
-            if not File.query.filter_by(slug=slug).first():
-                break
-            length += 1
+    while True:
+        slug = random_string(length)
+        if not File.query.filter_by(slug=slug).first():
+            break
+        length += 1
 
     return slug
 

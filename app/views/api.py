@@ -46,7 +46,7 @@ def upload():
     fd.seek(0)
 
     extension = Path(fd.filename).suffix
-    slug = utils.generate_slug(Path(fd.filename).suffix)
+    slug = utils.generate_slug()
     if extension:
         slug = slug + extension
 
@@ -66,5 +66,8 @@ def upload():
 
     fd.seek(0)
     fd.save(file.path())
+
+    db.session.add(file)
     db.session.commit()
+
     return jsonify({'url': url_for('web.file', slug=file.slug, _external=True)})
