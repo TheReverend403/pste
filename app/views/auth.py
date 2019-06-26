@@ -28,13 +28,13 @@ blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('web.index'))
+
     form = LoginForm(request.form)
 
     if request.method == 'GET':
         return render_template('auth/login.html', title='Sign in', form=form)
-
-    if current_user.is_authenticated:
-        return redirect(url_for('web.index'))
 
     if not form.validate_on_submit():
         flash_errors(form)
