@@ -65,7 +65,6 @@ def user_create(email, password, admin):
     user.email = email
     user.is_admin = admin
     user.set_password(password)
-    user.generate_api_key()
 
     try:
         db.session.add(user)
