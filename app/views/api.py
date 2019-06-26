@@ -44,7 +44,7 @@ def upload():
     file_hash = hashlib.sha256(fd.read()).hexdigest()
     fd.seek(0)
 
-    existing_file = File.query.filter_by(user=current_user, file_hash=file_hash)
+    existing_file = File.query.filter_by(user=current_user, file_hash=file_hash).first()
     if existing_file:
         existing_file.name = fd.filename
         db.session.commit()
