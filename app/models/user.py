@@ -51,7 +51,6 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         if argon2.needs_update(self.password, password):
             self.set_password(password)
-            db.session.commit()
 
         return argon2.verify(password, self.password)
 
