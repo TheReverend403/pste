@@ -45,6 +45,11 @@ def upload():
     file_hash = hashlib.sha256(fd.read()).hexdigest()
     fd.seek(0)
 
+    extension = Path(fd.filename).suffix
+    slug = utils.generate_slug(Path(fd.filename).suffix)
+    if extension:
+        slug = slug + extension
+
     existing_file = File.query.filter_by(user=current_user, file_hash=file_hash).first()
     if existing_file:
         existing_file.name = fd.filename
@@ -57,7 +62,7 @@ def upload():
     file.file_hash = file_hash
     file.client_mimetype = fd.mimetype
     file.server_mimetype = magic.from_buffer(fd.read(), mime=True)
-    file.slug = utils.generate_slug(Path(fd.filename).suffix)
+    file.slug = slug
 
     fd.seek(0)
     fd.save(file.path())

@@ -36,9 +36,6 @@ def flash_errors(form):
 def generate_slug(extension):
     length = 3
 
-    if not extension:
-        extension = '.txt'
-
     with db.session.no_autoflush:
         while True:
             slug = random_string(length)
@@ -46,5 +43,5 @@ def generate_slug(extension):
                 break
             length += 1
 
-    return slug + extension
+    return slug
 
