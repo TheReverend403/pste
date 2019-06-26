@@ -22,7 +22,8 @@ class RegistrationForm(FlaskForm):
     email = EmailField('Email', [validators.Email()])
     password = PasswordField('Password', [
         validators.DataRequired(message='Password is required.'),
-        validators.EqualTo('confirm', message='Passwords must match.')
+        validators.EqualTo('confirm', message='Passwords must match.'),
+        validators.Length(message='Password must be at least 6 characters long.', min=6)
     ])
     confirm = PasswordField('Confirm password')
     submit = SubmitField('Register')

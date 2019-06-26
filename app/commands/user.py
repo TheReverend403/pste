@@ -64,6 +64,11 @@ def user_create(email, password, admin):
     user = User()
     user.email = email
     user.is_admin = admin
+
+    if len(password) < 6:
+        click.secho('Password must be at least 6 characters long.', fg=ERROR_FG, err=True)
+        return
+
     user.set_password(password)
 
     try:
@@ -72,6 +77,8 @@ def user_create(email, password, admin):
     except IntegrityError:
         click.secho('Email is already in use.', fg=ERROR_FG, err=True)
         return
+
+    click.secho(f'User created.', fg=DEFAULT_FG)
 
 
 @group.command('delete')
