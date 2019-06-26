@@ -53,6 +53,6 @@ def upload():
     file.slug = utils.generate_slug(Path(fd.filename).suffix)
 
     fd.seek(0)
-    fd.save(file.user.storage_directory(), file.slug)
+    fd.save(file.path())
     db.session.commit()
-    return jsonify({'url': url_for('web.file', slug=file.slug)})
+    return jsonify({'url': url_for('web.file', slug=file.slug, _external=True)})
