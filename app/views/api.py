@@ -21,7 +21,7 @@ import magic
 from flask import Blueprint, jsonify, request, url_for
 from flask_login import login_required, current_user
 
-from app import db
+from app import db, csrf
 from app.forms.api import UploadForm
 from app.models import File
 from app import utils
@@ -31,6 +31,7 @@ blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 @blueprint.route('/upload', methods=['POST'])
 @login_required
+@csrf.exempt
 def upload():
     form = UploadForm(request.files, csrf_enabled=False)
     if not form.validate_on_submit():

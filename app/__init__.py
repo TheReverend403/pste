@@ -19,18 +19,32 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 migrate = Migrate()
 login = LoginManager()
 db = SQLAlchemy()
+csrf = CSRFProtect()
 
 
 def create_app():
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
     app.config.from_object('app.settings')
 
+    register_extensions(app)
+
+    from app.views import register_blueprints
+    register_blueprints(app)
+
+    from app import commands
+    commands.init_app(app)
+
+    return app
+
+
+def register_extensions(app):
     if app.config['SENTRY_DSN']:
         try:
             import sentry_sdk
@@ -42,14 +56,6 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
-
+    csrf.init_app(app)
     login.init_app(app)
     login.login_view = 'auth.login'
-
-    from app.views import register_blueprints
-    register_blueprints(app)
-
-    from app.commands import init_app
-    init_app(app)
-
-    return app
