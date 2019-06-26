@@ -52,7 +52,7 @@ class User(db.Model, UserMixin):
     api_key = db.Column(db.String(64), nullable=False, unique=True, default=generate_api_key)
     is_admin = db.Column(db.Boolean(), default=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
-    files = db.relationship('File', backref='user', lazy=True)
+    files = db.relationship('File', backref='user', lazy=True, cascade='all,delete')
 
     def set_password(self, password):
         self.password = argon2.hash(password)
