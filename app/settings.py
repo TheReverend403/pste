@@ -35,4 +35,4 @@ with env.prefixed('MAIL_'):
 
 # Sentry
 # https://sentry.io
-SENTRY_DSN = ''
+SENTRY_DSN = env.str('SENTRY_DSN')
