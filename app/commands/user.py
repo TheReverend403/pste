@@ -129,6 +129,7 @@ def user_list():
         click.echo(click.style('Email: ', fg=DEFAULT_FG) + user.email)
         click.echo(click.style('Admin: ', fg=DEFAULT_FG) + str(user.is_admin))
         click.echo(click.style('Created: ', fg=DEFAULT_FG) + str(user.created_at))
+        click.echo(click.style('Uploads: ', fg=DEFAULT_FG) + str(user.files.count()))
 
     if len(users) > 1:
         click.echo(seperator)
