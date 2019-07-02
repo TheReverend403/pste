@@ -47,7 +47,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer(), primary_key=True)
-    email = db.Column(db.String(255, collation='NOCASE'), nullable=False, unique=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False, server_default='')
     api_key = db.Column(db.String(64), nullable=False, unique=True, default=generate_api_key)
     is_admin = db.Column(db.Boolean(), default=False)
