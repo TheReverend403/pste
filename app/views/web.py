@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Blueprint, render_template, abort, send_file
+from flask import Blueprint, render_template, abort, send_file, make_response
 from flask_login import login_required
 
 from app.models import File
@@ -28,10 +28,10 @@ def index():
 
 
 @blueprint.route('/f/<string:slug>')
-@login_required
 def file(slug):
-    file = File.query.filter_by(slug=slug).first()
-    if not file:
-        abort(404)
+    file_instance = File.query.filter_by(slug=slug).first_or_404()
 
-    raise NotImplementedError
+    response = make_response(send_file(file_instance.path()))
+    response.headers['Content-Type'] = file_instance.response_mimetype()
+    response.headers['Content-Disposition'] = f'inline; filename="{file_instance.name}"'
+    return response

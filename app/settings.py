@@ -15,6 +15,15 @@
 
 from environs import Env
 
+PLAINTEXT_TYPES = [
+    'txt', 'php', 'rb', 'sh', 'py',
+    'conf', 'c', 'cpp', 'java', 'rs',
+    'html', 'htm', 'js', 'xml', 'sql',
+    'lua', 'cs', 'pl', 'md', 'ini',
+    'shtml', 'yaml', 'cfg', 'go', 'fish',
+    'yml', 'bash'
+]
+
 env = Env()
 env.read_env()
 
