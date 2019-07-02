@@ -20,3 +20,6 @@ from wtforms import FileField
 
 class UploadForm(FlaskForm):
     file = FileField(validators=[FileRequired()])
+
+    class Meta:
+        csrf = False

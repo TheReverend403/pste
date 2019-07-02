@@ -14,7 +14,9 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+from pathlib import Path
 
+from flask import current_app as app
 from sqlalchemy import func, event
 
 from app import db
@@ -37,7 +39,10 @@ class File(db.Model):
         return f'{self.user.storage_directory()}/{self.slug}'
 
     def response_mimetype(self):
-        # TODO: Implement sending of certain file types as text/plain.
+        extension = Path(self.path()).suffix
+        if extension and extension.lstrip('.') in app.config['PLAINTEXT_TYPES']:
+            return 'text/plain'
+
         return self.server_mimetype
 
 

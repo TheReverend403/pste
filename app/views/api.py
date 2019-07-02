@@ -33,7 +33,7 @@ blueprint = Blueprint('api', __name__, url_prefix='/api')
 @login_required
 @csrf.exempt
 def upload():
-    form = UploadForm(request.files, csrf_enabled=False)
+    form = UploadForm(request.files)
     if not form.validate_on_submit():
         return jsonify({'errors': form.errors})
 
