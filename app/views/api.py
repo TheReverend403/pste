@@ -38,12 +38,12 @@ def upload():
         return jsonify({'errors': form.errors})
 
     fd = form.file.data
+
     fd.seek(0, os.SEEK_END)
     file_size = fd.tell()
     fd.seek(0)
-
-    file_hash = hashlib.sha256(fd.read()).hexdigest()
-    fd.seek(0)
+    file_contents = fd.read()
+    file_hash = hashlib.sha256(file_contents).hexdigest()
 
     extension = Path(fd.filename).suffix
     slug = utils.generate_slug()
@@ -61,10 +61,9 @@ def upload():
     file.size = file_size
     file.file_hash = file_hash
     file.client_mimetype = fd.mimetype
-    file.server_mimetype = magic.from_buffer(fd.read(), mime=True)
+    file.server_mimetype = magic.from_buffer(file_contents, mime=True)
     file.slug = slug
 
-    fd.seek(0)
     fd.save(file.path())
 
     db.session.add(file)
