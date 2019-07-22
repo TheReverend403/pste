@@ -9,7 +9,7 @@ Very early alpha, 100% definitely not ready whatsoever for production use. Not e
 
 # Quick Installation (dev)
 
-```
+```sh
 git clone https://github.com/FoxDev/pste
 cd pste
 pipenv install
