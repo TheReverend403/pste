@@ -66,6 +66,9 @@ def register():
     if not app.config['ENABLE_REGISTRATION']:
         abort(404)
 
+    if current_user.is_authenticated:
+        return redirect(url_for('web.index'))
+
     form = RegistrationForm(request.form)
     if request.method == 'GET':
         return render_template('auth/register.html', title='Register', form=form)
