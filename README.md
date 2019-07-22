@@ -6,3 +6,16 @@
 Just a simple file hosting application inspired by the likes of pomf.se and teknik.io.
 
 Very early alpha, 100% definitely not ready whatsoever for production use. Not even for a laugh.
+
+# Quick Installation (dev)
+
+```
+git clone https://github.com/FoxDev/pste
+cd pste
+pipenv install
+cp .env.default .env # Edit .env
+pipenv shell
+flask db upgrade
+flask user create # Or use /auth/register
+flask run # Do not use this in production, use a WSGI server with app:create_app() as your entrypoint.
+```
