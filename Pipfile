@@ -16,4 +16,4 @@ passlib = {extras = ["argon2"],version = "*"}
 python-magic = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6"
