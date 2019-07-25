@@ -12,7 +12,7 @@
     <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-dark navbar-expand-md navbar-fixed-top bg-dark">
+<nav class="navbar navbar-dark navbar-expand-md navbar-fixed-top bg-dark" role="navigation">
     <div class="container">
         <a class="navbar-brand" href="{{ url_for('web.index') }}">
             <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
@@ -44,9 +44,6 @@
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 {% block scripts %}{% endblock %}
 
 </body>
