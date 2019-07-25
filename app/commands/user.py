@@ -38,6 +38,8 @@ from sqlalchemy.exc import IntegrityError
 from app import db
 from app.models import User
 
+group = AppGroup('user', help='User management commands.')
+
 DEFAULT_FG = 'bright_green'
 ERROR_FG = 'bright_red'
 
@@ -49,9 +51,6 @@ def validate_email(ctx, param, value):
         return validate_email(ctx, param, value)
 
     return value
-
-
-group = AppGroup('user', help='User management commands.')
 
 
 @group.command('create')

@@ -33,15 +33,21 @@ def create_app():
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
     app.config.from_object('app.settings')
 
+    register_commands(app)
     register_extensions(app)
-
-    from app.views import register_blueprints
     register_blueprints(app)
 
+    return app
+
+
+def register_commands(app):
     from app import commands
     commands.init_app(app)
 
-    return app
+
+def register_blueprints(app):
+    from app import views
+    views.register_blueprints(app)
 
 
 def register_extensions(app):
@@ -54,8 +60,7 @@ def register_extensions(app):
         except ImportError:
             app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
 
-    db.init_app(app)
-    migrate.init_app(app, db)
-    csrf.init_app(app)
+    migrate.init_app(app)
     login.init_app(app)
-    login.login_view = 'auth.login'
+    db.init_app(app)
+    csrf.init_app(app)
