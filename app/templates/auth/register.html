@@ -1,20 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'auth/_form.html' %}
 
-{% block content %}
-    <h1>{{ title }}</h1>
-    <hr>
+{% block form %}
     <form action="" method="post" role="form">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            <input type="email" class="form-control" id="email" name="email" aria-label="{{ form.email.label.text }}" placeholder="{{ form.email.label.text }}">
+            <input type="email" class="form-control" id="email" name="email"
+                   aria-label="{{ form.email.label.text }}" placeholder="{{ form.email.label.text }}">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="password" name="password" aria-label="{{ form.password.label.text }}" placeholder="{{ form.password.label.text }}">
+            <input type="password" class="form-control" id="password" name="password"
+                   aria-label="{{ form.password.label.text }}" placeholder="{{ form.password.label.text }}">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="password-confirm" name="confirm" aria-label="{{ form.confirm.label.text }}" placeholder="{{ form.confirm.label.text }}">
+            <input type="password" class="form-control" id="password-confirm" name="confirm"
+                   aria-label="{{ form.confirm.label.text }}" placeholder="{{ form.confirm.label.text }}">
         </div>
-
         <div class="form-group form-check">
             <div class="float-right">
                 <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
