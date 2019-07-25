@@ -7,6 +7,8 @@ Just a simple file hosting application inspired by the likes of pomf.se and tekn
 
 Very early alpha, 100% definitely not ready whatsoever for production use. Not even for a laugh.
 
+[Demo (master branch)](https://dev.pste.pw)
+
 # Quick Installation (dev)
 
 ```sh
