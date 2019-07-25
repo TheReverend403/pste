@@ -23,9 +23,9 @@ from flask_wtf.csrf import CSRFProtect
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
-db = SQLAlchemy()
 csrf = CSRFProtect()
 
 
@@ -48,6 +48,7 @@ def register_commands(app):
 def register_blueprints(app):
     from app import views
     views.register_blueprints(app)
+    app.register_error_handler(404, views.page_not_found)
 
 
 def register_extensions(app):
@@ -60,7 +61,9 @@ def register_extensions(app):
         except ImportError:
             app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
 
-    migrate.init_app(app)
-    login.init_app(app)
     db.init_app(app)
+    migrate.init_app(app, db)
+    login.init_app(app)
     csrf.init_app(app)
+
+    login.login_view = 'auth.login'

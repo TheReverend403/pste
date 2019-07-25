@@ -8,8 +8,8 @@
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
     <title>{{ config.APP_NAME }}{{ ' - ' + title if title else '' }}</title>
     <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-md navbar-fixed-top bg-dark">

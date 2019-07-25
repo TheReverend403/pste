@@ -12,6 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+from flask import render_template
 
 from app.views.web import blueprint as web_blueprint
 from app.views.auth import blueprint as auth_blueprint
@@ -22,3 +23,7 @@ def register_blueprints(app):
     app.register_blueprint(web_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(api_blueprint)
+
+
+def page_not_found(error):
+    return render_template('errors/404.html', error=error, title='404'), 404

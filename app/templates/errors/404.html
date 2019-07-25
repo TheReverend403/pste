@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+    <link href="{{ url_for('static', filename='starwars-glyphicons/css/starwars-glyphicons.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>404</h1>
+        <i class="swg swg-r2d2-2 swg-6x"></i>
+        <h3>This is not the page you are looking for.</h3>
+    </div>
+{% endblock %}

@@ -1,0 +1,684 @@
+/*!
+ *  Star Wars GlyphIcons 1.4 by @maxtusken - http://starwarsglyphicons.com - @starwarsglyphicons
+ *  License - http://starwarsglyphicons.com/license (Font: SIL OFL 1.1, CSS: MIT License)
+ */
+/* FONT PATH
+ * -------------------------- */
+@font-face {
+  font-family: 'StarWarsGlyphicons';
+  src: url('../fonts/starwars-glyphicons-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+.swg {
+  display: inline-block;
+  font: normal normal normal 14px/1 StarWarsGlyphicons;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* makes the font 33% larger relative to the icon container */
+.swg-lg {
+  font-size: 1.33333333em;
+  line-height: 0.75em;
+  vertical-align: -15%;
+}
+.swg-2x {
+  font-size: 2em;
+}
+.swg-3x {
+  font-size: 3em;
+}
+.swg-4x {
+  font-size: 4em;
+}
+.swg-5x {
+  font-size: 5em;
+}
+.swg-6x {
+  font-size: 6em;
+}
+.swg-fw {
+  width: 1.28571429em;
+  text-align: center;
+}
+.swg-ul {
+  padding-left: 0;
+  margin-left: 2.14285714em;
+  list-style-type: none;
+}
+.swg-ul > li {
+  position: relative;
+}
+.swg-li {
+  position: absolute;
+  left: -2.14285714em;
+  width: 2.14285714em;
+  top: 0.14285714em;
+  text-align: center;
+}
+.swg-li.swg-lg {
+  left: -1.85714286em;
+}
+.swg-border {
+  padding: .2em .25em .15em;
+  border: solid 0.08em #eeeeee;
+  border-radius: .1em;
+}
+.swg-pull-left {
+  float: left;
+}
+.swg-pull-right {
+  float: right;
+}
+.fa.swg-pull-left {
+  margin-right: .3em;
+}
+.fa.swg-pull-right {
+  margin-left: .3em;
+}
+/* Deprecated as of 4.4.0 */
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.fa.pull-left {
+  margin-right: .3em;
+}
+.fa.pull-right {
+  margin-left: .3em;
+}
+.swg-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+  animation: fa-spin 2s infinite linear;
+}
+.swg-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+  animation: fa-spin 1s infinite steps(8);
+}
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+.swg-rotate-90 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.swg-rotate-180 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.swg-rotate-270 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.swg-flip-horizontal {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.swg-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+:root .swg-rotate-90,
+:root .swg-rotate-180,
+:root .swg-rotate-270,
+:root .swg-flip-horizontal,
+:root .swg-flip-vertical {
+  filter: none;
+}
+.swg-stack {
+  position: relative;
+  display: inline-block;
+  width: 2em;
+  height: 2em;
+  line-height: 2em;
+  vertical-align: middle;
+}
+.swg-stack-1x,
+.swg-stack-2x {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.swg-stack-1x {
+  line-height: inherit;
+}
+.swg-stack-2x {
+  font-size: 2em;
+}
+.swg-inverse {
+  color: #ffffff;
+}
+/* Star Wars GlyphIcons uses the Unicode Private Use Area (PUA) to ensure screen
+   readers do not read off random characters that represent icons */
+.swg-starwars:before {
+  content: "\f000";
+}
+.swg-sw-alt:before {
+  content: "\f001";
+}
+.swg-sw-alt-2:before {
+  content: "\f002";
+}
+.swg-title4:before {
+  content: "\f003";
+}
+.swg-title5:before {
+  content: "\f004";
+}
+.swg-title6:before {
+  content: "\f005";
+}
+
+.swg-reball:before {
+  content: "\f006";
+}
+.swg-newrep:before {
+  content: "\f007";
+}
+.swg-galemp:before {
+  content: "\f008";
+}
+.swg-mandalorcrest:before {
+  content: "\f009";
+}
+.swg-mandalorian:before {
+  content: "\f00A";
+}
+.swg-blacksun:before {
+  content: "\f00B";
+}
+.swg-sith:before {
+  content: "\f00C";
+}
+.swg-galsenate:before {
+  content: "\f00D";
+}
+.swg-newjediorder:before {
+  content: "\f00E";
+}
+.swg-separ:before {
+  content: "\f00F";
+}
+.swg-jediorder:before {
+  content: "\f010";
+}
+.swg-galrep:before {
+  content: "\f011";
+}
+.swg-sithemp:before {
+  content: "\f012";
+}
+.swg-kirkanos:before {
+  content: "\f013";
+}
+.swg-credits:before {
+  content: "\f014";
+}
+.swg-ep1:before {
+  content: "\f015";
+}
+.swg-ep2:before {
+  content: "\f016";
+}
+.swg-ep3:before {
+  content: "\f017";
+}
+.swg-ep4:before {
+  content: "\f018";
+}
+.swg-ep5:before {
+  content: "\f019";
+}
+.swg-ep6:before {
+  content: "\f01A";
+}
+
+.swg-deathstar:before {
+  content: "\f01B";
+}
+.swg-deathstar-3:before {
+  content: "\f01C";
+}
+.swg-deathstar-4:before {
+  content: "\f01D";
+}
+.swg-r2d2:before {
+  content: "\f01E";
+}
+.swg-darthvader-3:before {
+  content: "\f01F";
+}
+.swg-yoda-2:before {
+  content: "\f020";
+}
+.swg-darthvader:before {
+  content: "\f021";
+}
+
+.swg-stormtrooper:before {
+  content: "\f022";
+}
+.swg-c3po:before {
+  content: "\f023";
+}
+.swg-yoda:before {
+  content: "\f024";
+}
+.swg-bobbafett:before {
+  content: "\f025";
+}
+.swg-saberjedi:before {
+  content: "\f026";
+}
+.swg-sabersith:before {
+  content: "\f027";
+}
+.swg-atat:before {
+  content: "\f028";
+}
+.swg-xwing:before {
+  content: "\f029";
+}
+.swg-wookie:before {
+  content: "\f02A";
+}
+.swg-akbar:before {
+  content: "\f02B";
+}
+.swg-falcon:before {
+  content: "\f02C";
+}
+.swg-leia:before {
+  content: "\f02D";
+}
+.swg-tie:before {
+  content: "\f02E";
+}
+.swg-lightsabers:before {
+  content: "\f02F";
+}
+.swg-kylo:before {
+  content: "\f030";
+}
+.swg-bb8:before {
+  content: "\f031";
+}
+.swg-trooper-ep7:before {
+  content: "\f032";
+}
+.swg-phasma:before {
+  content: "\f033";
+}
+.swg-trooper-o:before {
+  content: "\f034";
+}
+.swg-darthvader-o:before {
+  content: "\f035";
+}
+.swg-deathstar-o:before {
+  content: "\f036";
+}
+.swg-falcon-o:before {
+  content: "\f037";
+}
+.swg-r2d2-o:before {
+  content: "\f038";
+}
+.swg-tfdroid-o:before {
+  content: "\f039";
+}
+.swg-c3po-o:before {
+  content: "\f03A";
+}
+.swg-bobbafett-o:before {
+  content: "\f03B";
+}
+.swg-rogueone-title:before {
+  content: "\f03C";
+}
+.swg-rogueone-sybm:before {
+  content: "\f03D";
+}
+.swg-rogueone-2:before {
+  content: "\f03E";
+}
+.swg-k2s0:before {
+  content: "\f03F";
+}
+.swg-jynerso:before {
+  content: "\f040";
+}
+.swg-cassianandor:before {
+  content: "\f041";
+}
+.swg-mazkanata:before {
+  content: "\f042";
+}
+.swg-deathtrooper:before {
+  content: "\f043";
+}
+.swg-sawgerrera:before {
+  content: "\f044";
+}
+
+.swg-tie-2:before {
+  content: "\f045";
+}
+.swg-xwing-2:before {
+  content: "\f046";
+}
+.swg-falcon-2:before {
+  content: "\f047";
+}
+.swg-bobbafett-2:before {
+  content: "\f048";
+}
+.swg-darthvader-2:before {
+  content: "\f049";
+}
+.swg-bb8-2:before {
+  content: "\f04A";
+}
+
+.swg-cantina:before {
+  content: "\f04B";
+}
+.swg-carbonite:before {
+  content: "\f04C";
+}
+.swg-hologram:before {
+  content: "\f04D";
+}
+.swg-deathstar-2:before {
+  content: "\f04E";
+}
+.swg-combatdrone:before {
+  content: "\f04F";
+}
+.swg-falcon-3:before {
+  content: "\f050";
+}
+.swg-landspeeder:before {
+  content: "\f051";
+}
+.swg-speederbike:before {
+  content: "\f052";
+}
+.swg-stardestroyer:before {
+  content: "\f053";
+}
+.swg-xwing-3:before {
+  content: "\f054";
+}
+.swg-tie-3:before {
+  content: "\f055";
+}
+.swg-ywing:before {
+  content: "\f056";
+}
+.swg-jedistarfight:before {
+  content: "\f057";
+}
+.swg-sandcrawler:before {
+  content: "\f058";
+}
+.swg-atat-2:before {
+  content: "\f059";
+}
+.swg-atst:before {
+  content: "\f05A";
+}
+.swg-hanblaster:before {
+  content: "\f05B";
+}
+.swg-blasterrifle:before {
+  content: "\f05C";
+}
+.swg-lightsabers-2:before {
+  content: "\f05D";
+}
+.swg-lukelightsaber:before {
+  content: "\f05E";
+}
+.swg-kylolightsaber:before {
+  content: "\f05F";
+}
+.swg-darthvader-4:before {
+  content: "\f060";
+}
+.swg-anakin:before {
+  content: "\f061";
+}
+.swg-anakin-young:before {
+  content: "\f062";
+}
+.swg-anakin-kid:before {
+  content: "\f063";
+}
+.swg-hansolo:before {
+  content: "\f064";
+}
+.swg-leia-2:before {
+  content: "\f065";
+}
+.swg-lukeskywalker:before {
+  content: "\f066";
+}
+.swg-c3po-2:before {
+  content: "\f067";
+}
+.swg-r2d2-2:before {
+  content: "\f068";
+}
+.swg-bb8-3:before {
+  content: "\f069";
+}
+.swg-padme:before {
+  content: "\f06A";
+}
+.swg-yoda-3:before {
+  content: "\f06B";
+}
+.swg-chewbacca:before {
+  content: "\f06C";
+}
+.swg-emperor:before {
+  content: "\f06D";
+}
+.swg-dooku:before {
+  content: "\f06E";
+}
+.swg-darthmaul:before {
+  content: "\f06F";
+}
+.swg-stormtrooper-2:before {
+  content: "\f070";
+}
+.swg-snowtrooper:before {
+  content: "\f071";
+}
+.swg-clonetrooper:before {
+  content: "\f072";
+}
+.swg-bobafett:before {
+  content: "\f073";
+}
+.swg-jabba:before {
+  content: "\f074";
+}
+.swg-jabba:before {
+  content: "\f074";
+}
+.swg-imperialguard:before {
+  content: "\f075";
+}
+.swg-quigonjinn:before {
+  content: "\f076";
+}
+.swg-obiwankenobi:before {
+  content: "\f077";
+}
+.swg-macewindu:before {
+  content: "\f078";
+}
+.swg-starwarsrebels:before {
+  content: "\f079";
+}
+.swg-clonewars:before {
+  content: "\f07A";
+}
+.swg-swtrilogy:before {
+  content: "\f07B";
+}
+.swg-100clones:before {
+  content: "\f07C";
+}
+.swg-lastjedi:before {
+  content: "\f07D";
+}
+.swg-lastjedi-2:before {
+  content: "\f07E";
+}
+.swg-40starwars:before {
+  content: "\f07F";
+}
+.swg-darthvader-5:before {
+  content: "\f080";
+}
+.swg-stormtrooper-3:before {
+  content: "\f081";
+}
+.swg-clonetrooper-2:before {
+  content: "\f082";
+}
+.swg-bobafett-2:before {
+  content: "\f083";
+}
+.swg-kylo-2:before {
+  content: "\f084";
+}
+.swg-wookie-2:before {
+  content: "\f085";
+}
+.swg-r2d2-3:before {
+  content: "\f086";
+}
+.swg-c3po-3:before {
+  content: "\f087";
+}
+.swg-bb8-4:before {
+  content: "\f088";
+}
+.swg-xwingpilot:before {
+  content: "\f089";
+}
+.swg-firstorder:before {
+  content: "\f08A";
+}
+.swg-phoenix:before {
+  content: "\f08B";
+}
+.swg-porg-1:before {
+  content: "\f08C";
+}
+.swg-porg-2:before {
+  content: "\f08D";
+}
+.swg-porg-3:before {
+  content: "\f08E";
+}
+.swg-porg-4:before {
+  content: "\f08F";
+}
+.swg-porg-5:before {
+  content: "\f090";
+}
+.swg-porg-6:before {
+  content: "\f091";
+}
+.swg-porg-7:before {
+  content: "\f092";
+}
+.swg-porg-8:before {
+  content: "\f093";
+}
+.swg-porg-9:before {
+  content: "\f094";
+}
+.swg-porg-10:before {
+  content: "\f095";
+}
+.swg-decals-1:before {
+  content: "\f096";
+}
+.swg-decals-2:before {
+  content: "\f097";
+}
+.swg-decals-3:before {
+  content: "\f098";
+}
+.swg-decals-4:before {
+  content: "\f099";
+}
+.swg-decals-5:before {
+  content: "\f09A";
+}
+.swg-holocron-1:before {
+  content: "\f09B";
+}
+.swg-holocron-2:before {
+  content: "\f09C";
+}
+
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.sr-only-focusable:active,
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+}
