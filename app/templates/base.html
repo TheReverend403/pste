@@ -12,16 +12,15 @@
     <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-dark navbar-expand-md navbar-fixed-top bg-dark" role="navigation">
-    <div class="container">
-        <a class="navbar-brand" href="{{ url_for('web.index') }}">
-            <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
-        </a>
-    </div>
-</nav>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
+            <nav class="navbar navbar-light navbar-border" role="navigation">
+                <a class="navbar-brand" href="{{ url_for('web.index') }}">
+                    <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
+                </a>
+            </nav>
             {% block flash_messages %}
                 {%- with messages = get_flashed_messages(with_categories=true) -%}
                     {% if messages %}
@@ -34,7 +33,8 @@
                                 {% set category = 'info' %}
                             {% endif %}
 
-                            <div class="alert alert-{{ category }}" role="alert"><span class="sr-only">{{ category }}</span>{{ message|safe }}</div>
+                            <div class="alert alert-{{ category }}" role="alert"><span
+                                    class="sr-only">{{ category }}</span>{{ message|safe }}</div>
                         {% endfor %}
                     {% endif %}
                 {%- endwith %}
