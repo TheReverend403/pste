@@ -15,6 +15,7 @@
  * along with pste.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+Dropzone.prototype.defaultOptions.dictDefaultMessage = "Click or drag files here to upload.";
 Dropzone.options.psteUpload = {
     paramName: "file", // The name that will be used to transfer the file
     init: function () {
