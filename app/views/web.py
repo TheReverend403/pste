@@ -50,7 +50,9 @@ def paste(slug):
     mimetype = file_instance.client_mimetype
     size = naturalsize(file_instance.size, gnu=True)
     created_at = file_instance.created_at
+    raw_url = url_for('web.file', slug=slug)
+
     with open(file_instance.path(), 'r') as fd:
         file_content = format_code(fd.read())
-        return render_template('main/paste.html',
-                               size=size, mimetype=mimetype, name=name, created_at=created_at, file_content=file_content)
+        return render_template('main/paste.html', size=size, mimetype=mimetype, name=name, created_at=created_at,
+                               file_content=file_content, raw_url=raw_url)

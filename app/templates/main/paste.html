@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/code.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments/github.css') }}"/>
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,10 @@
             <ul class="list-inline text-secondary float-right">
                 <li class="list-inline-item"><span aria-label="File type">{{ mimetype }}</span></li>
                 <li class="list-inline-item"><span aria-label="File size">{{ size }}</span></li>
-                <li class="list-inline-item"><span aria-label="Upload date">{{ created_at.strftime('%Y-%m-%d') }}</span>
-                </li>
+                <li class="list-inline-item"><span aria-label="Upload date">{{ created_at.strftime('%Y-%m-%d') }}</span></li>
+                <li class="list-inline-item"><span aria-label="Raw text"><a href="{{ raw_url }}" class="btn btn-outline-primary">Raw</a></span></li>
             </ul>
         </div>
     </div>
-
     <pre class="pre-scrollable"><code>{{ file_content|safe }}</code></pre>
 {% endblock %}
