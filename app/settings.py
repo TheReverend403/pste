@@ -46,7 +46,7 @@ with env.prefixed('MAIL_'):
     MAIL_DEFAULT_SENDER = env.str('FROM')
 
 with env.prefixed('USER_'):
-    USER_STORAGE_LIMIT = env.int('STORAGE_LIMIT')
+    USER_STORAGE_LIMIT = env.int('STORAGE_LIMIT', 1073741824)  # 1GB default
 
 # Sentry
 # https://sentry.io
