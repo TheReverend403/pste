@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row justify-content-around align-text-bottom">
-        <div class="col">
+    <div class="row">
+        <div class="col-sm-4">
             <p class="h4" aria-label="File name">{{ name }}</p>
         </div>
-        <div class="col">
-            <ul class="list-inline text-secondary float-right">
+        <div class="col-sm-8 paste-info">
+            <ul class="list-inline text-secondary float-md-right">
                 <li class="list-inline-item"><span aria-label="File type">{{ mimetype }}</span></li>
                 <li class="list-inline-item"><span aria-label="File size">{{ size }}</span></li>
                 <li class="list-inline-item"><span aria-label="Upload date">{{ created_at.strftime('%Y-%m-%d') }}</span></li>
