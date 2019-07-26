@@ -53,6 +53,10 @@ def paste(slug):
     raw_url = url_for('web.file', slug=slug)
 
     with open(file_instance.path(), 'r') as fd:
-        file_content = format_code(fd.read())
+        try:
+            file_content = format_code(fd.read())
+        except UnicodeDecodeError:
+            return redirect(raw_url)
+
         return render_template('main/paste.html', size=size, mimetype=mimetype, name=name, created_at=created_at,
                                file_content=file_content, raw_url=raw_url)
