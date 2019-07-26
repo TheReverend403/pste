@@ -15,7 +15,7 @@
             <div class="float-right">
                 {% if config.ENABLE_REGISTRATION %}
                     <button type="button" class="btn btn-link" aria-label="Register"><a
-                            href="{{ url_for('auth.register') }}">Register</a></button>
+                            href="{{ url_for('auth.register') }}" class="text-primary">Register</a></button>
                 {% endif %}
                 <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
             </div>

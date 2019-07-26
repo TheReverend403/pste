@@ -17,6 +17,8 @@
         </div>
         <div class="form-group form-check">
             <div class="float-right">
+                <button type="button" class="btn btn-link" aria-label="Sign in"><a
+                        href="{{ url_for('auth.login') }}" class="text-primary">Sign in</a></button>
                 <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
             </div>
         </div>
