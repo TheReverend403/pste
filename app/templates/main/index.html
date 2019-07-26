@@ -1,5 +1,20 @@
 {% extends 'base.html' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous"/>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js" integrity="sha256-cs4thShDfjkqFGk5s2Lxj35sgSRr4MRcyccmi0WKqCM=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/dropzone.js') }}"></script>
+{% endblock %}
+
 {% block content %}
-<code>curl -H "Authorization: Bearer {{ current_user.api_key }}" -F file=@/path/to/file {{ url_for('api.upload', _external=True) }}</code>
+    <div>
+        <code>curl -H "Authorization: Bearer {{ current_user.api_key }}" -F file=@/path/to/file {{ url_for('api.upload', _external=True) }}</code>
+    </div>
+    <hr>
+    <div>
+        <form action="{{ url_for('api.upload') }}" class="dropzone text-center" id="pste-upload"></form>
+    </div>
 {% endblock %}

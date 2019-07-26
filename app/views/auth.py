@@ -77,6 +77,10 @@ def register():
         flash_errors(form)
         return redirect(url_for('auth.register'))
 
+    if User.query.filter_by(email=form.email.data).first():
+        flash('Email is already in use.', 'error')
+        return redirect(url_for('auth.register'))
+
     user = User()
     user.email = form.email.data
     user.set_password(form.password.data)

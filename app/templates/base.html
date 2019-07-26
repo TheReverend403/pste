@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %}{% endblock %}
 
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
     <title>{{ config.APP_NAME }}{{ ' - ' + title if title else '' }}</title>
@@ -20,6 +21,11 @@
                 <a class="navbar-brand" href="{{ url_for('web.index') }}">
                     <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
                 </a>
+                {% if current_user.is_authenticated %}
+                    <div class="nav-item">
+                        <a href="{{ url_for('auth.logout') }}">Logout</a>
+                    </div>
+                {% endif %}
             </nav>
             {% block flash_messages %}
                 {%- with messages = get_flashed_messages(with_categories=true) -%}
@@ -41,11 +47,17 @@
             {% endblock %}
             {% block content %}{% endblock %}
             <hr>
-            <a href="https://github.com/FoxDev/pste" class="text-muted" target="_blank">pste {{ config.APP_VERSION }}</a>
+            <div class="row">
+                <div class="col-sm-6">
+                    <a href="https://github.com/FoxDev/pste" class="text-muted"
+                       target="_blank">pste {{ config.APP_VERSION }}</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 {% block scripts %}{% endblock %}
 
 </body>

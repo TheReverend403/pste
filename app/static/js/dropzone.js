@@ -15,32 +15,15 @@
  * along with pste.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-.navbar {
-    margin-bottom: 20px;
-    border-bottom: 2px solid #754DAC;
-}
-
-.swg-r2d2-2 {
-    color: #5468B1;
-}
-
-.swg-c3po-2 {
-    color: #EDA35C;
-}
-
-.dropzone {
-    border-radius: 5px;
-    background: #eee;
-    font-size: 1.2em;
-    border: 2px solid #754DAC;
-}
-.dz-preview {
-    border-radius: 5px;
-    border: 2px solid #754DAC;
-}
-
-.dz-image {
-    border-radius: 0 !important;
-    background: none !important;
-    border-bottom: 2px solid #754DAC;
-}
+Dropzone.options.psteUpload = {
+    paramName: "file", // The name that will be used to transfer the file
+    init: function () {
+        this.on("success", function (file, responseText) {
+            $(file.previewTemplate).append($("<a>", {
+                "target": "_blank",
+                "href": responseText.url,
+                html: "Open..."
+            }))
+        })
+    }
+};
