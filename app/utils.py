@@ -49,4 +49,4 @@ def generate_slug():
 
 def format_code(code):
     lexer = guess_lexer(code)
-    return highlight(code, lexer, HtmlFormatter())
+    return highlight(code, lexer, HtmlFormatter(linenos='table', anchorlinenos=True, lineanchors='line'))
