@@ -128,7 +128,7 @@ def user_list():
         click.echo(click.style('ID: ', fg=DEFAULT_FG) + str(user.id))
         click.echo(click.style('Email: ', fg=DEFAULT_FG) + user.email)
         click.echo(click.style('Admin: ', fg=DEFAULT_FG) + str(user.is_admin))
-        click.echo(click.style('Created: ', fg=DEFAULT_FG) + str(user.created_at))
+        click.echo(click.style('Created: ', fg=DEFAULT_FG) + str(user.created_at.strftime('%Y-%m-%d %H:%M:%S')))
         click.echo(click.style('Uploads: ', fg=DEFAULT_FG) + str(len(user.files)))
         click.echo(click.style('Disk usage: ', fg=DEFAULT_FG) + user.get_disk_usage(humanize=True))
 
