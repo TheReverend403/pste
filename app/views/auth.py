@@ -46,7 +46,7 @@ def login():
         flash('Invalid email or password.', category='error')
         return redirect(url_for('auth.login'))
 
-    login_user(user, remember=form.remember_me.data)
+    login_user(user, remember=True)
 
     next_page = request.args.get('next')
     if not next_page or url_parse(next_page).netloc != '':

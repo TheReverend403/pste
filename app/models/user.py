@@ -16,10 +16,12 @@
 import os
 import shutil
 
+from humanize import naturalsize
 from passlib.hash import argon2
 from sqlalchemy import func, event
 from flask_login import UserMixin
 
+from flask import current_app as app
 from app import db, utils, login, BASE_DIR
 
 
@@ -62,6 +64,19 @@ class User(db.Model, UserMixin):
 
     def storage_directory(self):
         return f'{BASE_DIR}/storage/uploads/{self.id}'
+
+    def get_disk_usage(self, humanize=False):
+        total = sum(file.size for file in self.files)
+        if humanize:
+            return naturalsize(total, gnu=True)
+        return total
+
+    def get_quota(self, humanize=False):
+        quota = app.config['USER_STORAGE_LIMIT']
+        if humanize:
+            return naturalsize(quota, gnu=True)
+
+        return app.config['USER_STORAGE_LIMIT']
 
 
 def after_delete(mapper, connection, target):

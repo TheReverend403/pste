@@ -45,6 +45,9 @@ with env.prefixed('MAIL_'):
     MAIL_PASSWORD = env.str('PASSWORD')
     MAIL_DEFAULT_SENDER = env.str('FROM')
 
+with env.prefixed('USER_'):
+    USER_STORAGE_LIMIT = env.int('STORAGE_LIMIT')
+
 # Sentry
 # https://sentry.io
 SENTRY_DSN = env.str('SENTRY_DSN')

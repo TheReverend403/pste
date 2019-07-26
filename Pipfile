@@ -14,6 +14,7 @@ flask-wtf = "*"
 environs = "*"
 passlib = {extras = ["argon2"],version = "*"}
 python-magic = "*"
+humanize = "*"
 
 [requires]
 python_version = "3.6"

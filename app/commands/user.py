@@ -37,6 +37,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app import db
 from app.models import User
+from humanize import naturalsize
 
 group = AppGroup('user', help='User management commands.')
 
@@ -129,6 +130,7 @@ def user_list():
         click.echo(click.style('Admin: ', fg=DEFAULT_FG) + str(user.is_admin))
         click.echo(click.style('Created: ', fg=DEFAULT_FG) + str(user.created_at))
         click.echo(click.style('Uploads: ', fg=DEFAULT_FG) + str(len(user.files)))
+        click.echo(click.style('Disk usage: ', fg=DEFAULT_FG) + user.get_disk_usage(humanize=True))
 
     if len(users) > 1:
         click.echo(seperator)

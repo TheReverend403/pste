@@ -47,17 +47,27 @@
             {% endblock %}
             {% block content %}{% endblock %}
             <hr>
-            <div class="row">
-                <div class="col-sm-6">
-                    <a href="https://github.com/FoxDev/pste" class="text-muted"
-                       target="_blank">pste {{ config.APP_VERSION }}</a>
+            <div class="text-muted">
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="p-2">
+                        <a href="https://github.com/FoxDev/pste" class="text-muted"
+                           target="_blank">pste {{ config.APP_VERSION }}</a>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                        <div class="p-2">
+                            <span>Files: {{ current_user.files|length }}</span>
+                            <span> | </span>
+                            <span>Storage: {{ current_user.get_disk_usage(humanize=True) }}/{{ current_user.get_quota(humanize=True) }}</span>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 {% block scripts %}{% endblock %}
 
 </body>

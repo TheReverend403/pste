@@ -43,6 +43,9 @@ def upload():
     file_size = fd.tell()
     fd.seek(0)
 
+    if file_size + current_user.get_disk_usage() > current_user.get_quota() and not current_user.is_admin:
+        return jsonify({'error': f'Storage limit reached ({current_user.get_quota(humanize=True)})'})
+
     file_contents = fd.read()
     fd.seek(0)
 
