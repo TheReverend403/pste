@@ -18,6 +18,7 @@
 Dropzone.prototype.defaultOptions.dictDefaultMessage = "Click or drag files here to upload.";
 Dropzone.options.psteUpload = {
     paramName: "file", // The name that will be used to transfer the file
+    timeout: 0,
     init: function () {
         this.on("success", function (file, responseText) {
             $(file.previewTemplate).append($("<a>", {
