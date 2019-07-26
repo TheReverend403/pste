@@ -46,7 +46,7 @@
                                 {% set category = 'primary' %}
                             {% endif %}
 
-                            <div class="alert alert-{{ category }}" role="alert"><span
+                            <div class="alert alert-{{ category }} text-center" role="alert"><span
                                     class="sr-only">{{ category }}</span>{{ message|safe }}</div>
                         {% endfor %}
                     {% endif %}
