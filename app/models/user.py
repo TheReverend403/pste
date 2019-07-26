@@ -45,6 +45,10 @@ def generate_api_key():
     return key
 
 
+def get_default_storage_quota():
+    return app.config['USER_STORAGE_LIMIT']
+
+
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -53,6 +57,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(255), nullable=False, server_default='')
     api_key = db.Column(db.String(64), nullable=False, unique=True, default=generate_api_key)
     is_admin = db.Column(db.Boolean(), default=False)
+    storage_quota = db.Column(db.BigInteger, default=get_default_storage_quota)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
     files = db.relationship('File', backref='user', lazy=True, cascade='all,delete')
 
@@ -72,11 +77,11 @@ class User(db.Model, UserMixin):
         return total
 
     def get_quota(self, humanize=False):
-        quota = app.config['USER_STORAGE_LIMIT']
+        quota = self.storage_quota or app.config['USER_STORAGE_LIMIT']
         if humanize:
-            return naturalsize(quota, gnu=True)
+           quota = naturalsize(quota, gnu=True)
 
-        return app.config['USER_STORAGE_LIMIT']
+        return quota
 
 
 def after_delete(mapper, connection, target):
