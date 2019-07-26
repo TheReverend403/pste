@@ -52,6 +52,7 @@ def upload():
     file_hash = hashlib.sha256(file_contents).hexdigest()
     file_mimetype = magic.from_buffer(file_contents, mime=True)
 
+    route_name = 'web.file'
     extension = Path(fd.filename).suffix
     slug = utils.generate_slug()
     if extension:
@@ -61,7 +62,11 @@ def upload():
     if existing_file:
         existing_file.name = fd.filename
         db.session.commit()
-        return jsonify({'url': url_for('web.file', slug=existing_file.slug, _external=True)})
+
+        if existing_file.response_mimetype().startswith('text/'):
+            route_name = 'web.paste'
+
+        return jsonify({'url': url_for(route_name, slug=existing_file.slug, _external=True)})
 
     file = File(user=current_user)
     file.name = fd.filename
@@ -76,4 +81,7 @@ def upload():
     db.session.add(file)
     db.session.commit()
 
-    return jsonify({'url': url_for('web.file', slug=file.slug, _external=True)})
+    if file.response_mimetype().startswith('text/'):
+        route_name = 'web.paste'
+
+    return jsonify({'url': url_for(route_name, slug=file.slug, _external=True)})
