@@ -11,10 +11,11 @@
 
 {% block content %}
     <div>
-        <code>curl -H "Authorization: Bearer {{ current_user.api_key }}" -F file=@/path/to/file {{ url_for('api.upload', _external=True) }}</code>
+        <form action="{{ url_for('api.upload') }}" class="dropzone text-center text-muted" id="pste-upload"></form>
     </div>
     <hr>
-    <div>
-        <form action="{{ url_for('api.upload') }}" class="dropzone text-center" id="pste-upload"></form>
+    <div class="text-center text-muted"><p>...or upload from the command-line</p></div>
+        <div>
+        <code>curl -H "Authorization: Bearer {{ current_user.api_key }}" -F file=@/path/to/file {{ url_for('api.upload', _external=True) }}</code>
     </div>
 {% endblock %}
