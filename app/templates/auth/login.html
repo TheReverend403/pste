@@ -12,9 +12,6 @@
                    aria-label="{{ form.password.label.text }}" placeholder="{{ form.password.label.text }}">
         </div>
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me"
-                   aria-checked="false">
-            <label class="form-check-label" for="remember_me">{{ form.remember_me.label }}</label>
             <div class="float-right">
                 {% if config.ENABLE_REGISTRATION %}
                     <button type="button" class="btn btn-link" aria-label="Register"><a
