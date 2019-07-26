@@ -15,6 +15,7 @@ environs = "*"
 passlib = {extras = ["argon2"],version = "*"}
 python-magic = "*"
 humanize = "*"
+pygments = "*"
 
 [requires]
 python_version = "3.6"

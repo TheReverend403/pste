@@ -16,8 +16,10 @@
 import random
 import string
 from flask import flash
+from pygments import highlight
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers import guess_lexer
 
-from app import db
 from app.models.file import File
 
 
@@ -44,3 +46,7 @@ def generate_slug():
 
     return slug
 
+
+def format_code(code):
+    lexer = guess_lexer(code)
+    return highlight(code, lexer, HtmlFormatter())

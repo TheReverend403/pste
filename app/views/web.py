@@ -13,10 +13,12 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Blueprint, render_template, send_file, make_response
+from flask import Blueprint, render_template, send_file, make_response, redirect, url_for
 from flask_login import login_required
+from humanize import naturalsize
 
 from app.models import File
+from app.utils import format_code
 
 blueprint = Blueprint('web', __name__)
 
@@ -35,3 +37,20 @@ def file(slug):
     response.headers['Content-Type'] = file_instance.response_mimetype()
     response.headers['Content-Disposition'] = f'inline; filename="{file_instance.name}"'
     return response
+
+
+@blueprint.route('/p/<string:slug>')
+def paste(slug):
+    file_instance = File.query.filter_by(slug=slug).first_or_404()
+
+    if not file_instance.response_mimetype().startswith('text/'):
+        return redirect(url_for('web.file', slug=file_instance.slug))
+
+    name = file_instance.name
+    mimetype = file_instance.client_mimetype
+    size = naturalsize(file_instance.size, gnu=True)
+    created_at = file_instance.created_at
+    with open(file_instance.path(), 'r') as fd:
+        file_content = format_code(fd.read())
+        return render_template('main/paste.html',
+                               size=size, mimetype=mimetype, name=name, created_at=created_at, file_content=file_content)

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/code.css') }}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-around align-text-bottom">
+        <div class="col">
+            <p class="h4" aria-label="File name">{{ name }}</p>
+        </div>
+        <div class="col">
+            <ul class="list-inline text-secondary float-right">
+                <li class="list-inline-item"><span aria-label="File type">{{ mimetype }}</span></li>
+                <li class="list-inline-item"><span aria-label="File size">{{ size }}</span></li>
+                <li class="list-inline-item"><span aria-label="Upload date">{{ created_at.strftime('%Y-%m-%d') }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <pre class="pre-scrollable"><code>{{ file_content|safe }}</code></pre>
+{% endblock %}

@@ -30,7 +30,6 @@ env.read_env()
 
 APP_NAME = env.str('APP_NAME', 'pste')
 APP_VERSION = subprocess.check_output(['git', 'describe']).decode('UTF-8').strip()
-print(APP_VERSION)
 SECRET_KEY = env.str('SECRET_KEY')
 SQLALCHEMY_DATABASE_URI = env.str('DATABASE_URI')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
