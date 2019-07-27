@@ -47,7 +47,7 @@ def paste(slug):
         return redirect(url_for('web.file', slug=file_instance.slug))
 
     name = file_instance.name
-    mimetype = file_instance.client_mimetype
+    mimetype = file_instance.server_mimetype
     size = naturalsize(file_instance.size, gnu=True)
     created_at = file_instance.created_at
     raw_url = url_for('web.file', slug=slug)
