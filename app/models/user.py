@@ -16,13 +16,13 @@
 import os
 import shutil
 
+from flask import current_app as app
+from flask_login import UserMixin
 from humanize import naturalsize
 from passlib.hash import argon2
-from sqlalchemy import func, event
-from flask_login import UserMixin
+from sqlalchemy import event, func
 
-from flask import current_app as app
-from app import db, utils, login, BASE_DIR
+from app import BASE_DIR, db, login, utils
 
 
 @login.header_loader

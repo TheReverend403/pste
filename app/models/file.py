@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 
 from flask import current_app as app
-from sqlalchemy import func, event
+from sqlalchemy import event, func
 
 from app import db
 

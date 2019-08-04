@@ -29,15 +29,14 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import re
+import shutil
 
 import click
-import shutil
 from flask.cli import AppGroup
 from sqlalchemy.exc import IntegrityError
 
 from app import db
 from app.models import User
-from humanize import naturalsize
 
 group = AppGroup('user', help='User management commands.')
 

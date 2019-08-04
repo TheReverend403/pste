@@ -15,6 +15,7 @@
 
 import random
 import string
+
 from flask import flash
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter

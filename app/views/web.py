@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Blueprint, render_template, send_file, make_response, redirect, url_for
+from flask import Blueprint, make_response, redirect, render_template, send_file, url_for
 from flask_login import login_required
 from humanize import naturalsize
 

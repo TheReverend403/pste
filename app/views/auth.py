@@ -13,15 +13,14 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
+from flask import Blueprint, abort, current_app as app, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
-from flask import Blueprint, render_template, redirect, url_for, request, flash, current_app as app, abort
-from flask_login import current_user, logout_user, login_user
-
-from app.utils import flash_errors
-from app.forms.auth import RegistrationForm, LoginForm
-from app.models import User
 from app import db
+from app.forms.auth import LoginForm, RegistrationForm
+from app.models import User
+from app.utils import flash_errors
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 

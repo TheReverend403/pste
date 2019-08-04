@@ -12,11 +12,12 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 from flask import render_template
 
-from app.views.web import blueprint as web_blueprint
-from app.views.auth import blueprint as auth_blueprint
 from app.views.api import blueprint as api_blueprint
+from app.views.auth import blueprint as auth_blueprint
+from app.views.web import blueprint as web_blueprint
 
 
 def register_blueprints(app):
