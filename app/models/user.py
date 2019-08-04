@@ -75,7 +75,7 @@ class User(db.Model, UserMixin):
     def get_quota(self, humanize=False):
         quota = self.storage_quota or app.config['USER_STORAGE_LIMIT']
         if humanize:
-           quota = naturalsize(quota, gnu=True)
+            quota = naturalsize(quota, gnu=True)
 
         return quota
 
