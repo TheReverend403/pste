@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import render_template
+from flask import render_template, request, jsonify
 
 from app.views.api import blueprint as api_blueprint
 from app.views.auth import blueprint as auth_blueprint
@@ -27,4 +27,7 @@ def register_blueprints(app):
 
 
 def page_not_found(error):
+    if request.headers.get('Accept') == 'application/json':
+        return jsonify({'error': 'Page not found'}), 404
+
     return render_template('errors/404.html', error=error, title='404'), 404
