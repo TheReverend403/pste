@@ -33,7 +33,13 @@ blueprint = Blueprint('api', __name__, url_prefix='/api')
 @login_required
 def files():
     page = int(request.args.get('page', 0))
-    file_list = [file.to_dict() for file in File.query.filter_by(user=current_user).paginate(page, 15, False).items]
+    file_query = File.query.filter_by(user=current_user)
+
+    if page is 0:
+        file_list = [file.to_dict() for file in file_query.all()]
+    else:
+        file_list = [file.to_dict() for file in file_query.paginate(page, 15, False).items]
+
     return jsonify(file_list)
 
 
