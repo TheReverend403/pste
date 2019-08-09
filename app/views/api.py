@@ -29,7 +29,17 @@ from app.models import File
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 
-@blueprint.route('/files', methods=['GET'])
+@blueprint.route('/files/delete/<string:slug>', methods=['POST'])
+@login_required
+@csrf.exempt
+def delete(slug):
+    file = File.query.filter_by(user=current_user, slug=slug).first_or_404()
+    db.session.delete(file)
+    db.session.commit()
+    return '', 204
+
+
+@blueprint.route('/files/list', methods=['GET'])
 @login_required
 def files():
     page = int(request.args.get('page', 0))
