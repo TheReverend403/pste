@@ -47,7 +47,6 @@ class File(db.Model):
 
     def to_dict(self):
         return {
-            'id': self.id,
             'name': self.name,
             'size': self.size,
             'server_mimetype': self.server_mimetype,
