@@ -23,23 +23,24 @@ from flask_login import current_user, login_required
 
 from app import csrf, db
 from app import utils
-from app.forms.api import UploadForm
+from app.forms.api import UploadForm, DeleteForm
 from app.models import File
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 
-@blueprint.route('/files/delete/<string:slug>', methods=['POST'])
+@blueprint.route('delete', methods=['DELETE'])
 @login_required
 @csrf.exempt
-def delete(slug):
+def delete():
+    slug = request.args.get('slug')
     file = File.query.filter_by(user=current_user, slug=slug).first_or_404()
     db.session.delete(file)
     db.session.commit()
     return '', 204
 
 
-@blueprint.route('/files/list', methods=['GET'])
+@blueprint.route('list', methods=['GET'])
 @login_required
 def files():
     page = int(request.args.get('page', 0))
@@ -53,7 +54,7 @@ def files():
     return jsonify(file_list)
 
 
-@blueprint.route('/upload', methods=['POST'])
+@blueprint.route('upload', methods=['PUT'])
 @login_required
 @csrf.exempt
 def upload():
