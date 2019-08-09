@@ -29,11 +29,10 @@ from app.models import File
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 
-@blueprint.route('delete', methods=['DELETE'])
+@blueprint.route('delete/<string:slug>', methods=['DELETE'])
 @login_required
 @csrf.exempt
-def delete():
-    slug = request.args.get('slug')
+def delete(slug):
     file = File.query.filter_by(user=current_user, slug=slug).first_or_404()
     db.session.delete(file)
     db.session.commit()
@@ -54,7 +53,7 @@ def files():
     return jsonify(file_list)
 
 
-@blueprint.route('upload', methods=['PUT'])
+@blueprint.route('upload', methods=['POST'])
 @login_required
 @csrf.exempt
 def upload():
