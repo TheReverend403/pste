@@ -42,7 +42,11 @@ def delete(slug):
 @blueprint.route('list', methods=['GET'])
 @login_required
 def files():
-    page = int(request.args.get('page', 0))
+    try:
+        page = int(request.args.get('page', 0))
+    except ValueError:
+        page = 0
+
     file_query = File.query.filter_by(user=current_user)
 
     if page is 0:
