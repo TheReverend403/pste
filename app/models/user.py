@@ -19,10 +19,10 @@ import shutil
 from flask import current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
-from passlib.hash import argon2, bcrypt
 from sqlalchemy import event, func
 
 from app import BASE_DIR, db, login, utils
+from app.security import hasher
 
 
 @login.header_loader
@@ -58,16 +58,13 @@ class User(db.Model, UserMixin):
     files = db.relationship('File', backref='user', lazy=True, cascade='all,delete')
 
     def set_password(self, password):
-        self.password = argon2.hash(password)
+        self.password = hasher.hash(password)
 
-    def password_needs_rehash(self):
-        return bcrypt.identify(self.password)
+    def password_needs_update(self):
+        return hasher.needs_update(self.password)
 
     def check_password(self, password):
-        if self.password_needs_rehash():
-            return bcrypt.verify(password, self.password)
-
-        return argon2.verify(password, self.password)
+        return hasher.verify(password, self.password)
 
     def storage_directory(self):
         return f'{BASE_DIR}/storage/uploads/{self.id}'

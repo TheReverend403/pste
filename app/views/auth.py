@@ -45,8 +45,8 @@ def login():
         flash('Invalid email or password.', category='error')
         return redirect(url_for('auth.login'))
 
-    # Upgrade from uPste's bcrypt
-    if user.password_needs_rehash():
+    # Upgrade from uPste imported passwords, or update if hash parameters have changed.
+    if user.password_needs_update():
         user.set_password(form.password.data)
         db.session.commit()
 
