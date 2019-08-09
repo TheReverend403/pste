@@ -45,6 +45,17 @@ class File(db.Model):
 
         return self.server_mimetype
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'size': self.size,
+            'server_mimetype': self.server_mimetype,
+            'client_mimetype': self.client_mimetype,
+            'slug': self.slug,
+            'hash': self.file_hash,
+            'created_at': self.created_at
+        }
+
 
 def after_delete(mapper, connection, target):
     try:
