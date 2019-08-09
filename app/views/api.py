@@ -29,6 +29,14 @@ from app.models import File
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 
+@blueprint.route('/files', methods=['GET'])
+@login_required
+def files():
+    page = int(request.args.get('page', 0))
+    file_list = [file.to_dict() for file in File.query.filter_by(user=current_user).paginate(page, 15, False).items]
+    return jsonify(file_list)
+
+
 @blueprint.route('/upload', methods=['POST'])
 @login_required
 @csrf.exempt
