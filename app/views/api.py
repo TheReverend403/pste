@@ -23,7 +23,7 @@ from flask_login import current_user, login_required
 
 from app import csrf, db
 from app import utils
-from app.forms.api import UploadForm, DeleteForm
+from app.forms.api import UploadForm
 from app.models import File
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
