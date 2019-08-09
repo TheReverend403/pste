@@ -19,7 +19,7 @@ import shutil
 from flask import current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
-from passlib.hash import argon2
+from passlib.hash import argon2, bcrypt
 from sqlalchemy import event, func
 
 from app import BASE_DIR, db, login, utils
@@ -60,7 +60,13 @@ class User(db.Model, UserMixin):
     def set_password(self, password):
         self.password = argon2.hash(password)
 
+    def password_needs_rehash(self):
+        return bcrypt.identify(self.password)
+
     def check_password(self, password):
+        if self.password_needs_rehash():
+            return bcrypt.verify(password, self.password)
+
         return argon2.verify(password, self.password)
 
     def storage_directory(self):
