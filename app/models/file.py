@@ -36,7 +36,7 @@ class File(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 
     def path(self):
-        return f'{self.user.storage_directory()}/{self.slug}'
+        return f'{self.user.get_storage_directory()}/{self.slug}'
 
     def response_mimetype(self):
         extension = Path(self.path()).suffix
