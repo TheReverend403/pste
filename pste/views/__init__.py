@@ -21,6 +21,7 @@ from pste.views.web import blueprint as web_blueprint
 
 
 def register_blueprints(app):
+    app.register_error_handler(404, page_not_found)
     app.register_blueprint(web_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(api_blueprint)

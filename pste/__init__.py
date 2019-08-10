@@ -48,7 +48,6 @@ def register_commands(app):
 def register_blueprints(app):
     from pste import views
     views.register_blueprints(app)
-    app.register_error_handler(404, views.page_not_found)
 
 
 def register_extensions(app):
