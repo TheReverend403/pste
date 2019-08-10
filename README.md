@@ -19,5 +19,5 @@ cp .env.default .env # Edit .env
 pipenv shell
 flask db upgrade
 flask user create # Or use /auth/register
-flask run # Do not use this in production, use a WSGI server with app:create_app() as your entrypoint.
+flask run # Do not use this in production, use a WSGI server with pste:create_app() as your entrypoint.
 ```

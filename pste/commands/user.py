@@ -35,8 +35,8 @@ import click
 from flask.cli import AppGroup
 from sqlalchemy.exc import IntegrityError
 
-from app import db
-from app.models import User
+from pste import db
+from pste.models import User
 
 group = AppGroup('user', help='User management commands.')
 

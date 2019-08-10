@@ -31,7 +31,7 @@ csrf = CSRFProtect()
 
 def create_app():
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
-    app.config.from_object('app.settings')
+    app.config.from_object('pste.settings')
 
     register_commands(app)
     register_extensions(app)
@@ -41,12 +41,12 @@ def create_app():
 
 
 def register_commands(app):
-    from app import commands
+    from pste import commands
     commands.init_app(app)
 
 
 def register_blueprints(app):
-    from app import views
+    from pste import views
     views.register_blueprints(app)
     app.register_error_handler(404, views.page_not_found)
 

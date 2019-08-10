@@ -17,8 +17,8 @@ from flask import Blueprint, make_response, redirect, render_template, send_file
 from flask_login import login_required
 from humanize import naturalsize
 
-from app.models import File
-from app.utils import format_code
+from pste.models import File
+from pste.utils import format_code
 
 blueprint = Blueprint('web', __name__)
 

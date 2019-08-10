@@ -13,5 +13,21 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from app.models.file import File
-from app.models.user import User
+from flask import render_template, request, jsonify
+
+from pste.views.api import blueprint as api_blueprint
+from pste.views.auth import blueprint as auth_blueprint
+from pste.views.web import blueprint as web_blueprint
+
+
+def register_blueprints(app):
+    app.register_blueprint(web_blueprint)
+    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(api_blueprint)
+
+
+def page_not_found(error):
+    if request.headers.get('Accept') == 'application/json':
+        return jsonify({'error': 'Page not found'}), 404
+
+    return render_template('errors/404.html', error=error, title='404'), 404

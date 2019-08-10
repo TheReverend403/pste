@@ -19,7 +19,7 @@ from pathlib import Path
 from flask import current_app as app
 from sqlalchemy import event, func
 
-from app import db
+from pste import db
 
 
 class File(db.Model):

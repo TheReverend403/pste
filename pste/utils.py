@@ -21,7 +21,7 @@ from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import guess_lexer
 
-from app.models.file import File
+from pste.models.file import File
 
 
 def random_string(length):

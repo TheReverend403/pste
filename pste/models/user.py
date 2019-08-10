@@ -21,8 +21,8 @@ from flask_login import UserMixin
 from humanize import naturalsize
 from sqlalchemy import event, func
 
-from app import BASE_DIR, db, login, utils
-from app.security import hasher
+from pste import BASE_DIR, db, login, utils
+from pste.security import hasher
 
 
 @login.header_loader

@@ -17,10 +17,10 @@ from flask import Blueprint, abort, current_app as app, flash, redirect, render_
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
-from app import db
-from app.forms.auth import LoginForm, RegistrationForm
-from app.models import User
-from app.utils import flash_errors
+from pste import db
+from pste.forms.auth import LoginForm, RegistrationForm
+from pste.models import User
+from pste.utils import flash_errors
 
 blueprint = Blueprint('auth', __name__, url_prefix='/auth')
 

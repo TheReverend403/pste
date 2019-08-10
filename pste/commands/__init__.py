@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from app.commands.user import group as user
+from pste.commands.user import group as user
 
 
 def init_app(app):

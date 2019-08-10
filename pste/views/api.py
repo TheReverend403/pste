@@ -21,10 +21,10 @@ import magic
 from flask import Blueprint, jsonify, request, url_for
 from flask_login import current_user, login_required
 
-from app import csrf, db
-from app import utils
-from app.forms.api import UploadForm
-from app.models import File
+from pste import csrf, db
+from pste import utils
+from pste.forms.api import UploadForm
+from pste.models import File
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 

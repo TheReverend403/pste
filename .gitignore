@@ -30,7 +30,7 @@ coverage.xml
 instance/
 .webassets-cache
 **/*.sqlite
-app/storage/
+pste/storage/
 
 # IPython
 profile_default/
