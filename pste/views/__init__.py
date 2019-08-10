@@ -27,7 +27,7 @@ def register_blueprints(app):
 
 
 def page_not_found(error):
-    if request.headers.get('Accept') == 'application/json':
+    if request.path.startswith('/api/'):
         return jsonify({'error': 'Page not found'}), 404
 
     return render_template('errors/404.html', error=error, title='404'), 404
