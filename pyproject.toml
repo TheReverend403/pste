@@ -17,15 +17,15 @@ passlib = { extras = ["argon2", "bcrypt"], version = "*" }
 python-magic = "*"
 humanize = "*"
 pygments = "*"
-psycopg2 = { version = "^2.7", optional = true }
-mysqlclient = { version = "^1.3", optional = true }
+psycopg2 = { version = "*", optional = true }
+mysqlclient = { version = "*", optional = true }
 sentry-sdk = { version = "*", optional = true }
 
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.extras]
 mysql = ["mysqlclient"]
-pgsql = ["psycopg2"]
+postgres = ["psycopg2"]
 sentry = ["sentry-sdk"]
 
 
