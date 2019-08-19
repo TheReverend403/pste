@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ec555f0ecf3bfd4fa858ddea3e3eb57ab8bd374e19b1489d0e5fefdacb095ed4"
+            "sha256": "2040f6cca2b528c44820266aec95c62a1593a0c238b77324dcd2a3d6e6344fd4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -65,6 +65,12 @@
                 "sha256:ff032765bb8716d9387fd5376d987a937254b0619eff0972779515b5c98820bc"
             ],
             "version": "==3.1.7"
+        },
+        "blinker": {
+            "hashes": [
+                "sha256:471aee25f3992bd325afa3772f1063dbdbbca947a041b8b89466dc00d606f8b6"
+            ],
+            "version": "==1.4"
         },
         "certifi": {
             "hashes": [
@@ -309,6 +315,9 @@
             "version": "==0.4.15"
         },
         "sentry-sdk": {
+            "extras": [
+                "flask"
+            ],
             "hashes": [
                 "sha256:79e8352b5097aa06014871c6daad0933f59d1fcccc586339464ea86e4877b2ab",
                 "sha256:aeaaf6ae7cc4030d390e5c95797ac1a2a79ac2c8b687709293975ee808c68784"
