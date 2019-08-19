@@ -16,7 +16,7 @@ passlib = { extras = ["argon2", "bcrypt"], version = "*" }
 python-magic = "*"
 humanize = "*"
 pygments = "*"
-sentry-sdk = "*"
+sentry-sdk = { extras = ["flask"], version = "*" }
 psycopg2 = "*"
 pymysql = "*"
 
