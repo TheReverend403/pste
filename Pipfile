@@ -13,7 +13,7 @@ flask-migrate = "*"
 flask-wtf = "*"
 flask-assets = "*"
 libsass = "*"
-cssutils = "*"
+cssmin = "*"
 environs = "*"
 passlib = { extras = ["argon2", "bcrypt"], version = "*" }
 python-magic = "*"
