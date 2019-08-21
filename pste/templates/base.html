@@ -36,8 +36,8 @@
                 {% endif %}
             </nav>
             {% block flash_messages %}
-            <div class="row justify-content-center">
-                <div class="col-md-8 col-lg-8">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-8">
                         {%- with messages = get_flashed_messages(with_categories=true) -%}
                             {% if messages %}
                                 {% for category, message in messages %}
@@ -54,8 +54,8 @@
                                 {% endfor %}
                             {% endif %}
                         {%- endwith %}
+                    </div>
                 </div>
-            </div>
             {% endblock %}
             {% block content %}{% endblock %}
             <hr>
