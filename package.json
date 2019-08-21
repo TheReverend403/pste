@@ -1,0 +1,14 @@
+{
+  "name": "pste",
+  "version": "0.3.0",
+  "repository": "https://github.com/FoxDev/pste",
+  "author": "Lee Watson <rev@revthefox.co.uk>",
+  "license": "GPL-3.0+",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "dropzone": "^5.5.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.7"
+  }
+}

@@ -11,6 +11,9 @@ flask-login = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 flask-wtf = "*"
+flask-assets = "*"
+libsass = "*"
+cssutils = "*"
 environs = "*"
 passlib = { extras = ["argon2", "bcrypt"], version = "*" }
 python-magic = "*"
@@ -19,6 +22,7 @@ pygments = "*"
 sentry-sdk = { extras = ["flask"], version = "*" }
 psycopg2 = "*"
 pymysql = "*"
+pyyaml = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,0 +1,40 @@
+js-jquery:
+    filters: rjsmin
+    output: js/vendor/jquery-%(version)s.js
+    contents:
+        - ../../node_modules/jquery/dist/jquery.slim.js
+js-popper:
+    filters: rjsmin
+    output: js/vendor/popper-%(version)s.js
+    contents:
+        - ../../node_modules/popper.js/dist/umd/popper.js
+js-bootstrap:
+    filters: rjsmin
+    output: js/vendor/bootstrap-%(version)s.js
+    contents:
+        - ../../node_modules/bootstrap/dist/js/bootstrap.js
+js-dropzone:
+    filters: rjsmin
+    output: js/vendor/dropzone-%(version)s.js
+    contents:
+        - ../../node_modules/dropzone/dist/dropzone.js
+js-app:
+    filters: rjsmin
+    output: js/app-%(version)s.js
+    contents:
+        - js/app.js
+css-dropzone:
+    filters: cssmin
+    output: css/vendor/dropzone-%(version)s.css
+    contents:
+        - ../../node_modules/dropzone/dist/dropzone.css
+css-pygments:
+    filters: cssmin
+    output: css/pygments-%(version)s.css
+    contents:
+        - css/pygments.css
+css-app:
+    filters: libsass,cssmin
+    output: css/app-%(version)s.css
+    contents:
+        - scss/app.scss

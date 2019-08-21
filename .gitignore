@@ -32,6 +32,9 @@ instance/
 **/*.sqlite
 pste/storage/*
 !pste/storage/.gitkeep
+pste/static/js
+pste/static/css
+**/.webassets-cache
 
 # IPython
 profile_default/
@@ -49,3 +52,4 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+node_modules/

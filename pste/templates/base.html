@@ -8,10 +8,11 @@
 
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
     <title>{{ config.APP_NAME }}{{ ' - ' + title if title else '' }}</title>
-    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='bootstrap/css/theme.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
-    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet">
+
+    {% assets 'css-app' %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
 </head>
 <body>
 
@@ -76,15 +77,19 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+
+{% assets 'js-jquery' %}
+    <script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+{% assets 'js-popper' %}
+    <script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+{% assets 'js-bootstrap' %}
+    <script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
 {% block scripts %}{% endblock %}
 
 </body>

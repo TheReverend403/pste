@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css"
-          integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous"/>
+    {% assets 'css-dropzone' %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+    {% endassets %}
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"
-            integrity="sha256-cs4thShDfjkqFGk5s2Lxj35sgSRr4MRcyccmi0WKqCM=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/dropzone.js') }}"></script>
+    {% assets 'js-dropzone' %}
+        <script src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+    {% assets 'js-app' %}
+        <script src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 {% endblock %}
 
 {% block content %}

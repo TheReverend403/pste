@@ -16,10 +16,12 @@
 import os
 
 from flask import Flask
+from flask_assets import Environment
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -27,6 +29,7 @@ db = SQLAlchemy()
 migrate = Migrate(compare_type=True)
 login = LoginManager()
 csrf = CSRFProtect()
+assets = Environment()
 
 
 def create_app():
@@ -36,6 +39,7 @@ def create_app():
     register_commands(app)
     register_extensions(app)
     register_blueprints(app)
+    register_assets(app)
 
     return app
 
@@ -66,3 +70,18 @@ def register_extensions(app):
     csrf.init_app(app)
 
     login.login_view = 'auth.login'
+
+
+def register_assets(app):
+    # Don't warn about unsafe yaml with a trusted file.
+    import yaml
+    yaml.warnings({'YAMLLoadWarning': False})
+
+    assets.init_app(app)
+    with app.app_context():
+        assets.directory = f'{BASE_DIR}/static'
+        assets.load_path = [
+            f'{BASE_DIR}/assets'
+        ]
+
+    assets.from_yaml(f'{BASE_DIR}/assets/assets.yml')

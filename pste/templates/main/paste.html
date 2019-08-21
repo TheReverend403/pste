@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pygments/github.css') }}"/>
+    {% assets 'css-pygments' %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
 {% endblock %}
 
 {% block content %}
