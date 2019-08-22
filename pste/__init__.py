@@ -26,7 +26,7 @@ from flask_wtf.csrf import CSRFProtect
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 db = SQLAlchemy()
-migrate = Migrate(compare_type=True)
+migrate = Migrate(compare_type=True, directory=f'{BASE_DIR}/migrations')
 login = LoginManager()
 csrf = CSRFProtect()
 assets = Environment()
