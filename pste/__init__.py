@@ -26,6 +26,7 @@ from flask_wtf.csrf import CSRFProtect
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PSTE_VERSION = subprocess.check_output(['git', 'describe', '--abbrev=0']).decode('UTF-8')
 
 db = SQLAlchemy()
 migrate = Migrate(compare_type=True, directory=f'{BASE_DIR}/migrations')
@@ -42,6 +43,8 @@ def create_app():
     register_extensions(app)
     register_blueprints(app)
     register_assets(app)
+
+    app.config.update(PSTE_VERSION=PSTE_VERSION)
 
     return app
 
