@@ -18,7 +18,7 @@ import os
 from pathlib import Path
 
 import magic
-from flask import Blueprint, jsonify, request, url_for
+from flask import Blueprint, request, url_for
 from flask_login import current_user, login_required
 
 from pste import csrf, db
@@ -54,7 +54,7 @@ def files():
     else:
         file_list = [file.to_dict() for file in file_query.paginate(page, 15, False).items]
 
-    return jsonify(file_list)
+    return {file_list}
 
 
 @blueprint.route('upload', methods=['POST'])
@@ -63,7 +63,7 @@ def files():
 def upload():
     form = UploadForm(request.files)
     if not form.validate_on_submit():
-        return jsonify({'errors': form.errors})
+        return {'errors': form.errors}
 
     fd = form.file.data
 
@@ -72,7 +72,7 @@ def upload():
     fd.seek(0)
 
     if file_size + current_user.get_disk_usage() > current_user.get_quota() and not current_user.is_admin:
-        return jsonify({'error': f'Storage limit reached ({current_user.get_quota(humanize=True)})'})
+        return {'error': f'Storage limit reached ({current_user.get_quota(humanize=True)})'}
 
     file_contents = fd.read()
     fd.seek(0)
@@ -94,7 +94,7 @@ def upload():
         if existing_file.response_mimetype().startswith('text/'):
             route_name = 'web.paste'
 
-        return jsonify({'url': url_for(route_name, slug=existing_file.slug, _external=True)})
+        return {'url': url_for(route_name, slug=existing_file.slug, _external=True)}
 
     file = File(user=current_user)
     file.name = fd.filename
@@ -112,4 +112,4 @@ def upload():
     if file.response_mimetype().startswith('text/'):
         route_name = 'web.paste'
 
-    return jsonify({'url': url_for(route_name, slug=file.slug, _external=True)})
+    return {'url': url_for(route_name, slug=file.slug, _external=True)}
