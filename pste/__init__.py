@@ -84,8 +84,8 @@ def register_assets(app):
     assets.init_app(app)
     with app.app_context():
         assets.directory = f'{BASE_DIR}/static'
-        assets.load_path = [
-            f'{BASE_DIR}/assets'
-        ]
+        assets.append_path(f'{BASE_DIR}/assets')
+        assets.auto_build = False
 
     assets.from_yaml(f'{BASE_DIR}/assets/assets.yml')
+
