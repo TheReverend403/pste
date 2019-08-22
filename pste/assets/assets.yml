@@ -38,3 +38,4 @@ css-app:
     output: css/app-%(version)s.css
     contents:
         - scss/app.scss
+        - css/starwars-glyphicons.css

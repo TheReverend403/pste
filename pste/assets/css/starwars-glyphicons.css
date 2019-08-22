@@ -6,7 +6,7 @@
  * -------------------------- */
 @font-face {
   font-family: 'StarWarsGlyphicons';
-  src: url('../fonts/starwars-glyphicons-webfont.ttf') format('truetype');
+  src: url('../../static/fonts/starwars-glyphicons-webfont.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
