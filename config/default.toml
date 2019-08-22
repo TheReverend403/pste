@@ -38,4 +38,4 @@ sentry_dsn = ''
 
 [development]
 debug = true
-sqlalchemy_database_uri = 'sqlite:///pste/storage/app.sqlite'
+sqlalchemy_database_uri = 'sqlite:///../pste/storage/app.sqlite'
