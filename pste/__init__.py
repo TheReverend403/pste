@@ -14,7 +14,9 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+import subprocess
 
+from dynaconf import FlaskDynaconf
 from flask import Flask
 from flask_assets import Environment
 from flask_login import LoginManager
@@ -30,11 +32,11 @@ migrate = Migrate(compare_type=True, directory=f'{BASE_DIR}/migrations')
 login = LoginManager()
 csrf = CSRFProtect()
 assets = Environment()
+dynaconf = FlaskDynaconf()
 
 
 def create_app():
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
-    app.config.from_object('pste.settings')
 
     register_commands(app)
     register_extensions(app)
@@ -55,7 +57,9 @@ def register_blueprints(app):
 
 
 def register_extensions(app):
-    if app.config['SENTRY_DSN']:
+    dynaconf.init_app(app)
+
+    if 'SENTRY_DSN' in app.config and app.config['SENTRY_DSN'] and not app.config.DEBUG:
         try:
             import sentry_sdk
             from sentry_sdk.integrations.flask import FlaskIntegration

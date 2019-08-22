@@ -14,7 +14,7 @@ flask-wtf = "*"
 flask-assets = "*"
 libsass = "*"
 cssmin = "*"
-environs = "*"
+dynaconf = "*"
 passlib = { extras = ["argon2", "bcrypt"], version = "*" }
 python-magic = "*"
 humanize = "*"

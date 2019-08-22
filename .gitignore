@@ -35,6 +35,7 @@ pste/storage/*
 pste/static/js
 pste/static/css
 **/.webassets-cache
+config/settings.toml
 
 # IPython
 profile_default/
@@ -45,7 +46,6 @@ ipython_config.py
 
 # Environments
 .env
-!.env.default
 .venv
 env/
 venv/

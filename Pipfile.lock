@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "fe95321b492a52bd9171cf4272c0333d75ef39ba5c6948673cae8000bde47265"
+            "sha256": "a48d682f2180b8805c6be882d7492903f11ab05976b6eb1a132077245b993f2c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -126,13 +126,13 @@
             "index": "pypi",
             "version": "==0.2.0"
         },
-        "environs": {
+        "dynaconf": {
             "hashes": [
-                "sha256:ab4362c638aa67177a832aedf1609a95b46179ea9f5b1af8c90cbfe70ca7e6cf",
-                "sha256:d92784bdeb6fe038688b19128b5d9a4d9eda4d33f1a38c21be8cad54c769a763"
+                "sha256:3c84931440974d4082ae6289a2d5be781627daeb2e3698148ea51c328e6c4def",
+                "sha256:b6b64f1918d9fbf045f7670e8b658cff2f2f3e9b6e227aad205569d040ee4a5e"
             ],
             "index": "pypi",
-            "version": "==5.2.1"
+            "version": "==2.0.4"
         },
         "flask": {
             "hashes": [
@@ -261,13 +261,6 @@
             ],
             "version": "==1.1.1"
         },
-        "marshmallow": {
-            "hashes": [
-                "sha256:e5e9fd0c2e919b4ece915eb30808206349a49a45df72e99ed20e27a9053d574b",
-                "sha256:fa2d8a4b61d09b0e161a14acc5ad8ab7aaaf1477f3dd52819ddd6c6c8275733a"
-            ],
-            "version": "==3.0.0"
-        },
         "passlib": {
             "extras": [
                 "argon2",
@@ -318,6 +311,13 @@
             ],
             "index": "pypi",
             "version": "==0.9.3"
+        },
+        "python-box": {
+            "hashes": [
+                "sha256:3a5837245b264c7c8b79b019b2853db59ab8472a8a6a02407b7982d6f3321c4f",
+                "sha256:449f90ea30d7bc48d0f2242bac5299d87d1c1cc471464823e0a05fc1980a87fd"
+            ],
+            "version": "==3.4.3"
         },
         "python-dateutil": {
             "hashes": [
@@ -391,6 +391,13 @@
                 "sha256:0459bf0ea6478f3e904de074d65769a11d74cdc34438ab3159250c96d089aef0"
             ],
             "version": "==1.3.7"
+        },
+        "toml": {
+            "hashes": [
+                "sha256:229f81c57791a41d65e399fc06bf0848bab550a9dfd5ed66df18ce5f05e73d5c",
+                "sha256:235682dd292d5899d361a811df37e04a8828a5b1da3115886b73cf81ebc9100e"
+            ],
+            "version": "==0.10.0"
         },
         "urllib3": {
             "hashes": [
