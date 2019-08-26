@@ -26,7 +26,11 @@ from flask_wtf.csrf import CSRFProtect
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PSTE_VERSION = subprocess.check_output(['git', 'describe', '--abbrev=0']).decode('UTF-8')
+try:
+    PSTE_VERSION = 'pste ' + subprocess.check_output(['git', 'describe', '--abbrev=0']).decode('UTF-8')
+except subprocess.CalledProcessError:
+    # Not running from a git repo or git is not available.
+    PSTE_VERSION = 'pste'
 
 db = SQLAlchemy()
 migrate = Migrate(compare_type=True, directory=f'{BASE_DIR}/migrations')
