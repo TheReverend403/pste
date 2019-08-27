@@ -65,13 +65,17 @@ def register_blueprints(app):
 
 def register_extensions(app):
     dynaconf.init_app(app)
+    print(app.config.ENV)
 
     if 'SENTRY_DSN' in app.config and app.config['SENTRY_DSN'] and not app.config.DEBUG:
         try:
             import sentry_sdk
             from sentry_sdk.integrations.flask import FlaskIntegration
 
-            sentry_sdk.init(dsn=app.config['SENTRY_DSN'], integrations=[FlaskIntegration()])
+            sentry_sdk.init(
+                dsn=app.config['SENTRY_DSN'],
+                environment=app.config.ENV,
+                integrations=[FlaskIntegration()])
         except ImportError:
             app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
 
