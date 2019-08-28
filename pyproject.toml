@@ -24,7 +24,7 @@ pyyaml = "^5.1"
 sentry-sdk = { extras = ["flask"], version = "^0.11", optional = true }
 psycopg2 = { version = "^2.8", optional = true }
 mysqlclient = { version = "^1.4", optional = true }
-gunicorn = { version = "^19.9", optional = true }
+gunicorn = { version = "^19.9", optional = true, extras = ["gevent"] }
 
 [tool.poetry.dev-dependencies]
 
