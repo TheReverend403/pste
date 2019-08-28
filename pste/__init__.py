@@ -65,7 +65,6 @@ def register_blueprints(app):
 
 def register_extensions(app):
     dynaconf.init_app(app)
-    print(app.config.ENV)
 
     if 'SENTRY_DSN' in app.config and app.config['SENTRY_DSN'] and not app.config.DEBUG:
         try:

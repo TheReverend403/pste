@@ -11,13 +11,21 @@ Very early alpha, 100% definitely not ready whatsoever for production use. Not e
 
 # Quick Installation (dev)
 
+First, install [Poetry](https://poetry.eustace.io/).
+
 ```sh
 git clone https://github.com/FoxDev/pste
 cd pste
-pipenv install
-cp .env.default .env # Edit .env
-pipenv shell
+poetry install # optional features: poetry install -E mysql -E postgresql -E sentry -E gunicorn
+cp config/default.toml config/settings.toml # Edit settings.toml
+poetry shell
+
+export FLASK_APP=pste
+export FLASK_ENV=development
+
 flask db upgrade
 flask user create # Or use /auth/register
-flask run # Do not use this in production, use a WSGI server with pste:create_app() as your entrypoint.
+
+# Do not use this in production, use a WSGI server with pste:create_app() as your entrypoint.
+flask run
 ```
