@@ -104,10 +104,9 @@ def upload():
     file.server_mimetype = file_mimetype
     file.slug = slug
 
-    fd.save(file.path())
-
     db.session.add(file)
     db.session.commit()
+    fd.save(file.path())
 
     if file.response_mimetype().startswith('text/'):
         route_name = 'web.paste'
