@@ -16,7 +16,7 @@ First, install [Poetry](https://poetry.eustace.io/).
 ```sh
 git clone https://github.com/FoxDev/pste
 cd pste
-poetry install # optional features: poetry install -E mysql -E postgresql -E sentry -E gunicorn
+poetry install # optional features: poetry install --extras "mysql postgresql gunicorn sentry"
 cp config/default.toml config/settings.toml # Edit settings.toml
 poetry shell
 
