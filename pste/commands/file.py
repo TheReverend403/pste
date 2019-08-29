@@ -29,7 +29,7 @@ ERROR_FG = 'bright_red'
 
 @group.command('clean')
 def file_clean():
-    """Cleans any orphaned files from storage."""
+    """Deletes any orphaned files from storage."""
 
     deleted_files = []
     for root, _, files in os.walk(f'{BASE_DIR}/storage/uploads', topdown=False):
