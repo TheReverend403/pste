@@ -33,7 +33,6 @@ import shutil
 
 import click
 from flask.cli import AppGroup
-from sqlalchemy.exc import IntegrityError
 
 from pste import db
 from pste.models import User
@@ -61,8 +60,12 @@ def user_create(email, password, admin):
     """Create user."""
 
     user = User()
-    user.email = email
+    user.email = email.lower()
     user.is_admin = admin
+
+    if User.query.filter_by(email=user.email).scalar() is not None:
+        click.secho('Email is already in use.', fg=ERROR_FG, err=True)
+        return
 
     if len(password) < 6:
         click.secho('Password must be at least 6 characters long.', fg=ERROR_FG, err=True)
@@ -70,12 +73,8 @@ def user_create(email, password, admin):
 
     user.set_password(password)
 
-    try:
-        db.session.add(user)
-        db.session.commit()
-    except IntegrityError:
-        click.secho('Email is already in use.', fg=ERROR_FG, err=True)
-        return
+    db.session.add(user)
+    db.session.commit()
 
     click.secho(f'User created.', fg=DEFAULT_FG)
 

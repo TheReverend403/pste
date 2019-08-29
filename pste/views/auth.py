@@ -39,7 +39,7 @@ def login():
         flash_errors(form)
         return redirect(url_for('auth.login'))
 
-    user = User.query.filter_by(email=form.email.data).first()
+    user = User.query.filter_by(email=form.email.data.lower()).first()
 
     if user is None or not user.check_password(form.password.data):
         flash('Invalid email or password.', category='error')
@@ -81,12 +81,13 @@ def register():
         flash_errors(form)
         return redirect(url_for('auth.register'))
 
-    if User.query.filter_by(email=form.email.data).first():
+    email = form.email.data.lower()
+    if User.query.filter_by(email=email).scalar() is not None:
         flash('Email is already in use.', 'error')
         return redirect(url_for('auth.register'))
 
     user = User()
-    user.email = form.email.data
+    user.email = email
     user.set_password(form.password.data)
 
     db.session.add(user)

@@ -69,15 +69,14 @@ class User(db.Model, UserMixin):
 
     @property
     def file_count(self):
-        query = db.session.query(func.count(File.id)).filter(File.user_id == self.id)
-        return query.scalar() or 0
+        return db.session.query(func.count(File.id)).filter_by(user=self) or 0
 
     @property
     def storage_directory(self):
         return f'{BASE_DIR}/storage/uploads/{self.id}'
 
     def disk_usage(self, humanize=False):
-        total = db.session.query(func.sum(File.size)).filter(File.user_id == self.id).scalar() or 0
+        total = db.session.query(func.sum(File.size)).filter_by(user=self).scalar() or 0
         if humanize:
             return naturalsize(total, gnu=True)
         return total
