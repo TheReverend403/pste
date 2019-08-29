@@ -22,6 +22,7 @@ from humanize import naturalsize
 from sqlalchemy import event, func
 
 from pste import BASE_DIR, db, login, utils
+from pste.models import File
 from pste.security import hasher
 
 
@@ -39,7 +40,7 @@ def load_user(id):
 def generate_api_key():
     while True:
         key = utils.random_string(64)
-        if not User.query.filter_by(api_key=key).first():
+        if db.session.query(User.id).filter_by(api_key=key).scalar() is None:
             break
 
     return key
@@ -67,11 +68,16 @@ class User(db.Model, UserMixin):
         return hasher.verify(password, self.password)
 
     @property
+    def file_count(self):
+        query = db.session.query(func.count(File.id)).filter(File.user_id == self.id)
+        return query.scalar() or 0
+
+    @property
     def storage_directory(self):
         return f'{BASE_DIR}/storage/uploads/{self.id}'
 
     def disk_usage(self, humanize=False):
-        total = sum(file.size for file in self.files)
+        total = db.session.query(func.sum(File.size)).filter(File.user_id == self.id).scalar() or 0
         if humanize:
             return naturalsize(total, gnu=True)
         return total

@@ -28,7 +28,7 @@ def generate_slug():
 
     while True:
         slug = random_string(length)
-        if not File.query.filter_by(slug=slug).first():
+        if db.session.query(File.id).filter_by(slug=slug).scalar() is None:
             break
         length += 1
 

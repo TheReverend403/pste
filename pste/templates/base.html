@@ -67,7 +67,7 @@
                     </div>
                     {% if current_user.is_authenticated %}
                         <div class="p-2">
-                            <span>Files: {{ current_user.files|length }}</span>
+                            <span>Files: {{ current_user.file_count }}</span>
                             <span> | </span>
                             <span>Storage: {{ current_user.disk_usage(humanize=True) }}/{{ current_user.quota(humanize=True) }}</span>
                         </div>
