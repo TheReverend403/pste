@@ -39,3 +39,17 @@ def file_clean():
                 deleted_files.append(name)
 
     click.secho(f'Deleted {len(deleted_files)} orphaned file(s).', fg=DEFAULT_FG)
+
+
+@group.command('delete')
+@click.argument('files', nargs=-1, required=True)
+@click.confirmation_option(prompt='Confirm')
+def file_delete(files):
+    """Delete file(s)."""
+
+    file_query = File.query.filter(File.slug.in_(set(files))).all()
+    for file in file_query:
+        db.session.delete(file)
+        click.secho(f'Deleted file: {file.slug}', fg=DEFAULT_FG)
+
+    db.session.commit()

@@ -86,19 +86,12 @@ def user_create(email, password, admin):
 def user_delete(users):
     """Delete user(s)."""
 
-    users = set(users)
-    user_query = User.query.filter(User.email.in_(users)).all()
+    user_query = User.query.filter(User.email.in_(set(users))).all()
     for user in user_query:
         db.session.delete(user)
-        users.remove(user.email)
         click.secho(f'Deleted user: {user.email}', fg=DEFAULT_FG)
 
     db.session.commit()
-
-    # Any user left in `users` doesn't exist.
-    if users:
-        invalid_users = ', '.join(users)
-        click.secho(f'Invalid users: {invalid_users}', fg=ERROR_FG, err=True)
 
 
 @group.command('list')
