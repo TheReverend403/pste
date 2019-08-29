@@ -69,7 +69,7 @@ class User(db.Model, UserMixin):
 
     @property
     def file_count(self):
-        return db.session.query(func.count(File.id)).filter_by(user=self) or 0
+        return db.session.query(func.count(File.id)).filter_by(user=self).scalar() or 0
 
     @property
     def storage_directory(self):
