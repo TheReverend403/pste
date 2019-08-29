@@ -9,7 +9,7 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-4">
-            <p class="h4" aria-label="File name"><a href="{{ raw_url }}" class="text-primary">{{ name }}</a></p>
+            <h4 aria-label="File name">{{ name }}</h4>
         </div>
         <div class="col-sm-8 paste-info">
             <ul class="list-inline text-secondary float-md-right">
@@ -21,6 +21,11 @@
                 </li>
                 <li class="list-inline-item">
                     <span aria-label="Upload date">{{ created_at.strftime('%Y-%m-%d') }}</span>
+                </li>
+                <li class="list-inline-item">
+                    <span aria-label="Raw text">
+                        <a href="{{ raw_url }}" class="btn btn-outline-primary">Raw</a>
+                    </span>
                 </li>
             </ul>
         </div>
