@@ -12,7 +12,12 @@
             <h4 aria-label="File name">{{ name }}</h4>
         </div>
         <div class="col-sm-8 paste-info">
-            <ul class="list-inline text-secondary float-md-right">
+            <ul class="list-inline text-secondary text-center float-md-right list-inline-separators">
+                <li class="list-inline-item">
+                    <span aria-label="Plain text version">
+                        <a href="{{ raw_url }}" class="text-primary">raw</a>
+                    </span>
+                </li>
                 <li class="list-inline-item">
                     <span aria-label="File type">{{ mimetype }}</span>
                 </li>
@@ -21,11 +26,6 @@
                 </li>
                 <li class="list-inline-item">
                     <span aria-label="Upload date">{{ created_at.strftime('%Y-%m-%d') }}</span>
-                </li>
-                <li class="list-inline-item">
-                    <span aria-label="Plain text">
-                        <a href="{{ raw_url }}" class="btn btn-outline-primary">Plain</a>
-                    </span>
                 </li>
             </ul>
         </div>
