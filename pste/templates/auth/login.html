@@ -13,7 +13,7 @@
         </div>
         <div class="form-group form-check">
             <div class="float-right">
-                {% if config.ENABLE_REGISTRATION %}
+                {% if config['ENABLE_REGISTRATION'] %}
                     <button type="button" class="btn btn-link" aria-label="Register"><a
                             href="{{ url_for('auth.register') }}" class="text-primary">Register</a></button>
                 {% endif %}
