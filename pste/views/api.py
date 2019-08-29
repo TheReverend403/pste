@@ -30,7 +30,7 @@ from pste.models.file import generate_slug
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 
-@blueprint.route('delete/<string:slug>', methods=['DELETE'])
+@blueprint.route('<string:slug>', methods=['DELETE'])
 @login_required
 @csrf.exempt
 def delete(slug):
