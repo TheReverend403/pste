@@ -50,6 +50,6 @@ def file_delete(files):
     file_query = File.query.filter(File.slug.in_(set(files))).all()
     for file in file_query:
         db.session.delete(file)
-        click.secho(f'Deleted file: {file.slug}', fg=DEFAULT_FG)
+        click.secho(f'Deleted {file.slug}', fg=DEFAULT_FG)
 
     db.session.commit()

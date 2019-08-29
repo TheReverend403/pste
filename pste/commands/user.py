@@ -89,7 +89,7 @@ def user_delete(users):
     user_query = User.query.filter(User.email.in_(set(users))).all()
     for user in user_query:
         db.session.delete(user)
-        click.secho(f'Deleted user: {user.email}', fg=DEFAULT_FG)
+        click.secho(f'Deleted {user.email}', fg=DEFAULT_FG)
 
     db.session.commit()
 
