@@ -54,8 +54,8 @@ class File(db.Model):
 
     @property
     def response_mimetype(self):
-        extension = Path(self.path).suffix
-        if extension and extension.lstrip('.') in app.config['PLAINTEXT_TYPES'] or self.server_mimetype.startswith('text/'):
+        ext = Path(self.path).suffix
+        if ext and ext.lstrip('.') in app.config['PLAINTEXT_TYPES'] or self.server_mimetype.startswith('text/'):
             return 'text/plain'
 
         return self.server_mimetype
