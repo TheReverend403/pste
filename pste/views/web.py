@@ -33,8 +33,8 @@ def index():
 def file(slug):
     file_instance = File.query.filter_by(slug=slug).first_or_404()
 
-    response = make_response(send_file(file_instance.path()))
-    response.headers['Content-Type'] = file_instance.response_mimetype()
+    response = make_response(send_file(file_instance.path))
+    response.headers['Content-Type'] = file_instance.response_mimetype
     response.headers['Content-Disposition'] = f'inline; filename="{file_instance.name}"'
     return response
 
@@ -43,7 +43,7 @@ def file(slug):
 def paste(slug):
     file_instance = File.query.filter_by(slug=slug).first_or_404()
 
-    if not file_instance.response_mimetype().startswith('text/'):
+    if not file_instance.response_mimetype.startswith('text/'):
         return redirect(url_for('web.file', slug=file_instance.slug))
 
     name = file_instance.name
@@ -52,7 +52,7 @@ def paste(slug):
     created_at = file_instance.created_at
     raw_url = url_for('web.file', slug=slug)
 
-    with open(file_instance.path(), 'r') as fd:
+    with open(file_instance.path, 'r') as fd:
         try:
             file_content = format_code(fd.read())
         except UnicodeDecodeError:

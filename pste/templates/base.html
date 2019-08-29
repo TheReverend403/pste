@@ -69,7 +69,7 @@
                         <div class="p-2">
                             <span>Files: {{ current_user.files|length }}</span>
                             <span> | </span>
-                            <span>Storage: {{ current_user.get_disk_usage(humanize=True) }}/{{ current_user.get_quota(humanize=True) }}</span>
+                            <span>Storage: {{ current_user.disk_usage(humanize=True) }}/{{ current_user.quota(humanize=True) }}</span>
                         </div>
                     {% endif %}
                 </div>

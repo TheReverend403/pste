@@ -66,16 +66,17 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return hasher.verify(password, self.password)
 
-    def get_storage_directory(self):
+    @property
+    def storage_directory(self):
         return f'{BASE_DIR}/storage/uploads/{self.id}'
 
-    def get_disk_usage(self, humanize=False):
+    def disk_usage(self, humanize=False):
         total = sum(file.size for file in self.files)
         if humanize:
             return naturalsize(total, gnu=True)
         return total
 
-    def get_quota(self, humanize=False):
+    def quota(self, humanize=False):
         quota = self.storage_quota or app.config['USER_STORAGE_LIMIT']
         if humanize:
             quota = naturalsize(quota, gnu=True)
@@ -84,11 +85,11 @@ class User(db.Model, UserMixin):
 
 
 def after_delete(mapper, connection, target):
-    shutil.rmtree(target.get_storage_directory(), ignore_errors=True)
+    shutil.rmtree(target.storage_directory, ignore_errors=True)
 
 
 def after_insert(mapper, connection, target):
-    os.makedirs(target.get_storage_directory(), exist_ok=True)
+    os.makedirs(target.storage_directory, exist_ok=True)
 
 
 event.listen(User, 'after_delete', after_delete)

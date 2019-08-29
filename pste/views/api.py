@@ -23,7 +23,6 @@ from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
 from pste import csrf, db
-from pste import utils
 from pste.forms.api import UploadForm
 from pste.models import File
 from pste.models.file import generate_slug
@@ -73,8 +72,8 @@ def upload():
     file_size = fd.tell()
     fd.seek(0)
 
-    if file_size + current_user.get_disk_usage() > current_user.get_quota() and not current_user.is_admin:
-        return {'error': f'Storage limit reached ({current_user.get_quota(humanize=True)})'}
+    if file_size + current_user.disk_usage() > current_user.quota() and not current_user.is_admin:
+        return {'error': f'Storage limit reached ({current_user.quota(humanize=True)})'}
 
     file_contents = fd.read()
     fd.seek(0)
@@ -93,7 +92,7 @@ def upload():
         existing_file.name = fd.filename
         db.session.commit()
 
-        if existing_file.response_mimetype().startswith('text/'):
+        if existing_file.response_mimetype.startswith('text/'):
             route_name = 'web.paste'
 
         return {'url': url_for(route_name, slug=existing_file.slug, _external=True)}
@@ -110,13 +109,13 @@ def upload():
 
     try:
         db.session.commit()
-        fd.save(file.path())
+        fd.save(file.path)
     except IntegrityError as error:
         app.logger.exception(error)
         db.session.rollback()
         return {'errors': ['An error occured while processing your file. Try uploading again.']}
 
-    if file.response_mimetype().startswith('text/'):
+    if file.response_mimetype.startswith('text/'):
         route_name = 'web.paste'
 
     return {'url': url_for(route_name, slug=file.slug, _external=True)}

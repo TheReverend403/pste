@@ -48,11 +48,13 @@ class File(db.Model):
     file_hash = db.Column(db.String(64), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 
+    @property
     def path(self):
-        return f'{self.user.get_storage_directory()}/{self.slug}'
+        return f'{self.user.storage_directory}/{self.slug}'
 
+    @property
     def response_mimetype(self):
-        extension = Path(self.path()).suffix
+        extension = Path(self.path).suffix
         if extension and extension.lstrip('.') in app.config['PLAINTEXT_TYPES'] or self.server_mimetype.startswith('text/'):
             return 'text/plain'
 
@@ -72,7 +74,7 @@ class File(db.Model):
 
 def after_delete(mapper, connection, target):
     try:
-        os.remove(target.path())
+        os.remove(target.path)
     except OSError:
         pass
 
