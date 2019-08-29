@@ -18,13 +18,15 @@ import os
 from pathlib import Path
 
 import magic
-from flask import Blueprint, request, url_for
+from flask import Blueprint, request, url_for, current_app as app
 from flask_login import current_user, login_required
+from sqlalchemy.exc import IntegrityError
 
 from pste import csrf, db
 from pste import utils
 from pste.forms.api import UploadForm
 from pste.models import File
+from pste.models.file import generate_slug
 
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
@@ -82,7 +84,7 @@ def upload():
 
     route_name = 'web.file'
     extension = Path(fd.filename).suffix
-    slug = utils.generate_slug()
+    slug = generate_slug()
     if extension:
         slug = slug + extension
 
@@ -105,8 +107,14 @@ def upload():
     file.slug = slug
 
     db.session.add(file)
-    db.session.commit()
-    fd.save(file.path())
+
+    try:
+        db.session.commit()
+        fd.save(file.path())
+    except IntegrityError as error:
+        app.logger.exception(error)
+        db.session.rollback()
+        return {'errors': ['An error occured while processing your file. Try uploading again.']}
 
     if file.response_mimetype().startswith('text/'):
         route_name = 'web.paste'

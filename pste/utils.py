@@ -21,8 +21,6 @@ from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import guess_lexer
 
-from pste.models.file import File
-
 
 def random_string(length):
     chars = ''.join(string.ascii_letters + string.digits)
@@ -34,18 +32,6 @@ def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
             flash(f'{error}', category='error')
-
-
-def generate_slug():
-    length = 3
-
-    while True:
-        slug = random_string(length)
-        if not File.query.filter_by(slug=slug).first():
-            break
-        length += 1
-
-    return slug
 
 
 def format_code(code):

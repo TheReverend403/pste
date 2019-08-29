@@ -20,6 +20,19 @@ from flask import current_app as app
 from sqlalchemy import event, func
 
 from pste import db
+from pste.utils import random_string
+
+
+def generate_slug():
+    length = 3
+
+    while True:
+        slug = random_string(length)
+        if not File.query.filter_by(slug=slug).first():
+            break
+        length += 1
+
+    return slug
 
 
 class File(db.Model):
