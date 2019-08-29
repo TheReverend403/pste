@@ -14,7 +14,9 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 from pste.commands.user import group as user
+from pste.commands.file import group as file
 
 
 def init_app(app):
     app.cli.add_command(user)
+    app.cli.add_command(file)
