@@ -25,6 +25,6 @@ echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv
 flask db upgrade
 flask user create # Or use /auth/register
 
-# Do not use this in production, use a WSGI server with pste:create_app() as your entrypoint.
+# Do not use this in production, use a WSGI server such as gunicorn with pste:create_app() as your entrypoint.
 flask run
 ```
