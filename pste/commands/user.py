@@ -63,7 +63,7 @@ def user_create(email, password, admin):
     user.email = email.lower()
     user.is_admin = admin
 
-    if User.query.filter_by(email=user.email).scalar() is not None:
+    if db.session.query(User.id).filter_by(email=user.email).scalar() is not None:
         click.secho('Email is already in use.', fg=ERROR_FG, err=True)
         return
 
