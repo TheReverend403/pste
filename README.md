@@ -20,7 +20,7 @@ poetry install # optional features: poetry install --extras "mysql postgresql gu
 cp config/default.toml config/settings.toml # Edit settings.toml
 poetry shell
 
-echo "FLASK_APP=pste\nFLASK_ENV=development" > .flaskenv
+echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv
 
 flask db upgrade
 flask user create # Or use /auth/register
