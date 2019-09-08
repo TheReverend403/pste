@@ -45,7 +45,7 @@
                                         {% set category = 'danger' %}
                                     {% endif %}
 
-                                    {% if category == 'message' %}
+                                    {% if category == 'message' or not category %}
                                         {% set category = 'primary' %}
                                     {% endif %}
 
