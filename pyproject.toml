@@ -7,24 +7,24 @@ license = "GPL-3.0+"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-flask = "^1.1"
-flask-login = "^0.4"
-flask-sqlalchemy = "^2.4"
-flask-migrate = "^2.5"
+flask = "^1.1.0"
+flask-login = "^0.4.0"
+flask-sqlalchemy = "^2.4.0"
+flask-migrate = "^2.5.0"
 flask-wtf = "^0.14"
 flask-assets = "^0.12"
-libsass = "^0.19"
-cssmin = "^0.2"
-dynaconf = "^2.0"
-passlib = { extras = ["argon2", "bcrypt"], version = "^1.7" }
-python-magic = "^0.4"
-humanize = "^0.5"
-pygments = "^2.4"
-pyyaml = "^5.1"
-sentry-sdk = { extras = ["flask"], version = "^0.11", optional = true }
-psycopg2 = { version = "^2.8", optional = true }
-mysqlclient = { version = "^1.4", optional = true }
-gunicorn = { version = "^19.9", optional = true, extras = ["gevent"] }
+libsass = "^0.19.0"
+cssmin = "^0.2.0"
+dynaconf = "^2.1.0"
+passlib = { extras = ["argon2", "bcrypt"], version = "^1.7.0" }
+python-magic = "^0.4.0"
+humanize = "^0.5.0"
+pygments = "^2.4.0"
+pyyaml = "^5.1.0"
+sentry-sdk = { extras = ["flask"], version = "^0.11.0", optional = true }
+psycopg2 = { version = "^2.8.0", optional = true }
+mysqlclient = { version = "^1.4.0", optional = true }
+gunicorn = { version = "^19.9.0", optional = true, extras = ["gevent"] }
 
 [tool.poetry.dev-dependencies]
 
