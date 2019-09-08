@@ -70,11 +70,12 @@ def register_extensions(app):
         try:
             import sentry_sdk
             from sentry_sdk.integrations.flask import FlaskIntegration
+            from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
             sentry_sdk.init(
                 dsn=app.config['SENTRY_DSN'],
                 environment=app.config['ENV'],
-                integrations=[FlaskIntegration()])
+                integrations=[FlaskIntegration(), SqlalchemyIntegration()])
         except ImportError:
             app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
 
