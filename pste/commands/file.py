@@ -31,14 +31,14 @@ ERROR_FG = 'bright_red'
 def file_clean():
     """Deletes any orphaned files from storage."""
 
-    deleted_files = []
+    deleted_files = 0
     for root, _, files in os.walk(f'{BASE_DIR}/storage/uploads', topdown=False):
         for name in files:
             if db.session.query(File.id).filter_by(slug=name).scalar() is None:
                 os.remove(f'{root}/{name}')
-                deleted_files.append(name)
+                deleted_files += 1
 
-    click.secho(f'Deleted {len(deleted_files)} orphaned file(s).', fg=DEFAULT_FG)
+    click.secho(f'Deleted {deleted_files} orphaned file(s).', fg=DEFAULT_FG)
 
 
 @group.command('delete')
