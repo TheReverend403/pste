@@ -18,7 +18,7 @@ import os
 from pathlib import Path
 
 import magic
-from flask import Blueprint, request, url_for, current_app as app
+from flask import Blueprint, request, url_for, jsonify, current_app as app
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
@@ -55,7 +55,7 @@ def files():
     else:
         file_list = [file.to_dict() for file in file_query.paginate(page, 15, False).items]
 
-    return {file_list}
+    return jsonify(file_list)
 
 
 @blueprint.route('upload', methods=['POST'])
