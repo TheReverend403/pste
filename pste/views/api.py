@@ -109,11 +109,12 @@ def upload():
 
     try:
         db.session.commit()
-        fd.save(file.path)
-    except IntegrityError as error:
-        app.logger.exception(error)
+    except IntegrityError as exc:
         db.session.rollback()
+        app.logger.error(exc)
         return {'errors': ['An error occured while processing your file. Try uploading again.']}
+    else:
+        fd.save(file.path)
 
     if file.response_mimetype.startswith('text/'):
         route_name = 'web.paste'
