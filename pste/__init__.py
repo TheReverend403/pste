@@ -69,6 +69,10 @@ def register_extensions(app):
     if 'SENTRY_DSN' in app.config and app.config['SENTRY_DSN'] and not app.config['DEBUG']:
         try:
             import sentry_sdk
+        except ImportError:
+            app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
+        else:
+            import sentry_sdk
             from sentry_sdk.integrations.flask import FlaskIntegration
             from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
@@ -77,8 +81,6 @@ def register_extensions(app):
                 environment=app.config['ENV'],
                 release=PSTE_VERSION.replace('pste ', ''),
                 integrations=[FlaskIntegration(), SqlalchemyIntegration()])
-        except ImportError:
-            app.logger.warn('SENTRY_DSN is set but the sentry-sdk library is not available. Sentry will not be used.')
 
     db.init_app(app)
     migrate.init_app(app, db)
