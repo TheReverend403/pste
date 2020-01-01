@@ -4,7 +4,7 @@ description = "A database migration tool for SQLAlchemy."
 name = "alembic"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.3.1"
+version = "1.3.2"
 
 [package.dependencies]
 Mako = "*"
@@ -93,13 +93,13 @@ description = "The dynamic configurator for your Python Project"
 name = "dynaconf"
 optional = false
 python-versions = "*"
-version = "2.2.1"
+version = "2.2.2"
 
 [package.dependencies]
-click = "*"
-python-box = "*"
-python-dotenv = "*"
-toml = "*"
+click = "<=7.0"
+python-box = "<4.0.0"
+python-dotenv = "<=0.10.3"
+toml = "<=0.10.0"
 
 [package.extras]
 all = ["redis", "pyyaml", "configobj", "hvac"]
@@ -445,7 +445,7 @@ description = "Database Abstraction Library"
 name = "sqlalchemy"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.3.11"
+version = "1.3.12"
 
 [package.extras]
 mssql = ["pyodbc"]
@@ -486,7 +486,7 @@ description = "Media asset management for Python, with glue code for various web
 name = "webassets"
 optional = false
 python-versions = "*"
-version = "0.12.1"
+version = "2.0"
 
 [[package]]
 category = "main"
@@ -524,7 +524,7 @@ python-versions = "^3.6"
 
 [metadata.files]
 alembic = [
-    {file = "alembic-1.3.1.tar.gz", hash = "sha256:49277bb7242192bbb9eac58fed4fe02ec6c3a2a4b4345d2171197459266482b2"},
+    {file = "alembic-1.3.2.tar.gz", hash = "sha256:3b0cb1948833e062f4048992fbc97ecfaaaac24aaa0d83a1202a99fb58af8c6d"},
 ]
 argon2-cffi = [
     {file = "argon2-cffi-19.2.0.tar.gz", hash = "sha256:ffaa623eea77b497ffbdd1a51e941b33d3bf552c60f14dbee274c4070677bda3"},
@@ -616,8 +616,8 @@ cssmin = [
     {file = "cssmin-0.2.0.tar.gz", hash = "sha256:e012f0cc8401efcf2620332339011564738ae32be8c84b2e43ce8beaec1067b6"},
 ]
 dynaconf = [
-    {file = "dynaconf-2.2.1-py2.py3-none-any.whl", hash = "sha256:52e3e41290763e405723b13a893592f8bca06f676854e59623052ffeee1a658f"},
-    {file = "dynaconf-2.2.1.tar.gz", hash = "sha256:75691e9dd4093a1a2dc530d33369ae9296cfba30d29b72b00715dfb98b3f82e4"},
+    {file = "dynaconf-2.2.2-py2.py3-none-any.whl", hash = "sha256:3cfc1ad7efae08b9cf91d81043a3230175e74e01157d875ce5ec6709bf4e6b9d"},
+    {file = "dynaconf-2.2.2.tar.gz", hash = "sha256:4bac78b432e090d8ed66f1c23fb32e03ca91a590bf0a51ac36137e0e45ac31ca"},
 ]
 flask = [
     {file = "Flask-1.1.1-py2.py3-none-any.whl", hash = "sha256:45eb5a6fd193d6cf7e0cf5d8a5b31f83d5faae0293695626f539a823e93b13f6"},
@@ -830,7 +830,7 @@ six = [
     {file = "six-1.13.0.tar.gz", hash = "sha256:30f610279e8b2578cab6db20741130331735c781b56053c59c4076da27f06b66"},
 ]
 sqlalchemy = [
-    {file = "SQLAlchemy-1.3.11.tar.gz", hash = "sha256:afa5541e9dea8ad0014251bc9d56171ca3d8b130c9627c6cb3681cff30be3f8a"},
+    {file = "SQLAlchemy-1.3.12.tar.gz", hash = "sha256:bfb8f464a5000b567ac1d350b9090cf081180ec1ab4aa87e7bca12dab25320ec"},
 ]
 toml = [
     {file = "toml-0.10.0-py2.7.egg", hash = "sha256:f1db651f9657708513243e61e6cc67d101a39bad662eaa9b5546f789338e07a3"},
@@ -842,7 +842,8 @@ urllib3 = [
     {file = "urllib3-1.25.7.tar.gz", hash = "sha256:f3c5fd51747d450d4dcf6f923c81f78f811aab8205fda64b0aba34a4e48b0745"},
 ]
 webassets = [
-    {file = "webassets-0.12.1.tar.gz", hash = "sha256:e7d9c8887343123fd5b32309b33167428cb1318cdda97ece12d0907fd69d38db"},
+    {file = "webassets-2.0-py3-none-any.whl", hash = "sha256:a31a55147752ba1b3dc07dee0ad8c8efff274464e08bbdb88c1fd59ffd552724"},
+    {file = "webassets-2.0.tar.gz", hash = "sha256:167132337677c8cedc9705090f6d48da3fb262c8e0b2773b29f3352f050181cd"},
 ]
 werkzeug = [
     {file = "Werkzeug-0.16.0-py2.py3-none-any.whl", hash = "sha256:e5f4a1f98b52b18a93da705a7458e55afb26f32bff83ff5d19189f92462d65c4"},
