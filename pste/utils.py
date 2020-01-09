@@ -23,8 +23,7 @@ from pygments.lexers import guess_lexer
 
 
 def random_string(length):
-    chars = ''.join(string.ascii_letters + string.digits)
-    value = ''.join(random.choice(chars) for _ in range(length))
+    value = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
     return value
 
 
@@ -34,6 +33,6 @@ def flash_errors(form):
             flash(f'{error}', category='error')
 
 
-def format_code(code):
+def syntax_highlight(code):
     lexer = guess_lexer(code)
     return highlight(code, lexer, HtmlFormatter(linenos='table', anchorlinenos=True, lineanchors='line'))

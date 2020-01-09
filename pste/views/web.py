@@ -18,7 +18,7 @@ from flask_login import login_required
 from humanize import naturalsize
 
 from pste.models import File
-from pste.utils import format_code
+from pste.utils import syntax_highlight
 
 blueprint = Blueprint('web', __name__)
 
@@ -54,7 +54,7 @@ def paste(slug):
 
     with open(file_instance.path, 'r') as fd:
         try:
-            file_content = format_code(fd.read())
+            file_content = syntax_highlight(fd.read())
         except UnicodeDecodeError:
             return redirect(raw_url)
 
