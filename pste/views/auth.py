@@ -82,7 +82,7 @@ def register():
         return redirect(url_for('auth.register'))
 
     email = form.email.data.lower()
-    if db.session.query(User.id).filter_by(email=email).scalar() is not None:
+    if User.query.filter_by(email=email).first() is not None:
         flash('Email is already in use.', 'error')
         return redirect(url_for('auth.register'))
 

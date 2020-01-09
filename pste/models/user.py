@@ -40,7 +40,7 @@ def load_user(id):
 def generate_api_key():
     while True:
         key = utils.random_string(64)
-        if db.session.query(User.id).filter_by(api_key=key).scalar() is None:
+        if User.query.filter_by(api_key=key).first() is None:
             break
 
     return key

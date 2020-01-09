@@ -34,7 +34,7 @@ def file_clean():
     deleted_files = 0
     for root, _, files in os.walk(f'{BASE_DIR}/storage/uploads', topdown=False):
         for name in files:
-            if db.session.query(File.id).filter_by(slug=name).scalar() is None:
+            if File.query.filter_by(slug=name).first() is None:
                 os.remove(f'{root}/{name}')
                 deleted_files += 1
 
