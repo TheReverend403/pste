@@ -18,7 +18,7 @@ import os
 from pathlib import Path
 
 import magic
-from flask import Blueprint, request, url_for, jsonify, current_app as app
+from flask import Blueprint, current_app as app, jsonify, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
@@ -73,7 +73,7 @@ def upload():
     fd.seek(0)
 
     if file_size + current_user.disk_usage() > current_user.quota() and not current_user.is_admin:
-        return {'error': f'Storage limit reached ({current_user.quota(humanize=True)})'}
+        return {'errors': f'Storage limit reached ({current_user.quota(humanize=True)})'}
 
     file_contents = fd.read()
     fd.seek(0)
