@@ -46,14 +46,13 @@ dynaconf = FlaskDynaconf()
 def create_app():
     setup_logging()
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
+    app.config.update(PSTE_VERSION=PSTE_VERSION, SQLALCHEMY_TRACK_MODIFICATIONS=False)
     app.logger.info(f'Running {PSTE_VERSION}')
 
     register_extensions(app)
     register_commands(app)
     register_blueprints(app)
     register_assets(app)
-
-    app.config.update(PSTE_VERSION=PSTE_VERSION)
     return app
 
 
@@ -98,7 +97,6 @@ def register_extensions(app):
 
 
 def register_assets(app):
-    # Don't warn about unsafe yaml with a trusted file.
     assets.init_app(app)
     with app.app_context():
         assets.directory = f'{BASE_DIR}/static'
