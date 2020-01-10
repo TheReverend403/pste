@@ -1,0 +1,39 @@
+# This is the default config file. Don't edit this, copy it to config/settings.yml.
+default:
+    # Do not set this to true in production.
+    # debug: false
+
+    # Site name
+    name: 'pste'
+
+    # MUST be set to a secure, random value.
+    # Generate one with:
+    #    python -c "import uuid; print(uuid.uuid4().hex);"
+    secret_key: ''
+
+    # Database
+    # https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
+    sqlalchemy_database_uri: ''
+
+    # File extensions that will be displayed as plaintext regardless of the file's mimetype.
+    plaintext_types : [
+        'txt', 'php', 'rb', 'sh', 'py',
+        'conf', 'c', 'cpp', 'java', 'rs',
+        'html', 'htm', 'js', 'xml', 'sql',
+        'lua', 'cs', 'pl', 'md', 'ini',
+        'shtml', 'yaml', 'cfg', 'go', 'fish',
+        'yml', 'bash'
+    ]
+
+    # If disabled, users can only be created via 'flask user create'.
+    enable_registration: false
+
+    # Storage quota per-user in bytes. Default is 1GB
+    user_storage_limit: 1073741824
+
+    # Max size of a single file upload. Defaults to 1GB.
+    max_upload_size: 1073741824
+
+    # Sentry
+    # https://sentry.io
+    sentry_dsn: ''

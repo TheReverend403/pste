@@ -37,7 +37,8 @@ pste/storage/*
 pste/static/js
 pste/static/css
 **/.webassets-cache
-config/settings.toml
+config/settings.yml
+config/logging.yml
 
 # IPython
 profile_default/

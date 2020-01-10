@@ -101,6 +101,10 @@ python-box = "<4.0.0"
 python-dotenv = "<=0.10.3"
 toml = "<=0.10.0"
 
+[package.dependencies.PyYAML]
+optional = true
+version = "*"
+
 [package.extras]
 all = ["redis", "pyyaml", "configobj", "hvac"]
 configobj = ["configobj"]
@@ -531,7 +535,7 @@ postgresql = ["psycopg2"]
 sentry = ["sentry-sdk"]
 
 [metadata]
-content-hash = "482a56096ef5ff62ea35e656a3df7d44a0eedb625aacf438132d0ae6faf1a8f6"
+content-hash = "b65a991b42a0c1d5da51fd29433c40f17f02919720194598bff0629ca0f471e6"
 python-versions = "^3.6"
 
 [metadata.files]

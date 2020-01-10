@@ -17,7 +17,7 @@ First, install [Poetry](https://poetry.eustace.io/).
 git clone https://github.com/FoxDev/pste
 cd pste
 poetry install # optional features: poetry install --extras "mysql postgresql gunicorn sentry"
-cp config/default.toml config/settings.toml # Edit settings.toml
+cp config/default/settings.yml config/settings.yml # Edit settings.yml
 poetry shell
 
 echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv

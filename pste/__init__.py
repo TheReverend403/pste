@@ -27,8 +27,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-with open(os.environ.get('FLASK_LOG_CONFIG', f'{os.path.dirname(BASE_DIR)}/config/logging.yml'), 'r') as fd:
-    logging.config.dictConfig(yaml.safe_load(fd.read()))
+
 
 try:
     PSTE_VERSION = 'pste ' + subprocess.check_output(['git', 'describe']).decode('UTF-8').strip()
@@ -45,6 +44,7 @@ dynaconf = FlaskDynaconf()
 
 
 def create_app():
+    setup_logging()
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
     app.logger.info(f'Running {PSTE_VERSION}')
 
@@ -107,3 +107,11 @@ def register_assets(app):
 
     assets.from_yaml(f'{BASE_DIR}/assets/assets.yml')
     app.logger.debug('Assets registered.')
+
+
+def setup_logging(file=f'{os.path.dirname(BASE_DIR)}/config/logging.yml'):
+    try:
+        with open(file, 'r') as fd:
+            logging.config.dictConfig(yaml.safe_load(fd.read()))
+    except FileNotFoundError:
+        setup_logging(f'{os.path.dirname(BASE_DIR)}/config/default/logging.yml')

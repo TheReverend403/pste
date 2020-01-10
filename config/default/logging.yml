@@ -1,0 +1,15 @@
+# If you want to edit this file, copy it to config/logging.yml
+# https://docs.python.org/3.7/library/logging.config.html#logging-config-dictschema
+version: 1
+root:
+    level: INFO
+    handlers: [console]
+formatters:
+    console:
+        format: '[%(asctime)s] [%(levelname)-5s] %(message)s'
+        datefmt: '%H:%M:%S'
+handlers:
+    console:
+        class: logging.StreamHandler
+        formatter: console
+        stream: ext://sys.stdout
