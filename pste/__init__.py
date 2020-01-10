@@ -13,9 +13,11 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
+import logging.config
 import os
 import subprocess
 
+import yaml
 from dynaconf import FlaskDynaconf
 from flask import Flask
 from flask_assets import Environment
@@ -24,10 +26,12 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+with open(os.environ.get('FLASK_LOG_CONFIG', f'{os.path.dirname(BASE_DIR)}/config/logging.yml'), 'r') as fd:
+    logging.config.dictConfig(yaml.safe_load(fd.read()))
+
 try:
-    PSTE_VERSION = 'pste ' + subprocess.check_output(['git', 'describe']).decode('UTF-8')
+    PSTE_VERSION = 'pste ' + subprocess.check_output(['git', 'describe']).decode('UTF-8').strip()
 except subprocess.CalledProcessError:
     # Not running from a git repo or git is not available.
     PSTE_VERSION = 'pste'
@@ -42,31 +46,33 @@ dynaconf = FlaskDynaconf()
 
 def create_app():
     app = Flask('pste', static_folder=f'{BASE_DIR}/static', template_folder=f'{BASE_DIR}/templates')
+    app.logger.info(f'Running {PSTE_VERSION}')
 
-    register_commands(app)
     register_extensions(app)
+    register_commands(app)
     register_blueprints(app)
     register_assets(app)
 
     app.config.update(PSTE_VERSION=PSTE_VERSION)
-
     return app
 
 
 def register_commands(app):
     from pste import commands
     commands.init_app(app)
+    app.logger.debug('Commands registered.')
 
 
 def register_blueprints(app):
     from pste import views
     views.register_blueprints(app)
+    app.logger.debug('Blueprints registered.')
 
 
 def register_extensions(app):
     dynaconf.init_app(app)
 
-    if 'SENTRY_DSN' in app.config and app.config['SENTRY_DSN'] and not app.config['DEBUG']:
+    if 'SENTRY_DSN' in app.config and app.config['SENTRY_DSN'] and not app.debug:
         try:
             import sentry_sdk
         except ImportError:
@@ -88,13 +94,11 @@ def register_extensions(app):
     csrf.init_app(app)
 
     login.login_view = 'auth.login'
+    app.logger.debug('Extensions registered.')
 
 
 def register_assets(app):
     # Don't warn about unsafe yaml with a trusted file.
-    import yaml
-    yaml.warnings({'YAMLLoadWarning': False})
-
     assets.init_app(app)
     with app.app_context():
         assets.directory = f'{BASE_DIR}/static'
@@ -102,4 +106,4 @@ def register_assets(app):
         assets.auto_build = False
 
     assets.from_yaml(f'{BASE_DIR}/assets/assets.yml')
-
+    app.logger.debug('Assets registered.')
