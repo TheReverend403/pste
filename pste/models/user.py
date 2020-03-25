@@ -28,8 +28,10 @@ from pste.security import hasher
 
 @login.request_loader
 def load_user_from_header(request):
-    api_key = request.headers.get('Authorization').replace('Bearer ', '')
-    return User.query.filter_by(api_key=api_key).first()
+    auth_header = request.headers.get('Authorization')
+    if auth_header:
+        api_key = auth_header.get('Authorization').replace('Bearer ', '')
+        return User.query.filter_by(api_key=api_key).first()
 
 
 @login.user_loader
