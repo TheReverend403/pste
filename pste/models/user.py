@@ -30,7 +30,7 @@ from pste.security import hasher
 def load_user_from_header(request):
     auth_header = request.headers.get('Authorization')
     if auth_header:
-        api_key = auth_header.get('Authorization').replace('Bearer ', '')
+        api_key = auth_header.replace('Bearer ', '')
         return User.query.filter_by(api_key=api_key).first()
 
 
