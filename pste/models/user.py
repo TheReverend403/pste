@@ -26,9 +26,9 @@ from pste.models import File
 from pste.security import hasher
 
 
-@login.header_loader
-def load_user_from_header(header):
-    api_key = header.replace('Bearer ', '')
+@login.request_loader
+def load_user_from_header(request):
+    api_key = request.headers.get('Authorization').replace('Bearer ', '')
     return User.query.filter_by(api_key=api_key).first()
 
 
