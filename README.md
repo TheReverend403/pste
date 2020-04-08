@@ -18,7 +18,7 @@ First, install [Poetry](https://poetry.eustace.io/).
 git clone https://github.com/FoxDev/pste
 cd pste
 poetry install # optional features: poetry install --extras "mysql postgresql gunicorn sentry"
-yarn install
+yarn install # or `npm install` if you're a caveman.
 cp config/default/settings.yml config/settings.yml # Edit settings.yml
 poetry shell
 
