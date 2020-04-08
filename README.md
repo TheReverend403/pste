@@ -18,11 +18,13 @@ First, install [Poetry](https://poetry.eustace.io/).
 git clone https://github.com/FoxDev/pste
 cd pste
 poetry install # optional features: poetry install --extras "mysql postgresql gunicorn sentry"
+yarn install
 cp config/default/settings.yml config/settings.yml # Edit settings.yml
 poetry shell
 
 echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv
 
+flask assets build
 flask db upgrade
 flask user create # Or use /auth/register
 
