@@ -29,10 +29,8 @@ def generate_slug():
     while True:
         slug = random_string(length)
         if File.query.filter_by(slug=slug).first() is None:
-            break
+            return slug
         length += 1
-
-    return slug
 
 
 class File(db.Model):
