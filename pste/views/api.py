@@ -50,7 +50,7 @@ def files():
 
     file_query = File.query.filter_by(user=current_user)
 
-    if page is 0:
+    if page == 0:
         file_list = [file.to_dict() for file in file_query.all()]
     else:
         file_list = [file.to_dict() for file in file_query.paginate(page, 15, False).items]
