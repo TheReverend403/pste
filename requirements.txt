@@ -221,12 +221,15 @@ psycopg2==2.8.5 \
     --hash=sha256:2327bf42c1744a434ed8ed0bbaa9168cac7ee5a22a9001f6fc85c33b8a4a14b7 \
     --hash=sha256:132efc7ee46a763e68a815f4d26223d9c679953cd190f1f218187cb60decf535 \
     --hash=sha256:f7d46240f7a1ae1dd95aab38bd74f7428d46531f69219954266d669da60c0818
-pycparser==2.20; platform_python_implementation == "CPython" and sys_platform == "win32" \
+pycparser==2.20 \
     --hash=sha256:7582ad22678f0fcd81102833f60ef8d0e57288b6b5fb00323d101be910e35705 \
     --hash=sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0
 pygments==2.6.1 \
     --hash=sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324 \
     --hash=sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44
+python-box==5.1.1 \
+    --hash=sha256:e51d03275f0d6fef3c155f79c19e542c2fb6d92e89eb385cd71ea22c5d4681b3 \
+    --hash=sha256:b7a6f3edd2f71e2475d93163b6465f637a2714b155acafef17408b06e55282b3
 python-dateutil==2.8.1 \
     --hash=sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c \
     --hash=sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a
