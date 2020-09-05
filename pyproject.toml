@@ -27,6 +27,7 @@ gunicorn = { version = "^20.0", optional = true, extras = ["gevent"] }
 email_validator = "^1.0.5"
 python-dotenv = "^0.14.0"
 python-box = "^5.1.1"
+pyyaml = "^5.3.1"
 
 [tool.poetry.dev-dependencies]
 
