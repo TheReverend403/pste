@@ -24,27 +24,27 @@ from sqlalchemy.exc import IntegrityError
 
 from pste import csrf, db
 from pste.forms.api import UploadForm
-from pste.models import File
+from pste.models.file import File
 from pste.models.file import generate_slug
 
-blueprint = Blueprint('api', __name__, url_prefix='/api')
+blueprint = Blueprint("api", __name__, url_prefix="/api")
 
 
-@blueprint.route('<string:slug>', methods=['DELETE'])
+@blueprint.route("<string:slug>", methods=["DELETE"])
 @login_required
 @csrf.exempt
 def delete(slug):
     file = File.query.filter_by(user=current_user, slug=slug).first_or_404()
     db.session.delete(file)
     db.session.commit()
-    return '', 204
+    return "", 204
 
 
-@blueprint.route('list', methods=['GET'])
+@blueprint.route("list", methods=["GET"])
 @login_required
 def files():
     try:
-        page = int(request.args.get('page', 0))
+        page = int(request.args.get("page", 0))
     except ValueError:
         page = 0
 
@@ -53,18 +53,20 @@ def files():
     if page == 0:
         file_list = [file.to_dict() for file in file_query.all()]
     else:
-        file_list = [file.to_dict() for file in file_query.paginate(page, 15, False).items]
+        file_list = [
+            file.to_dict() for file in file_query.paginate(page, 15, False).items
+        ]
 
     return jsonify(file_list)
 
 
-@blueprint.route('upload', methods=['POST'])
+@blueprint.route("upload", methods=["POST"])
 @login_required
 @csrf.exempt
 def upload():
     form = UploadForm(request.files)
     if not form.validate_on_submit():
-        return {'errors': form.errors}
+        return {"errors": form.errors}
 
     fd = form.file.data
 
@@ -72,8 +74,13 @@ def upload():
     file_size = fd.tell()
     fd.seek(0)
 
-    if file_size + current_user.disk_usage() > current_user.quota() and not current_user.is_admin:
-        return {'errors': f'Storage limit reached ({current_user.quota(humanize=True)})'}
+    if (
+        file_size + current_user.disk_usage() > current_user.quota()
+        and not current_user.is_admin
+    ):
+        return {
+            "errors": f"Storage limit reached ({current_user.quota(humanize=True)})"
+        }
 
     file_contents = fd.read()
     fd.seek(0)
@@ -81,7 +88,7 @@ def upload():
     file_hash = hashlib.sha256(file_contents).hexdigest()
     file_mimetype = magic.from_buffer(file_contents, mime=True)
 
-    route_name = 'web.file'
+    route_name = "web.file"
     extension = Path(fd.filename).suffix
     slug = generate_slug()
     if extension:
@@ -92,10 +99,10 @@ def upload():
         existing_file.name = fd.filename
         db.session.commit()
 
-        if existing_file.response_mimetype.startswith('text/'):
-            route_name = 'web.paste'
+        if existing_file.response_mimetype.startswith("text/"):
+            route_name = "web.paste"
 
-        return {'url': url_for(route_name, slug=existing_file.slug, _external=True)}
+        return {"url": url_for(route_name, slug=existing_file.slug, _external=True)}
 
     file = File(user=current_user)
     file.name = fd.filename
@@ -112,11 +119,15 @@ def upload():
     except IntegrityError as exc:
         db.session.rollback()
         app.logger.error(exc)
-        return {'errors': ['An error occured while processing your file. Try uploading again.']}
+        return {
+            "errors": [
+                "An error occured while processing your file. Try uploading again."
+            ]
+        }
     else:
         fd.save(file.path)
 
-    if file.response_mimetype.startswith('text/'):
-        route_name = 'web.paste'
+    if file.response_mimetype.startswith("text/"):
+        route_name = "web.paste"
 
-    return {'url': url_for(route_name, slug=file.slug, _external=True)}
+    return {"url": url_for(route_name, slug=file.slug, _external=True)}

@@ -12,6 +12,3 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
-
-from pste.models.file import File
-from pste.models.user import User

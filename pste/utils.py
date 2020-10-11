@@ -25,14 +25,16 @@ from pygments.util import ClassNotFound
 
 
 def random_string(length):
-    value = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(length))
+    value = "".join(
+        random.choice(string.ascii_letters + string.digits) for _ in range(length)
+    )
     return value
 
 
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
-            flash(f'{error}', category='error')
+            flash(f"{error}", category="error")
 
 
 def syntax_highlight(file):
@@ -45,4 +47,8 @@ def syntax_highlight(file):
         except ClassNotFound:
             lexer = TextLexer()
 
-    return highlight(code, lexer, HtmlFormatter(linenos='table', anchorlinenos=True, lineanchors='line'))
+    return highlight(
+        code,
+        lexer,
+        HtmlFormatter(linenos="table", anchorlinenos=True, lineanchors="line"),
+    )

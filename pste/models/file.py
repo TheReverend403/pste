@@ -34,10 +34,10 @@ def generate_slug():
 
 
 class File(db.Model):
-    __tablename__ = 'files'
+    __tablename__ = "files"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
     name = db.Column(db.String(255), nullable=False)
     size = db.Column(db.BigInteger, nullable=False)
     client_mimetype = db.Column(db.String(128))
@@ -53,20 +53,24 @@ class File(db.Model):
     @property
     def response_mimetype(self):
         ext = self.path.suffix
-        if ext and ext.lstrip('.') in app.config['PLAINTEXT_TYPES'] or self.server_mimetype.startswith('text/'):
-            return 'text/plain'
+        if (
+            ext
+            and ext.lstrip(".") in app.config["PLAINTEXT_TYPES"]
+            or self.server_mimetype.startswith("text/")
+        ):
+            return "text/plain"
 
         return self.server_mimetype
 
     def to_dict(self):
         return {
-            'name': self.name,
-            'size': self.size,
-            'server_mimetype': self.server_mimetype,
-            'client_mimetype': self.client_mimetype,
-            'slug': self.slug,
-            'hash': self.file_hash,
-            'created_at': self.created_at
+            "name": self.name,
+            "size": self.size,
+            "server_mimetype": self.server_mimetype,
+            "client_mimetype": self.client_mimetype,
+            "slug": self.slug,
+            "hash": self.file_hash,
+            "created_at": self.created_at,
         }
 
 
@@ -77,4 +81,4 @@ def after_delete(mapper, connection, target):
         pass
 
 
-event.listen(File, 'after_delete', after_delete)
+event.listen(File, "after_delete", after_delete)

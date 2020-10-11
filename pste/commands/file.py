@@ -21,35 +21,35 @@ from flask.cli import AppGroup
 from pste import BASE_DIR, db
 from pste.models import File
 
-group = AppGroup('file', help='File management commands.')
+group = AppGroup("file", help="File management commands.")
 
-DEFAULT_FG = 'bright_green'
-ERROR_FG = 'bright_red'
+DEFAULT_FG = "bright_green"
+ERROR_FG = "bright_red"
 
 
-@group.command('clean')
+@group.command("clean")
 def file_clean():
     """Deletes any orphaned files from storage."""
 
     deleted_files = 0
-    for root, _, files in os.walk(f'{BASE_DIR}/storage/uploads', topdown=False):
+    for root, _, files in os.walk(f"{BASE_DIR}/storage/uploads", topdown=False):
         for name in files:
             if File.query.filter_by(slug=name).first() is None:
-                os.remove(f'{root}/{name}')
+                os.remove(f"{root}/{name}")
                 deleted_files += 1
 
-    click.secho(f'Deleted {deleted_files} orphaned file(s).', fg=DEFAULT_FG)
+    click.secho(f"Deleted {deleted_files} orphaned file(s).", fg=DEFAULT_FG)
 
 
-@group.command('delete')
-@click.argument('files', nargs=-1, required=True)
-@click.confirmation_option(prompt='Confirm')
+@group.command("delete")
+@click.argument("files", nargs=-1, required=True)
+@click.confirmation_option(prompt="Confirm")
 def file_delete(files):
     """Delete file(s)."""
 
     file_query = File.query.filter(File.slug.in_(set(files))).all()
     for file in file_query:
         db.session.delete(file)
-        click.secho(f'Deleted {file.slug}', fg=DEFAULT_FG)
+        click.secho(f"Deleted {file.slug}", fg=DEFAULT_FG)
 
     db.session.commit()

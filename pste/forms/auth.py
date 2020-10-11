@@ -19,17 +19,25 @@ from wtforms.fields.html5 import EmailField
 
 
 class RegistrationForm(FlaskForm):
-    email = EmailField('Email', [validators.Email()])
-    password = PasswordField('Password', [
-        validators.DataRequired(message='Password is required.'),
-        validators.EqualTo('confirm', message='Passwords must match.'),
-        validators.Length(message='Password must be at least 6 characters long.', min=6)
-    ])
-    confirm = PasswordField('Confirm password')
-    submit = SubmitField('Register')
+    email = EmailField("Email", [validators.Email()])
+    password = PasswordField(
+        "Password",
+        [
+            validators.DataRequired(message="Password is required."),
+            validators.EqualTo("confirm", message="Passwords must match."),
+            validators.Length(
+                message="Password must be at least 6 characters long.", min=6
+            ),
+        ],
+    )
+    confirm = PasswordField("Confirm password")
+    submit = SubmitField("Register")
 
 
 class LoginForm(FlaskForm):
-    email = EmailField('Email', validators=[validators.Email()])
-    password = PasswordField('Password', validators=[validators.DataRequired(message='Password is required.')])
-    submit = SubmitField('Sign in')
+    email = EmailField("Email", validators=[validators.Email()])
+    password = PasswordField(
+        "Password",
+        validators=[validators.DataRequired(message="Password is required.")],
+    )
+    submit = SubmitField("Sign in")

@@ -48,8 +48,7 @@ ipython_config.py
 
 # Environments
 /.env
-.venv
-.flaskenv
+.venv/
 env/
 venv/
 ENV/

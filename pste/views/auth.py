@@ -13,37 +13,46 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Blueprint, abort, current_app as app, flash, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    abort,
+    current_app as app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
 from pste import db
 from pste.forms.auth import LoginForm, RegistrationForm
-from pste.models import User
+from pste.models.user import User
 from pste.utils import flash_errors
 
-blueprint = Blueprint('auth', __name__, url_prefix='/auth')
+blueprint = Blueprint("auth", __name__, url_prefix="/auth")
 
 
-@blueprint.route('/login', methods=['GET', 'POST'])
+@blueprint.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('web.index'))
+        return redirect(url_for("web.index"))
 
     form = LoginForm(request.form)
 
-    if request.method == 'GET':
-        return render_template('auth/login.html', title='Sign in', form=form)
+    if request.method == "GET":
+        return render_template("auth/login.html", title="Sign in", form=form)
 
     if not form.validate_on_submit():
         flash_errors(form)
-        return redirect(url_for('auth.login'))
+        return redirect(url_for("auth.login"))
 
     user = User.query.filter_by(email=form.email.data.lower()).first()
 
     if user is None or not user.check_password(form.password.data):
-        flash('Invalid email or password.', category='error')
-        return redirect(url_for('auth.login'))
+        flash("Invalid email or password.", category="error")
+        return redirect(url_for("auth.login"))
 
     # Upgrade from uPste imported passwords, or update if hash parameters have changed.
     if user.password_needs_update():
@@ -52,39 +61,39 @@ def login():
 
     login_user(user, remember=True)
 
-    next_page = request.args.get('next')
-    if not next_page or url_parse(next_page).netloc != '':
-        next_page = url_for('web.index')
+    next_page = request.args.get("next")
+    if not next_page or url_parse(next_page).netloc != "":
+        next_page = url_for("web.index")
 
     return redirect(next_page)
 
 
-@blueprint.route('/logout', methods=['GET'])
+@blueprint.route("/logout", methods=["GET"])
 def logout():
     logout_user()
-    return redirect(url_for('web.index'))
+    return redirect(url_for("web.index"))
 
 
-@blueprint.route('/register', methods=['GET', 'POST'])
+@blueprint.route("/register", methods=["GET", "POST"])
 def register():
-    if not app.config['ENABLE_REGISTRATION']:
+    if not app.config["ENABLE_REGISTRATION"]:
         abort(404)
 
     if current_user.is_authenticated:
-        return redirect(url_for('web.index'))
+        return redirect(url_for("web.index"))
 
     form = RegistrationForm(request.form)
-    if request.method == 'GET':
-        return render_template('auth/register.html', title='Register', form=form)
+    if request.method == "GET":
+        return render_template("auth/register.html", title="Register", form=form)
 
     if not form.validate_on_submit():
         flash_errors(form)
-        return redirect(url_for('auth.register'))
+        return redirect(url_for("auth.register"))
 
     email = form.email.data.lower()
     if User.query.filter_by(email=email).first() is not None:
-        flash('Email is already in use.', 'error')
-        return redirect(url_for('auth.register'))
+        flash("Email is already in use.", "error")
+        return redirect(url_for("auth.register"))
 
     user = User()
     user.email = email
@@ -94,4 +103,4 @@ def register():
     db.session.commit()
 
     login_user(user)
-    return redirect(url_for('auth.login'))
+    return redirect(url_for("auth.login"))
