@@ -20,7 +20,7 @@ import click
 from flask.cli import AppGroup
 
 from pste import db
-from pste.models import User
+from pste.models.user import User
 
 group = AppGroup("user", help="User management commands.")
 
