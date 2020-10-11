@@ -19,7 +19,9 @@ import string
 from flask import flash
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
-from pygments.lexers import guess_lexer
+from pygments.lexers import get_lexer_for_mimetype, guess_lexer
+from pygments.lexers.special import TextLexer
+from pygments.util import ClassNotFound
 
 
 def random_string(length):
@@ -33,6 +35,14 @@ def flash_errors(form):
             flash(f'{error}', category='error')
 
 
-def syntax_highlight(code):
-    lexer = guess_lexer(code)
+def syntax_highlight(file):
+    code = file.path.read_text()
+    try:
+        lexer = get_lexer_for_mimetype(file.server_mimetype)
+    except ClassNotFound:
+        try:
+            lexer = guess_lexer(code)
+        except ClassNotFound:
+            lexer = TextLexer()
+
     return highlight(code, lexer, HtmlFormatter(linenos='table', anchorlinenos=True, lineanchors='line'))

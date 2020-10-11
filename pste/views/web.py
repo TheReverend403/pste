@@ -52,11 +52,11 @@ def paste(slug):
     created_at = file_instance.created_at
     raw_url = url_for('web.file', slug=slug)
 
-    with open(file_instance.path, 'r') as fd:
-        try:
-            file_content = syntax_highlight(fd.read())
-        except UnicodeDecodeError:
-            return redirect(raw_url)
+    try:
+        file_content = syntax_highlight(file_instance)
+    except UnicodeDecodeError:
+        return redirect(raw_url)
 
-        return render_template('main/paste.html', size=size, mimetype=mimetype, name=name, created_at=created_at,
-                               file_content=file_content, raw_url=raw_url)
+    return render_template('main/paste.html', size=size, mimetype=mimetype, name=name, created_at=created_at,
+                           file_content=file_content, raw_url=raw_url)
+

@@ -47,12 +47,12 @@ class File(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 
     @property
-    def path(self):
-        return f'{self.user.storage_directory}/{self.slug}'
+    def path(self) -> Path:
+        return Path(self.user.storage_directory) / self.slug
 
     @property
     def response_mimetype(self):
-        ext = Path(self.path).suffix
+        ext = self.path.suffix
         if ext and ext.lstrip('.') in app.config['PLAINTEXT_TYPES'] or self.server_mimetype.startswith('text/'):
             return 'text/plain'
 
