@@ -34,7 +34,7 @@ def random_string(length):
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
-            flash(f"{error}", category="error")
+            flash(error, category="error")
 
 
 def syntax_highlight(file):
