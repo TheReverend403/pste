@@ -40,7 +40,7 @@ def flash_errors(form):
 def syntax_highlight(file):
     code = file.path.read_text()
     try:
-        lexer = get_lexer_for_mimetype(file.server_mimetype)
+        lexer = get_lexer_for_mimetype(file.client_mimetype)
     except ClassNotFound:
         try:
             lexer = guess_lexer(code)
