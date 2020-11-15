@@ -39,9 +39,7 @@ def validate_email(ctx, param, value):
 
 @group.command("create")
 @click.option("--email", "-e", prompt=True, callback=validate_email)
-@click.option(
-    "--password", "-p", prompt=True, hide_input=True, confirmation_prompt=True
-)
+@click.password_option()
 @click.option("--admin", "-a", is_flag=True, prompt=True, default=False)
 def user_create(email, password, admin):
     """Create user."""
