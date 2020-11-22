@@ -79,7 +79,7 @@ class User(db.Model, UserMixin):
 
     @property
     def storage_directory(self) -> Path:
-        return BASE_DIR / "storage" / "uploads" / self.id
+        return BASE_DIR / "storage" / "uploads" / str(self.id)
 
     def disk_usage(self, humanize=False):
         total = db.session.query(func.sum(File.size)).filter_by(user=self).scalar() or 0

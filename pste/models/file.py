@@ -48,7 +48,7 @@ class File(db.Model):
 
     @property
     def path(self) -> Path:
-        return Path(self.user.storage_directory) / self.slug
+        return self.user.storage_directory / self.slug
 
     @property
     def response_mimetype(self):
