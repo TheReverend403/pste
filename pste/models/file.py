@@ -14,23 +14,23 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+import secrets
 from pathlib import Path
 
 from flask import current_app as app
 from sqlalchemy import event, func
 
 from pste.extensions import db
-from pste.utils import random_string
 
 
-def generate_slug():
-    length = 3
+def generate_slug() -> str:
+    bytes = 3
 
     while True:
-        slug = random_string(length)
+        slug = secrets.token_urlsafe(bytes)
         if File.query.filter_by(slug=slug).first() is None:
             return slug
-        length += 1
+        bytes += 1
 
 
 class File(db.Model):
