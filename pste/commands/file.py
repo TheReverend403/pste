@@ -18,7 +18,8 @@ import os
 import click
 from flask.cli import AppGroup
 
-from pste import BASE_DIR, db
+from pste import BASE_DIR
+from pste.extensions import db
 from pste.models.file import File
 
 group = AppGroup("file", help="File management commands.")

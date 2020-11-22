@@ -14,22 +14,19 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging.config
-import os
 import subprocess
+from pathlib import Path
 
 import sentry_sdk
 import yaml
-from dynaconf import FlaskDynaconf
 from flask import Flask
-from flask_assets import Environment
-from flask_login import LoginManager
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
-from flask_wtf.csrf import CSRFProtect
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+from pste import extensions
+
+BASE_DIR = Path(__file__).parent.absolute()
+CONFIG_DIR = BASE_DIR.parent / "config"
 
 
 try:
@@ -40,20 +37,13 @@ except subprocess.CalledProcessError:
     # Not running from a git repo or git is not available.
     PSTE_VERSION = "pste"
 
-db = SQLAlchemy()
-migrate = Migrate(compare_type=True, directory=f"{BASE_DIR}/migrations")
-login = LoginManager()
-csrf = CSRFProtect()
-assets = Environment()
-dynaconf = FlaskDynaconf()
-
 
 def create_app():
     setup_logging()
     app = Flask(
         "pste",
-        static_folder=f"{BASE_DIR}/static",
-        template_folder=f"{BASE_DIR}/templates",
+        static_folder=str(BASE_DIR / "static"),
+        template_folder=str(BASE_DIR / "templates"),
     )
     app.config.update(PSTE_VERSION=PSTE_VERSION, SQLALCHEMY_TRACK_MODIFICATIONS=False)
     app.logger.info(f"Running {PSTE_VERSION}")
@@ -80,7 +70,7 @@ def register_blueprints(app):
 
 
 def register_extensions(app):
-    dynaconf.init_app(app)
+    extensions.dynaconf.init_app(app)
 
     if "SENTRY_DSN" in app.config and app.config["SENTRY_DSN"] and not app.debug:
         sentry_sdk.init(
@@ -90,29 +80,28 @@ def register_extensions(app):
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )
 
-    db.init_app(app)
-    migrate.init_app(app, db)
-    login.init_app(app)
-    csrf.init_app(app)
+    extensions.db.init_app(app)
+    extensions.migrate.init_app(app, extensions.db, directory=BASE_DIR / "migrations")
+    extensions.login.init_app(app)
+    extensions.csrf.init_app(app)
+    extensions.assets.init_app(app)
 
-    login.login_view = "auth.login"
+    extensions.login.login_view = "auth.login"
     app.logger.debug("Extensions registered.")
 
 
 def register_assets(app):
-    assets.init_app(app)
     with app.app_context():
-        assets.directory = f"{BASE_DIR}/static"
-        assets.append_path(f"{BASE_DIR}/assets")
-        assets.auto_build = False
+        extensions.assets.directory = BASE_DIR / "static"
+        extensions.assets.append_path(BASE_DIR / "assets")
+        extensions.assets.auto_build = False
 
-    assets.from_yaml(f"{BASE_DIR}/assets/assets.yml")
+    extensions.assets.from_yaml(str(BASE_DIR / "assets" / "assets.yml"))
     app.logger.debug("Assets registered.")
 
 
-def setup_logging(file=f"{os.path.dirname(BASE_DIR)}/config/logging.yml"):
+def setup_logging(file: Path = CONFIG_DIR / "logging.yml"):
     try:
-        with open(file, "r") as fd:
-            logging.config.dictConfig(yaml.safe_load(fd.read()))
+        logging.config.dictConfig(yaml.safe_load(file.read_text()))
     except FileNotFoundError:
-        setup_logging(f"{os.path.dirname(BASE_DIR)}/config/default/logging.yml")
+        setup_logging(CONFIG_DIR / "default" / "logging.yml")

@@ -22,7 +22,7 @@ from flask import Blueprint, current_app as app, jsonify, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 
-from pste import csrf, db
+from pste.extensions import csrf, db
 from pste.forms.api import UploadForm
 from pste.models.file import File
 from pste.models.file import generate_slug

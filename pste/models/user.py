@@ -15,13 +15,15 @@
 
 import os
 import shutil
+from pathlib import Path
 
 from flask import current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
 from sqlalchemy import event, func
 
-from pste import BASE_DIR, db, login, utils
+from pste import BASE_DIR, utils
+from pste.extensions import db, login
 from pste.models.file import File
 from pste.security import hasher
 
@@ -76,8 +78,8 @@ class User(db.Model, UserMixin):
         return db.session.query(func.count(File.id)).filter_by(user=self).scalar() or 0
 
     @property
-    def storage_directory(self):
-        return f"{BASE_DIR}/storage/uploads/{self.id}"
+    def storage_directory(self) -> Path:
+        return BASE_DIR / "storage" / "uploads" / self.id
 
     def disk_usage(self, humanize=False):
         total = db.session.query(func.sum(File.size)).filter_by(user=self).scalar() or 0
@@ -93,11 +95,11 @@ class User(db.Model, UserMixin):
         return quota
 
 
-def after_delete(mapper, connection, target):
+def after_delete(mapper, connection, target: User):
     shutil.rmtree(target.storage_directory, ignore_errors=True)
 
 
-def after_insert(mapper, connection, target):
+def after_insert(mapper, connection, target: User):
     os.makedirs(target.storage_directory, exist_ok=True)
 
 

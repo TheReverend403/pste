@@ -19,7 +19,7 @@ from pathlib import Path
 from flask import current_app as app
 from sqlalchemy import event, func
 
-from pste import db
+from pste.extensions import db
 from pste.utils import random_string
 
 
