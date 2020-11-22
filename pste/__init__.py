@@ -23,7 +23,7 @@ from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
-from pste import extensions
+from pste.extensions import assets, csrf, db, dynaconf, login, migrate
 
 BASE_DIR = Path(__file__).parent.absolute()
 CONFIG_DIR = BASE_DIR.parent / "config"
@@ -70,7 +70,7 @@ def register_blueprints(app):
 
 
 def register_extensions(app):
-    extensions.dynaconf.init_app(app)
+    dynaconf.init_app(app)
 
     if "SENTRY_DSN" in app.config and app.config["SENTRY_DSN"] and not app.debug:
         sentry_sdk.init(
@@ -80,23 +80,23 @@ def register_extensions(app):
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )
 
-    extensions.db.init_app(app)
-    extensions.migrate.init_app(app, extensions.db, directory=BASE_DIR / "migrations")
-    extensions.login.init_app(app)
-    extensions.csrf.init_app(app)
-    extensions.assets.init_app(app)
+    db.init_app(app)
+    migrate.init_app(app, db, directory=BASE_DIR / "migrations")
+    login.init_app(app)
+    csrf.init_app(app)
+    assets.init_app(app)
 
-    extensions.login.login_view = "auth.login"
+    login.login_view = "auth.login"
     app.logger.debug("Extensions registered.")
 
 
 def register_assets(app):
     with app.app_context():
-        extensions.assets.directory = BASE_DIR / "static"
-        extensions.assets.append_path(BASE_DIR / "assets")
-        extensions.assets.auto_build = False
+        assets.directory = BASE_DIR / "static"
+        assets.append_path(BASE_DIR / "assets")
+        assets.auto_build = False
 
-    extensions.assets.from_yaml(str(BASE_DIR / "assets" / "assets.yml"))
+    assets.from_yaml(str(BASE_DIR / "assets" / "assets.yml"))
     app.logger.debug("Assets registered.")
 
 
