@@ -34,6 +34,9 @@ default:
     # Max size of a single file upload. Defaults to 1GB.
     max_upload_size: 1073741824
 
+    # Minimum length of generated file URLs, excluding the file extension part (if any).
+    min_url_length: 3
+
     # Sentry
     # https://sentry.io
     sentry_dsn: ''

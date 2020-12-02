@@ -14,23 +14,23 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-import secrets
 from pathlib import Path
 
 from flask import current_app as app
 from sqlalchemy import event, func
 
 from pste.extensions import db
+from pste.utils import random_string
 
 
 def generate_slug() -> str:
-    bytes = 3
+    url_length = app.config.get("MIN_URL_LENGTH", 3)
 
     while True:
-        slug = secrets.token_urlsafe(bytes)
+        slug = random_string(url_length, extra_chars="-._~")
         if File.query.filter_by(slug=slug).first() is None:
             return slug
-        bytes += 1
+        url_length += 1
 
 
 class File(db.Model):
@@ -42,7 +42,7 @@ class File(db.Model):
     size = db.Column(db.BigInteger, nullable=False)
     client_mimetype = db.Column(db.String(128))
     server_mimetype = db.Column(db.String(128))
-    slug = db.Column(db.String(32), nullable=False, unique=True)
+    slug = db.Column(db.Text(), nullable=False, unique=True)
     file_hash = db.Column(db.String(64), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
 

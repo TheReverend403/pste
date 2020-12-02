@@ -24,9 +24,10 @@ from pygments.lexers.special import TextLexer
 from pygments.util import ClassNotFound
 
 
-def random_string(length):
+def random_string(length: int, extra_chars: str = ""):
     value = "".join(
-        random.choice(string.ascii_letters + string.digits) for _ in range(length)
+        random.choice(string.ascii_letters + string.digits + extra_chars)
+        for _ in range(length)
     )
     return value
 
