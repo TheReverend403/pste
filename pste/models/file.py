@@ -27,7 +27,7 @@ def generate_slug() -> str:
     url_length = app.config.get("MIN_URL_LENGTH", 3)
 
     while True:
-        slug = random_string(url_length, extra_chars="-._~")
+        slug = random_string(url_length, extra_chars="-_~")
         if File.query.filter_by(slug=slug).first() is None:
             return slug
         url_length += 1
