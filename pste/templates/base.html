@@ -7,7 +7,7 @@
     {% block meta %}{% endblock %}
 
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
-    <title>{{ config['NAME'] }}{{ ' - ' + title if title else '' }}</title>
+    <title>{{ title if title else config['NAME'] }}</title>
     {% block stylesheets %}{% endblock %}
 
     {% assets 'css-app' %}
