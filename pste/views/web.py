@@ -66,6 +66,7 @@ def paste(slug):
 
     return render_template(
         "main/paste.html",
+        title=name,
         size=size,
         mimetype=mimetype,
         name=name,
