@@ -794,7 +794,7 @@ postgresql = ["psycopg2"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "38ed7ac0dc987ee9d199ef5456690eb24805bc74b6cb615f67f251d20c9ed4ae"
+content-hash = "17a41b00e8bc1714cf7442d145e5c08375898e61d73aa5bbe38e44434cc03de3"
 
 [metadata.files]
 alembic = [
