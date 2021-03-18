@@ -1,6 +1,7 @@
 # pste
 
-[![License](https://img.shields.io/github/license/FoxDev/pste.svg)](https://www.gnu.org/licenses/gpl.txt)
+![GitHub](https://img.shields.io/github/license/FoxDev/pste?style=flat-square)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
 
 Just a simple file hosting application inspired by the likes of pomf.se and teknik.io.
 
