@@ -1,8 +1,6 @@
 # pste
 
 [![License](https://img.shields.io/github/license/FoxDev/pste.svg)](https://www.gnu.org/licenses/gpl.txt)
-[![Requirements Status](https://requires.io/github/FoxDev/pste/requirements.svg?branch=dev)](https://requires.io/github/FoxDev/pste/requirements/?branch=dev)
-[![Keybase PGP](https://img.shields.io/keybase/pgp/TheReverend403.svg)](https://keybase.io/thereverend403)
 
 Just a simple file hosting application inspired by the likes of pomf.se and teknik.io.
 
