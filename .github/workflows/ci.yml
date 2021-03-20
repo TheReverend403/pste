@@ -1,0 +1,35 @@
+name: ci
+
+on: [pull_request, push]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9']
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Poetry
+        uses: Gr1N/setup-poetry@v4
+
+      - name: Cache virtualenv
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install Dependencies
+        run: poetry install
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Lint
+        uses: pre-commit/action@v2.0.0
