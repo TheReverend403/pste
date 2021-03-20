@@ -37,8 +37,8 @@ def load_user_from_header(request):
 
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(user_id: str):
+    return User.query.get(int(user_id))
 
 
 def generate_api_key():

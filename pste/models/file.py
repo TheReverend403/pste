@@ -74,7 +74,7 @@ class File(db.Model):
         }
 
 
-def after_delete(mapper, connection, target):
+def after_delete(mapper, connection, target: File):
     try:
         os.remove(target.path)
     except OSError:
