@@ -23,7 +23,7 @@ from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
-from pste.extensions import assets, csrf, db, dynaconf, login, migrate
+from pste.extensions import assets, csrf, db, debugbar, dynaconf, login, migrate
 
 BASE_DIR = Path(__file__).parent.absolute()
 CONFIG_DIR = BASE_DIR.parent / "config"
@@ -45,7 +45,11 @@ def create_app():
         static_folder=str(BASE_DIR / "static"),
         template_folder=str(BASE_DIR / "templates"),
     )
-    app.config.update(PSTE_VERSION=PSTE_VERSION, SQLALCHEMY_TRACK_MODIFICATIONS=False)
+    app.config.update(
+        PSTE_VERSION=PSTE_VERSION,
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        DEBUG_TB_INTERCEPT_REDIRECTS=False,
+    )
     app.logger.info(f"Running {PSTE_VERSION}")
 
     register_extensions(app)
@@ -85,6 +89,7 @@ def register_extensions(app):
     login.init_app(app)
     csrf.init_app(app)
     assets.init_app(app)
+    debugbar.init_app(app)
 
     login.login_view = "auth.login"
     app.logger.debug("Extensions registered.")

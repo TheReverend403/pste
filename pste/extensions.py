@@ -15,6 +15,7 @@
 
 from dynaconf import FlaskDynaconf
 from flask_assets import Environment
+from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -26,3 +27,4 @@ login = LoginManager()
 csrf = CSRFProtect()
 assets = Environment()
 dynaconf = FlaskDynaconf()
+debugbar = DebugToolbarExtension()
