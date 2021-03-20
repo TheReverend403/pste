@@ -15,8 +15,8 @@
  * along with pste.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-Dropzone.prototype.defaultOptions.dictDefaultMessage = "Click or drag files here to upload.";
 Dropzone.options.psteUpload = {
+    dictDefaultMessage: "Click or drag files here to upload.",
     paramName: "file",
     timeout: 0,
     maxFilesize: null,
