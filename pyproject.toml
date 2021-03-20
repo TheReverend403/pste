@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pste"
-version = "0.4.2"
+version = "0.5.0"
 description = "Just a simple file hosting application inspired by the likes of pomf.se and teknik.io."
 authors = ["Lee Watson <rev@revthefox.co.uk>"]
 license = "GPL-3.0+"
