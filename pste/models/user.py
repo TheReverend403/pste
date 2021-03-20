@@ -21,10 +21,10 @@ from flask import current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
 from sqlalchemy import event, func
+from sqlalchemy.orm import backref
 
 from pste import BASE_DIR, utils
 from pste.extensions import db, login
-from pste.models.file import File
 from pste.security import hasher
 
 
@@ -62,7 +62,9 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean(), default=False)
     storage_quota = db.Column(db.BigInteger)
     created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
-    files = db.relationship("File", backref="user", lazy=True, cascade="all,delete")
+    files = db.relationship(
+        "File", backref=backref("user", lazy="joined"), cascade="all,delete"
+    )
 
     def set_password(self, password):
         self.password = hasher.hash(password)
@@ -75,14 +77,14 @@ class User(db.Model, UserMixin):
 
     @property
     def file_count(self):
-        return db.session.query(func.count(File.id)).filter_by(user=self).scalar() or 0
+        return len(self.files)
 
     @property
     def storage_directory(self) -> Path:
         return BASE_DIR / "storage" / "uploads" / str(self.id)
 
     def disk_usage(self, humanize=False):
-        total = db.session.query(func.sum(File.size)).filter_by(user=self).scalar() or 0
+        total = sum(file.size for file in self.files)
         if humanize:
             return naturalsize(total, gnu=True)
         return total
