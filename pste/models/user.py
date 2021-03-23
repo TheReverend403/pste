@@ -20,8 +20,17 @@ from pathlib import Path
 from flask import current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
-from sqlalchemy import event, func
-from sqlalchemy.orm import backref
+from sqlalchemy import (
+    BigInteger,
+    Boolean,
+    Column,
+    DateTime,
+    Integer,
+    String,
+    event,
+    func,
+)
+from sqlalchemy.orm import relationship
 
 from pste import BASE_DIR, utils
 from pste.extensions import db, login
@@ -53,18 +62,14 @@ def generate_api_key():
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
-    id = db.Column(db.Integer(), primary_key=True)
-    email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(255), nullable=False, server_default="")
-    api_key = db.Column(
-        db.String(64), nullable=False, unique=True, default=generate_api_key
-    )
-    is_admin = db.Column(db.Boolean(), default=False)
-    storage_quota = db.Column(db.BigInteger)
-    created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
-    files = db.relationship(
-        "File", backref=backref("user", lazy="joined"), cascade="all,delete"
-    )
+    id = Column(Integer, primary_key=True)
+    email = Column(String(255), nullable=False, unique=True)
+    password = Column(String(255), nullable=False, server_default="")
+    api_key = Column(String(64), nullable=False, unique=True, default=generate_api_key)
+    is_admin = Column(Boolean, default=False)
+    storage_quota = Column(BigInteger)
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    files = relationship("File", back_populates="user", cascade="all,delete")
 
     def set_password(self, password):
         self.password = hasher.hash(password)

@@ -24,7 +24,7 @@ from sqlalchemy.exc import IntegrityError
 
 from pste.extensions import csrf, db
 from pste.forms.api import UploadForm
-from pste.models.file import File
+from pste.models import File
 from pste.models.file import generate_slug
 
 blueprint = Blueprint("api", __name__, url_prefix="/api")

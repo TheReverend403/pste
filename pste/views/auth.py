@@ -28,7 +28,7 @@ from werkzeug.urls import url_parse
 
 from pste.extensions import db
 from pste.forms.auth import LoginForm, RegistrationForm
-from pste.models.user import User
+from pste.models import User
 from pste.utils import flash_errors
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")

@@ -17,9 +17,20 @@ import os
 from pathlib import Path
 
 from flask import current_app as app
-from sqlalchemy import event, func
+from sqlalchemy import (
+    BigInteger,
+    Column,
+    DateTime,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    event,
+    func,
+)
+from sqlalchemy.orm import relationship
 
-from pste.extensions import db
+from pste import db
 from pste.utils import random_string
 
 
@@ -36,15 +47,16 @@ def generate_slug() -> str:
 class File(db.Model):
     __tablename__ = "files"
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"))
-    name = db.Column(db.String(255), nullable=False)
-    size = db.Column(db.BigInteger, nullable=False)
-    client_mimetype = db.Column(db.String(128))
-    server_mimetype = db.Column(db.String(128))
-    slug = db.Column(db.Text(), nullable=False, unique=True)
-    file_hash = db.Column(db.String(64), nullable=False)
-    created_at = db.Column(db.DateTime(), nullable=False, server_default=func.now())
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    name = Column(String(255), nullable=False)
+    size = Column(BigInteger, nullable=False)
+    client_mimetype = Column(String(128))
+    server_mimetype = Column(String(128))
+    slug = Column(Text, nullable=False, unique=True)
+    file_hash = Column(String(64), nullable=False)
+    created_at = Column(DateTime, nullable=False, server_default=func.now())
+    user = relationship("User", back_populates="files")
 
     @property
     def path(self) -> Path:
