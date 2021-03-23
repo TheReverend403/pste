@@ -16,8 +16,9 @@
 import os
 import shutil
 from pathlib import Path
+from typing import Union
 
-from flask import current_app as app
+from flask import Request, current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
 from sqlalchemy import (
@@ -38,7 +39,7 @@ from pste.security import hasher
 
 
 @login.request_loader
-def load_user_from_header(request):
+def load_user_from_header(request: Request):
     auth_header = request.headers.get("Authorization")
     if auth_header:
         api_key = auth_header.replace("Bearer ", "")
@@ -50,7 +51,7 @@ def load_user(user_id: str):
     return User.query.get(int(user_id))
 
 
-def generate_api_key():
+def generate_api_key() -> str:
     while True:
         key = utils.random_string(64)
         if User.query.filter_by(api_key=key).first() is None:
@@ -71,30 +72,30 @@ class User(db.Model, UserMixin):
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     files = relationship("File", back_populates="user", cascade="all,delete")
 
-    def set_password(self, password):
+    def set_password(self, password: str):
         self.password = hasher.hash(password)
 
-    def password_needs_update(self):
+    def password_needs_update(self) -> bool:
         return hasher.needs_update(self.password)
 
-    def check_password(self, password):
+    def check_password(self, password: str) -> bool:
         return hasher.verify(password, self.password)
 
     @property
-    def file_count(self):
+    def file_count(self) -> int:
         return len(self.files)
 
     @property
     def storage_directory(self) -> Path:
         return BASE_DIR / "storage" / "uploads" / str(self.id)
 
-    def disk_usage(self, humanize=False):
+    def disk_usage(self, humanize: bool = False) -> Union[int, str]:
         total = sum(file.size for file in self.files)
         if humanize:
             return naturalsize(total, gnu=True)
         return total
 
-    def quota(self, humanize=False):
+    def quota(self, humanize: bool = False) -> Union[int, str]:
         quota = self.storage_quota or app.config["USER_STORAGE_LIMIT"]
         if humanize:
             quota = naturalsize(quota, gnu=True)

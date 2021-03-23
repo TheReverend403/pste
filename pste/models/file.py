@@ -63,7 +63,7 @@ class File(db.Model):
         return self.user.storage_directory / self.slug
 
     @property
-    def response_mimetype(self):
+    def response_mimetype(self) -> str:
         ext = self.path.suffix
         if (
             ext
@@ -74,7 +74,7 @@ class File(db.Model):
 
         return self.server_mimetype
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         return {
             "name": self.name,
             "size": self.size,

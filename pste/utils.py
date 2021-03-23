@@ -17,14 +17,17 @@ import random
 import string
 
 from flask import flash
+from flask_wtf import FlaskForm
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_for_mimetype, guess_lexer
 from pygments.lexers.special import TextLexer
 from pygments.util import ClassNotFound
 
+from pste.models import File
 
-def random_string(length: int, extra_chars: str = ""):
+
+def random_string(length: int, extra_chars: str = "") -> str:
     value = "".join(
         random.choice(string.ascii_letters + string.digits + extra_chars)
         for _ in range(length)
@@ -32,13 +35,13 @@ def random_string(length: int, extra_chars: str = ""):
     return value
 
 
-def flash_errors(form):
+def flash_errors(form: FlaskForm):
     for field, errors in form.errors.items():
         for error in errors:
             flash(error, category="error")
 
 
-def syntax_highlight(file):
+def syntax_highlight(file: File) -> str:
     code = file.path.read_text()
     try:
         lexer = get_lexer_for_mimetype(file.client_mimetype)
