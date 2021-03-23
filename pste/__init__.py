@@ -20,13 +20,25 @@ from pathlib import Path
 import sentry_sdk
 import yaml
 from flask import Flask
+from flask_session import SqlAlchemySessionInterface
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
-from pste.extensions import assets, csrf, db, debugbar, dynaconf, login, migrate
+from pste.extensions import (
+    assets,
+    csrf,
+    db,
+    debugbar,
+    dynaconf,
+    login,
+    migrate,
+)
 
 BASE_DIR = Path(__file__).parent.absolute()
 CONFIG_DIR = BASE_DIR.parent / "config"
+STATIC_DIR = BASE_DIR / "static"
+ASSETS_DIR = BASE_DIR / "assets"
+STORAGE_DIR = BASE_DIR / "storage"
 
 
 try:
@@ -42,13 +54,14 @@ def create_app():
     setup_logging()
     app = Flask(
         "pste",
-        static_folder=str(BASE_DIR / "static"),
+        static_folder=str(STATIC_DIR),
         template_folder=str(BASE_DIR / "templates"),
     )
     app.config.update(
         PSTE_VERSION=PSTE_VERSION,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
+        SESSION_TYPE="sqlalchemy",
     )
     app.logger.info(f"Running {PSTE_VERSION}")
 
@@ -86,6 +99,7 @@ def register_extensions(app):
 
     db.init_app(app)
     migrate.init_app(app, db, directory=BASE_DIR / "migrations")
+    app.session_interface = SqlAlchemySessionInterface(app, db, "sessions", "")
     login.init_app(app)
     csrf.init_app(app)
     assets.init_app(app)
@@ -97,11 +111,11 @@ def register_extensions(app):
 
 def register_assets(app):
     with app.app_context():
-        assets.directory = BASE_DIR / "static"
-        assets.append_path(BASE_DIR / "assets")
+        assets.directory = STATIC_DIR
+        assets.append_path(ASSETS_DIR)
         assets.auto_build = False
 
-    assets.from_yaml(str(BASE_DIR / "assets" / "assets.yml"))
+    assets.from_yaml(str(ASSETS_DIR / "assets.yml"))
     app.logger.debug("Assets registered.")
 
 

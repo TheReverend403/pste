@@ -17,6 +17,11 @@ import os
 from pathlib import Path
 
 from flask import current_app as app
+from pygments import highlight
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers import get_lexer_for_mimetype, guess_lexer
+from pygments.lexers.special import TextLexer
+from pygments.util import ClassNotFound
 from sqlalchemy import (
     BigInteger,
     Column,
@@ -94,3 +99,20 @@ def after_delete(mapper, connection, target: File):
 
 
 event.listen(File, "after_delete", after_delete)
+
+
+def syntax_highlight(file: File) -> str:
+    code = file.path.read_text()
+    try:
+        lexer = get_lexer_for_mimetype(file.client_mimetype)
+    except ClassNotFound:
+        try:
+            lexer = guess_lexer(code)
+        except ClassNotFound:
+            lexer = TextLexer()
+
+    return highlight(
+        code,
+        lexer,
+        HtmlFormatter(linenos="table", anchorlinenos=True, lineanchors="line"),
+    )

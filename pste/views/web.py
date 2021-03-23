@@ -25,7 +25,7 @@ from flask_login import login_required
 from humanize import naturalsize
 
 from pste.models import File
-from pste.utils import syntax_highlight
+from pste.models.file import syntax_highlight
 
 blueprint = Blueprint("web", __name__)
 
