@@ -61,6 +61,7 @@ def create_app():
         PSTE_VERSION=PSTE_VERSION,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
+        SESSION_COOKIE_SECURE=True,
         SESSION_USE_SIGNER=True,
     )
     app.logger.info(f"Running {PSTE_VERSION}")
