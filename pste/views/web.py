@@ -18,12 +18,12 @@ from flask import (
     make_response,
     redirect,
     render_template,
-    send_file,
     url_for,
 )
 from flask_login import login_required
 from humanize import naturalsize
 
+from pste import STORAGE_DIR
 from pste.models import File
 from pste.models.file import syntax_highlight
 
@@ -39,10 +39,12 @@ def index():
 @blueprint.route("/f/<string:slug>")
 def file(slug):
     file_instance = File.query.filter_by(slug=slug).first_or_404()
+    relative_path = file_instance.path.relative_to(STORAGE_DIR)
 
-    response = make_response(send_file(file_instance.path))
+    response = make_response()
     response.headers["Content-Type"] = file_instance.response_mimetype
     response.headers["Content-Disposition"] = f'inline; filename="{file_instance.name}"'
+    response.headers["X-Accel-Redirect"] = f"/{relative_path}"
     return response
 
 
