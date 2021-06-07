@@ -34,7 +34,7 @@ Flask-Session = "^0.3.2"
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.11.1"
 flake8 = "^3.9.0"
-black = "^20.8b1"
+black = "^21.5b2"
 
 [tool.poetry.extras]
 mysql = ["mysqlclient"]

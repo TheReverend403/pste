@@ -15,18 +15,20 @@
  * along with pste.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+function onSuccess(file, responseText) {
+    $(file.previewTemplate).append($("<a>", {
+        "target": "_blank",
+        "href": responseText.url,
+        html: "Open..."
+    }))
+}
+
 Dropzone.options.psteUpload = {
     dictDefaultMessage: "Click or drag files here to upload.",
     paramName: "file",
     timeout: 0,
     maxFilesize: null,
     init: function () {
-        this.on("success", function (file, responseText) {
-            $(file.previewTemplate).append($("<a>", {
-                "target": "_blank",
-                "href": responseText.url,
-                html: "Open..."
-            }))
-        })
+        this.on("success", onSuccess);
     }
 };
