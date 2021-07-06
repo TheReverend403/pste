@@ -33,8 +33,9 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
-from pste import BASE_DIR, utils
+from pste import utils
 from pste.extensions import db, login
+from pste.paths import BASE_DIR
 from pste.security import hasher
 
 

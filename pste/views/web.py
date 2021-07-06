@@ -23,9 +23,9 @@ from flask import (
 from flask_login import login_required
 from humanize import naturalsize
 
-from pste import STORAGE_DIR
 from pste.models import File
 from pste.models.file import syntax_highlight
+from pste.paths import STORAGE_DIR
 
 blueprint = Blueprint("web", __name__)
 

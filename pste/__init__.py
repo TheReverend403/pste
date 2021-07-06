@@ -33,13 +33,7 @@ from pste.extensions import (
     login,
     migrate,
 )
-
-BASE_DIR = Path(__file__).parent.absolute()
-CONFIG_DIR = BASE_DIR.parent / "config"
-STATIC_DIR = BASE_DIR / "static"
-ASSETS_DIR = BASE_DIR / "assets"
-STORAGE_DIR = BASE_DIR / "storage"
-
+from pste.paths import ASSETS_DIR, BASE_DIR, CONFIG_DIR, STATIC_DIR
 
 try:
     PSTE_VERSION = (
@@ -56,13 +50,6 @@ def create_app():
         "pste",
         static_folder=str(STATIC_DIR),
         template_folder=str(BASE_DIR / "templates"),
-    )
-    app.config.update(
-        PSTE_VERSION=PSTE_VERSION,
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        DEBUG_TB_INTERCEPT_REDIRECTS=False,
-        SESSION_COOKIE_SECURE=not app.debug,
-        SESSION_USE_SIGNER=True,
     )
     app.logger.info(f"Running {PSTE_VERSION}")
 
@@ -89,6 +76,13 @@ def register_blueprints(app):
 
 def register_extensions(app):
     dynaconf.init_app(app)
+    app.config.update(
+        PSTE_VERSION=PSTE_VERSION,
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        DEBUG_TB_INTERCEPT_REDIRECTS=False,
+        SESSION_COOKIE_SECURE=not app.debug,
+        SESSION_USE_SIGNER=True,
+    )
 
     if "SENTRY_DSN" in app.config and app.config["SENTRY_DSN"] and not app.debug:
         sentry_sdk.init(
