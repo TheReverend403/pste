@@ -13,7 +13,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from dynaconf import FlaskDynaconf
+from pathlib import Path
+
+from dynaconf import Dynaconf, FlaskDynaconf
 from flask_assets import Environment
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
@@ -26,5 +28,13 @@ migrate = Migrate(compare_type=True)
 login = LoginManager()
 csrf = CSRFProtect()
 assets = Environment()
-dynaconf = FlaskDynaconf(ENVIRONMENTS=False)
 debugbar = DebugToolbarExtension()
+
+dynaconf = FlaskDynaconf(
+    dynaconf_instance=Dynaconf(
+        settings_file=Path().cwd() / "config" / "settings.yml",
+        environments=False,
+        envvar_prefix="REHOME",
+        yaml_loader="safe_load",
+    ),
+)
