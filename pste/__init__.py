@@ -23,7 +23,7 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
 
 from pste import paths
-from pste.extensions import assets, csrf, db, debugbar, dynaconf, login, migrate
+from pste.extensions import assets, csrf, db, dynaconf, login, migrate
 
 try:
     PSTE_VERSION = (
@@ -40,7 +40,6 @@ def create_app():
         static_folder=str(paths.STATIC),
         template_folder=str(paths.TEMPLATES),
     )
-    app.logger.info(f"Running {PSTE_VERSION}")
 
     load_configuration(app)
     register_extensions(app)
@@ -91,15 +90,18 @@ def register_extensions(app):
     init_sentry(app)
     db.init_app(app)
     migrate.init_app(app, db, directory=paths.BASE / "migrations")
-    app.session_interface = SqlAlchemySessionInterface(app, db, "sessions", "")
-    login.init_app(app)
     csrf.init_app(app)
     assets.init_app(app)
+    login.init_app(app)
 
-    if app.debug:
+    app.session_interface = SqlAlchemySessionInterface(app, db, "sessions", "")
+    login.login_view = "auth.login"
+
+    from pste.extensions import debugbar
+
+    if app.debug and debugbar is not None:
         debugbar.init_app(app)
 
-    login.login_view = "auth.login"
     app.logger.debug("Extensions registered.")
 
 

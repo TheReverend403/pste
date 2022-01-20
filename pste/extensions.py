@@ -15,7 +15,6 @@
 
 from dynaconf import Dynaconf, FlaskDynaconf
 from flask_assets import Environment
-from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -26,7 +25,17 @@ migrate = Migrate(compare_type=True)
 login = LoginManager()
 csrf = CSRFProtect()
 assets = Environment()
-debugbar = DebugToolbarExtension()
+debugbar = None
+
+try:
+    import flask_debugtoolbar
+except ImportError:
+    pass
+else:
+    from flask_debugtoolbar import DebugToolbarExtension
+
+    debugbar = DebugToolbarExtension()
+
 
 dynaconf = FlaskDynaconf(
     dynaconf_instance=Dynaconf(

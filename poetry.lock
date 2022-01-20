@@ -339,7 +339,7 @@ webassets = ">=2.0"
 name = "flask-debugtoolbar"
 version = "0.11.0"
 description = "A toolbar overlay for debugging Flask applications."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -983,7 +983,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "15e6bbefc95caa43f3c4bbb587490dbd123c379e547b34ce1cdabe17c15a4dc9"
+content-hash = "7b4ed249be4635ff3d87ec3d4d9bacd37fd05a4d76c572399ae208db9f7abdfd"
 
 [metadata.files]
 alembic = [
