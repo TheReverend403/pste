@@ -7,13 +7,13 @@ license = "GPL-3.0+"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-flask = "^1.1.0"
+flask = "^2.0.0"
 flask-login = "^0.5.0"
 flask-sqlalchemy = "^2.4.0"
-flask-migrate = "^2.5.0"
-flask-wtf = "^0.14"
+flask-migrate = "^3.1.0"
+flask-wtf = "^1.0.0"
 flask-assets = "^2.0"
-libsass = "^0.20.0"
+libsass = "^0.21.0"
 cssmin = "^0.2.0"
 dynaconf = { version = "^3.1.0", extras = ["yaml"] }
 passlib = { extras = ["argon2", "bcrypt"], version = "^1.7.0" }
@@ -24,24 +24,26 @@ sentry-sdk = { extras = ["flask"], version = "^1.0.0" }
 psycopg2 = "^2.8.0"
 gunicorn = { version = "^20.0", extras = ["gevent"] }
 email_validator = "^1.0.5"
-python-dotenv = "^0.15.0"
+python-dotenv = "^0.19.0"
 python-box = "^5.2.0"
-pyyaml = "^5.3.1"
 Flask-DebugToolbar = "^0.11.0"
 Flask-Session = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^2.11.1"
-flake8 = "^3.9.0"
-black = "^21.5b2"
+black = "^21.12b0"
+pre-commit = "^2.16.0"
+flake8 = "^4.0.1"
+isort = "^5.9.1"
+flake8-bandit = "^2.1.2"
+flake8-bugbear = "^22.1.0"
 
 [tool.black]
-exclude = '''
-(
-    pste/storage/|
-    pste/migrations/
-)
-'''
+exclude = '^(data/)'
+
+[tool.isort]
+profile = "black"
+src_paths = ["pste"]
+extend_skip = ["data/"]
 
 [build-system]
 requires = ["poetry>=1.0"]

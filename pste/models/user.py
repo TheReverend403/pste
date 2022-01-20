@@ -18,7 +18,8 @@ import shutil
 from pathlib import Path
 from typing import Union
 
-from flask import Request, current_app as app
+from flask import Request
+from flask import current_app as app
 from flask_login import UserMixin
 from humanize import naturalsize
 from sqlalchemy import (
@@ -33,9 +34,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
-from pste import utils
+from pste import paths, utils
 from pste.extensions import db, login
-from pste.paths import BASE_DIR
 from pste.security import hasher
 
 
@@ -88,7 +88,7 @@ class User(db.Model, UserMixin):
 
     @property
     def storage_directory(self) -> Path:
-        return BASE_DIR / "storage" / "uploads" / str(self.id)
+        return paths.DATA / "uploads" / str(self.id)
 
     def disk_usage(self, humanize: bool = False) -> Union[int, str]:
         total = sum(file.size for file in self.files)
@@ -97,7 +97,7 @@ class User(db.Model, UserMixin):
         return total
 
     def quota(self, humanize: bool = False) -> Union[int, str]:
-        quota = self.storage_quota or app.config["USER_STORAGE_LIMIT"]
+        quota = self.storage_quota or app.config.USER_STORAGE_LIMIT
         if humanize:
             quota = naturalsize(quota, gnu=True)
 

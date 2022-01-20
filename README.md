@@ -19,7 +19,7 @@ git clone https://github.com/FoxDev/pste
 cd pste
 poetry install
 yarn install # or `npm install` if you're a caveman.
-cp config/default/config.yml config/config.yml # Edit config.yml
+cp pste/resources/config/settings.yml config/settings.yml # Edit settings.yml
 poetry shell
 
 echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv

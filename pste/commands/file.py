@@ -18,7 +18,7 @@ import os
 import click
 from flask.cli import AppGroup
 
-from pste import BASE_DIR
+from pste import paths
 from pste.extensions import db
 from pste.models.file import File
 
@@ -30,10 +30,10 @@ ERROR_FG = "bright_red"
 
 @group.command("clean")
 def file_clean():
-    """Deletes any orphaned files from storage."""
+    """Deletes any orphaned files from data."""
 
     deleted_files = 0
-    for root, _, files in os.walk(f"{BASE_DIR}/storage/uploads", topdown=False):
+    for root, _, files in os.walk(f"{paths.DATA}/uploads", topdown=False):
         for name in files:
             if File.query.filter_by(slug=name).first() is None:
                 os.remove(f"{root}/{name}")

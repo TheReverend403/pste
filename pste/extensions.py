@@ -21,8 +21,6 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
-from pste.paths import CONFIG_DIR
-
 db = SQLAlchemy()
 migrate = Migrate(compare_type=True)
 login = LoginManager()
@@ -32,9 +30,7 @@ debugbar = DebugToolbarExtension()
 
 dynaconf = FlaskDynaconf(
     dynaconf_instance=Dynaconf(
-        settings_file=CONFIG_DIR / "config.yml",
         environments=False,
-        envvar_prefix="PSTE",
-        yaml_loader="safe_load",
+        envvar_prefix="FLASK",
     ),
 )

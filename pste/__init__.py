@@ -13,46 +13,36 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import logging.config
 import subprocess
-from pathlib import Path
 
 import sentry_sdk
-import yaml
 from flask import Flask
 from flask_session import SqlAlchemySessionInterface
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+from webassets import Bundle
 
-from pste.extensions import (
-    assets,
-    csrf,
-    db,
-    debugbar,
-    dynaconf,
-    login,
-    migrate,
-)
-from pste.paths import ASSETS_DIR, BASE_DIR, CONFIG_DIR, STATIC_DIR
+from pste import paths
+from pste.extensions import assets, csrf, db, debugbar, dynaconf, login, migrate
 
 try:
     PSTE_VERSION = (
         "pste " + subprocess.check_output(["git", "describe"]).decode("UTF-8").strip()
     )
-except subprocess.CalledProcessError:
+except FileNotFoundError:
     # Not running from a git repo or git is not available.
     PSTE_VERSION = "pste"
 
 
 def create_app():
-    setup_logging()
     app = Flask(
         "pste",
-        static_folder=str(STATIC_DIR),
-        template_folder=str(BASE_DIR / "templates"),
+        static_folder=str(paths.STATIC),
+        template_folder=str(paths.TEMPLATES),
     )
     app.logger.info(f"Running {PSTE_VERSION}")
 
+    load_configuration(app)
     register_extensions(app)
     register_commands(app)
     register_blueprints(app)
@@ -74,48 +64,95 @@ def register_blueprints(app):
     app.logger.debug("Blueprints registered.")
 
 
-def register_extensions(app):
+def init_sentry(app):
+    if (dsn := app.config.get("sentry_dsn")) and not (app.debug or app.testing):
+        app.logger.info("Sentry enabled.")
+        sentry_sdk.init(
+            dsn=dsn,
+            environment=app.env,
+            release=PSTE_VERSION.replace("pste ", ""),
+            integrations=[FlaskIntegration(), SqlalchemyIntegration()],
+        )
+    else:
+        app.logger.debug("Sentry disabled.")
+
+
+def load_configuration(app):
     dynaconf.init_app(app)
     app.config.update(
         PSTE_VERSION=PSTE_VERSION,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
-        SESSION_COOKIE_SECURE=not app.debug,
         SESSION_USE_SIGNER=True,
     )
 
-    if "SENTRY_DSN" in app.config and app.config["SENTRY_DSN"] and not app.debug:
-        sentry_sdk.init(
-            dsn=app.config["SENTRY_DSN"],
-            environment=app.config["ENV"],
-            release=PSTE_VERSION.replace("pste ", ""),
-            integrations=[FlaskIntegration(), SqlalchemyIntegration()],
-        )
 
+def register_extensions(app):
+    init_sentry(app)
     db.init_app(app)
-    migrate.init_app(app, db, directory=BASE_DIR / "migrations")
+    migrate.init_app(app, db, directory=paths.BASE / "migrations")
     app.session_interface = SqlAlchemySessionInterface(app, db, "sessions", "")
     login.init_app(app)
     csrf.init_app(app)
     assets.init_app(app)
-    debugbar.init_app(app)
+
+    if app.debug:
+        debugbar.init_app(app)
 
     login.login_view = "auth.login"
     app.logger.debug("Extensions registered.")
 
 
 def register_assets(app):
+    bundles = {
+        "css-pygments": Bundle(
+            "css/pygments.css",
+            filters="cssmin",
+            output="css/pygments-%(version)s.css",
+        ),
+        "css-dropzone": Bundle(
+            f"{paths.NODE_MODULES}/dropzone/dist/dropzone.css",
+            filters="cssmin",
+            output="css/vendor/dropzone-%(version)s.css",
+        ),
+        "css-app": Bundle(
+            "scss/app.scss",
+            "css/starwars-glyphicons.css",
+            filters="libsass,cssmin",
+            output="css/app-%(version)s.css",
+        ),
+        "js-jquery": Bundle(
+            f"{paths.NODE_MODULES}/jquery/dist/jquery.slim.js",
+            filters="rjsmin",
+            output="js/vendor/jquery-%(version)s.js",
+        ),
+        "js-popper": Bundle(
+            f"{paths.NODE_MODULES}/popper.js/dist/umd/popper.js",
+            filters="rjsmin",
+            output="js/vendor/popper-%(version)s.js",
+        ),
+        "js-bootstrap": Bundle(
+            f"{paths.NODE_MODULES}/bootstrap/dist/js/bootstrap.js",
+            filters="rjsmin",
+            output="js/vendor/bootstrap-%(version)s.js",
+        ),
+        "js-dropzone": Bundle(
+            f"{paths.NODE_MODULES}/dropzone/dist/dropzone.js",
+            filters="rjsmin",
+            output="js/vendor/dropzone-%(version)s.js",
+        ),
+        "js-app": Bundle(
+            "js/app.js",
+            filters="rjsmin",
+            output="js/app-%(version)s.js",
+        ),
+    }
+
     with app.app_context():
-        assets.directory = STATIC_DIR
-        assets.append_path(ASSETS_DIR)
-        assets.auto_build = False
+        assets.directory = app.static_folder
+        assets.append_path(paths.ASSETS)
 
-    assets.from_yaml(str(ASSETS_DIR / "assets.yml"))
+    for name, bundle in bundles.items():
+        assets.register(name, bundle)
+
     app.logger.debug("Assets registered.")
-
-
-def setup_logging(file: Path = CONFIG_DIR / "logging.yml"):
-    try:
-        logging.config.dictConfig(yaml.safe_load(file.read_text()))
-    except FileNotFoundError:
-        setup_logging(CONFIG_DIR / "default" / "logging.yml")

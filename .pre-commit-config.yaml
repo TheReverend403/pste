@@ -1,21 +1,30 @@
 repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
   - repo: https://github.com/psf/black
-    rev: '21.5b2'
+    rev: '21.12b0'
     hooks:
       - id: black
-        exclude: |
-          (?x)(
-              ^pste/storage/|
-              ^pste/migrations/
-          )
-        args:
-          - '--check'
+        exclude: '^(data/)'
+
   - repo: https://gitlab.com/pycqa/flake8
-    rev: '3.9.2'
+    rev: '4.0.1'
     hooks:
       - id: flake8
         exclude: |
           (?x)(
-              ^pste/storage/|
-              ^pste/migrations/
+            ^data/|
+            ^\.git/|
+            ^__pycache__|
           )
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.9.1
+    hooks:
+      - id: isort
+        args: ['--profile', 'black', '--extend-skip', 'data/', '--src-path', 'pste']

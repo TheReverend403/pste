@@ -72,7 +72,7 @@ class File(db.Model):
         ext = self.path.suffix
         if (
             ext
-            and ext.lstrip(".") in app.config["PLAINTEXT_TYPES"]
+            and ext.lstrip(".") in app.config.PLAINTEXT_TYPES
             or self.server_mimetype.startswith("text/")
         ):
             return "text/plain"

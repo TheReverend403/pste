@@ -18,7 +18,9 @@ import os
 from pathlib import Path
 
 import magic
-from flask import Blueprint, current_app as app, jsonify, request, url_for
+from flask import Blueprint
+from flask import current_app as app
+from flask import jsonify, request, url_for
 from flask_login import current_user, login_required
 from sqlalchemy.exc import IntegrityError
 

@@ -13,19 +13,13 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import (
-    Blueprint,
-    make_response,
-    redirect,
-    render_template,
-    url_for,
-)
+from flask import Blueprint, make_response, redirect, render_template, url_for
 from flask_login import login_required
 from humanize import naturalsize
 
+from pste import paths
 from pste.models import File
 from pste.models.file import syntax_highlight
-from pste.paths import STORAGE_DIR
 
 blueprint = Blueprint("web", __name__)
 
@@ -39,7 +33,7 @@ def index():
 @blueprint.route("/f/<string:slug>")
 def file(slug):
     file_instance = File.query.filter_by(slug=slug).first_or_404()
-    relative_path = file_instance.path.relative_to(STORAGE_DIR)
+    relative_path = file_instance.path.relative_to(paths.DATA)
 
     response = make_response()
     response.headers["Content-Type"] = file_instance.response_mimetype
