@@ -1,2 +1,2 @@
 #!/bin/sh
-runuser -u "$APP_USER" -- flask db upgrade
+gosu "$APP_USER" flask db upgrade

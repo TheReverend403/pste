@@ -1,2 +1,2 @@
 #!/bin/sh
-exec runuser -u "$APP_USER" -- "$@"
+gosu "$APP_USER" "$@"

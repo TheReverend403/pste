@@ -60,7 +60,7 @@ COPY docker/entrypoint.d/ /etc/entrypoint.d/
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
-        util-linux \
+        curl \
         libpq5 \
         libmagic1
 
@@ -80,6 +80,8 @@ COPY --chown=${APP_USER}:${APP_USER} ./pste ./pste
 
 ENV APP_USER=${APP_USER} \
     SETTINGS_FILE_FOR_DYNACONF="/config/settings.yml" \
+    GUNICORN_HOST="0.0.0.0" \
+    GUNICORN_PORT=5000 \
     FLASK_APP="pste" \
     FLASK_ENV="production" \
     PATHS_STATIC="/static" \
@@ -89,5 +91,6 @@ ENV APP_USER=${APP_USER} \
 VOLUME ["/static", "/config", "/data"]
 EXPOSE 5000
 
+HEALTHCHECK --interval=10s --timeout=5s CMD ["/usr/bin/healthcheckd.sh"]
 ENTRYPOINT ["/usr/bin/entrypointd.sh"]
-CMD ["sh", "-c", "gunicorn 'pste:create_app()' --worker-class gevent --bind 0.0.0.0:5000 $GUNICORN_OPTS"]
+CMD ["sh", "-c", "gunicorn 'pste:create_app()' --worker-class gevent --bind $GUNICORN_HOST:$GUNICORN_PORT $GUNICORN_OPTS"]
