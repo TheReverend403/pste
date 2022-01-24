@@ -1,0 +1,7 @@
+#!/command/with-contenv sh
+set -e
+
+cd /app || exit 1
+. "$VENV_PATH/bin/activate"
+
+s6-setuidgid "$APP_USER" flask db upgrade

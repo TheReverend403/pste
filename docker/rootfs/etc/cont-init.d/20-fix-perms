@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/command/with-contenv sh
+set -e
 
 if test -z "$PUID" && test -z "$PGID"; then
     echo "Neither PUID or PGID are set, skipping permission changes."
@@ -6,14 +7,11 @@ if test -z "$PUID" && test -z "$PGID"; then
 fi
 
 if test -n "$PUID"; then
-    echo "Changing UID of $APP_USER to $PUID"
-    usermod -u "$PUID" "$APP_USER"
+    /usr/sbin/usermod -u "$PUID" "$APP_USER" > /dev/null
 fi
 
 if test -n "$PGID"; then
-    echo "Changing GID of $APP_USER to $PGID"
-    groupmod -g "$PGID" "$APP_USER"
+    /usr/sbin/groupmod -g "$PGID" "$APP_USER" > /dev/null
 fi
 
-echo "Changing ownership of app files"
 chown -R "$APP_USER:$APP_USER" /config /data /app /static

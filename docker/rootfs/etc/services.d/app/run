@@ -1,0 +1,8 @@
+#!/command/with-contenv sh
+set -e
+
+cd /app || exit 1
+. "$VENV_PATH/bin/activate"
+
+# shellcheck disable=SC2086
+s6-setuidgid "$APP_USER" gunicorn "$FLASK_APP:create_app()" --worker-class gevent --bind "$GUNICORN_HOST:$GUNICORN_PORT" $GUNICORN_OPTS
