@@ -136,8 +136,7 @@ RUN addgroup --gid 1000 --system $APP_USER && \
 
 WORKDIR /app
 
-COPY --chown=$APP_USER:$APP_USER ./rehome ./rehome
-COPY --chown=$APP_USER:$APP_USER ./alembic.ini .
+COPY --chown=$APP_USER:$APP_USER ./pste ./pste
 
 ENV FLASK_ENV="production"
 
