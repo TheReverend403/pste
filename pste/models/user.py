@@ -13,10 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
 import shutil
 from pathlib import Path
-from typing import Union
 
 from flask import Request
 from flask import current_app as app
@@ -45,6 +43,7 @@ def load_user_from_header(request: Request):
     if auth_header:
         api_key = auth_header.replace("Bearer ", "")
         return User.query.filter_by(api_key=api_key).first()
+    return None
 
 
 @login.user_loader
@@ -90,13 +89,13 @@ class User(db.Model, UserMixin):
     def storage_directory(self) -> Path:
         return paths.DATA / "uploads" / str(self.id)
 
-    def disk_usage(self, humanize: bool = False) -> Union[int, str]:
+    def disk_usage(self, humanize: bool = False) -> int | str:
         total = sum(file.size for file in self.files)
         if humanize:
             return naturalsize(total, gnu=True)
         return total
 
-    def quota(self, humanize: bool = False) -> Union[int, str]:
+    def quota(self, humanize: bool = False) -> int | str:
         quota = self.storage_quota or app.config.USER_STORAGE_LIMIT
         if humanize:
             quota = naturalsize(quota, gnu=True)
@@ -109,7 +108,7 @@ def after_delete(mapper, connection, target: User):
 
 
 def after_insert(mapper, connection, target: User):
-    os.makedirs(target.storage_directory, exist_ok=True)
+    Path(target.storage_directory).mkdir(parents=True, exist_ok=True)
 
 
 event.listen(User, "after_delete", after_delete)

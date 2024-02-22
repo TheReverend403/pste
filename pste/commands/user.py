@@ -26,6 +26,8 @@ group = AppGroup("user", help="User management commands.")
 
 DEFAULT_FG = "bright_green"
 ERROR_FG = "bright_red"
+PASSWORD_MIN_LEN = 6
+TERM_WIDTH_MAX = 40
 
 
 def validate_email(ctx, param, value):
@@ -52,9 +54,11 @@ def user_create(email, password, admin):
         click.secho("Email is already in use.", fg=ERROR_FG, err=True)
         return
 
-    if len(password) < 6:
+    if len(password) < PASSWORD_MIN_LEN:
         click.secho(
-            "Password must be at least 6 characters long.", fg=ERROR_FG, err=True
+            f"Password must be at least {PASSWORD_MIN_LEN} characters long.",
+            fg=ERROR_FG,
+            err=True,
         )
         return
 
@@ -90,8 +94,8 @@ def user_list():
         return
 
     term_width, _ = shutil.get_terminal_size()
-    if term_width > 40:
-        term_width = 40
+    if term_width > TERM_WIDTH_MAX:
+        term_width = TERM_WIDTH_MAX
 
     seperator = "".join("-" for _ in range(term_width))
 

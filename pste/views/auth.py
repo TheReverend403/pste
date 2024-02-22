@@ -13,11 +13,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Blueprint, abort
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask import current_app as app
-from flask import flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user
-from werkzeug.urls import url_parse
+from werkzeug.urls import urlsplit
 
 from pste.extensions import db
 from pste.forms.auth import LoginForm, RegistrationForm
@@ -55,7 +54,7 @@ def login():
     login_user(user, remember=True)
 
     next_page = request.args.get("next")
-    if not next_page or url_parse(next_page).netloc != "":
+    if not next_page or urlsplit(next_page).netloc != "":
         next_page = url_for("web.index")
 
     return redirect(next_page)

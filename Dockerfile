@@ -1,10 +1,11 @@
-ARG ARG_PYTHON_VERSION=3.9
-ARG ARG_NODE_VERSION=17
-ARG ARG_POETRY_VERSION=1.1.12
+# syntax=docker/dockerfile:1
+
+ARG DEBIAN_VERSION=bookworm
+ARG PYTHON_VERSION=3.12
+ARG NODE_VERSION=20
 
 ## Base
-FROM python:${ARG_PYTHON_VERSION}-slim as python-base
-
+FROM python:${PYTHON_VERSION}-slim-${DEBIAN_VERSION} as python-base
 ARG ARG_APP_USER=app
 
 ENV PYTHONUNBUFFERED=1 \
@@ -12,7 +13,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=$ARG_POETRY_VERSION \
+    POETRY_VERSION="" \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_NO_INTERACTION=1 \
@@ -67,11 +68,11 @@ WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
 
 # Install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
-RUN poetry install --no-dev
+RUN poetry install --only main
 
 
 ## JS builder
-FROM node:${ARG_NODE_VERSION}-bullseye-slim as node-builder-base
+FROM node:${NODE_VERSION}-bullseye-slim as node-builder-base
 
 ENV NODE_MODULES="/opt/node"
 WORKDIR $NODE_MODULES
@@ -143,5 +144,5 @@ ENV FLASK_ENV="production"
 VOLUME ["/static", "/config", "/data"]
 EXPOSE 5000
 
-HEALTHCHECK --interval=10s --timeout=5s CMD ["/bin/healthcheck"]
+HEALTHCHECK --start-interval=1s --start-period=10s --interval=10s --timeout=5s CMD ["/docker-healthcheck.sh"]
 ENTRYPOINT ["/init"]

@@ -14,6 +14,7 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
+from pathlib import Path
 
 import click
 from flask.cli import AppGroup
@@ -36,7 +37,7 @@ def file_clean():
     for root, _, files in os.walk(f"{paths.DATA}/uploads", topdown=False):
         for name in files:
             if File.query.filter_by(slug=name).first() is None:
-                os.remove(f"{root}/{name}")
+                Path(f"{root}/{name}").unlink()
                 deleted_files += 1
 
     click.secho(f"Deleted {deleted_files} orphaned file(s).", fg=DEFAULT_FG)

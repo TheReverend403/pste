@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import os
+import contextlib
 from pathlib import Path
 
 from flask import current_app as app
@@ -92,10 +92,8 @@ class File(db.Model):
 
 
 def after_delete(mapper, connection, target: File):
-    try:
-        os.remove(target.path)
-    except OSError:
-        pass
+    with contextlib.suppress(OSError):
+        Path(target.path).unlink()
 
 
 event.listen(File, "after_delete", after_delete)

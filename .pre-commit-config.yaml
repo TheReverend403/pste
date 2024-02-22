@@ -1,30 +1,50 @@
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+  - repo: local
     hooks:
-      - id: check-yaml
       - id: end-of-file-fixer
-      - id: trailing-whitespace
+        name: end-of-file-fixer
+        entry: poetry run end-of-file-fixer
+        language: system
+        types: [text]
 
-  - repo: https://github.com/psf/black
-    rev: '21.12b0'
-    hooks:
-      - id: black
-        exclude: '^(data/)'
+      - id: trailing-whitespace-fixer
+        name: trailing-whitespace-fixer
+        entry: poetry run trailing-whitespace-fixer
+        language: system
+        types: [text]
 
-  - repo: https://gitlab.com/pycqa/flake8
-    rev: '4.0.1'
-    hooks:
-      - id: flake8
-        exclude: |
-          (?x)(
-            ^data/|
-            ^\.git/|
-            ^__pycache__|
-          )
+      - id: check-yaml
+        name: check-yaml
+        entry: poetry run check-yaml
+        language: system
+        types: [yaml]
 
-  - repo: https://github.com/pycqa/isort
-    rev: 5.9.1
-    hooks:
-      - id: isort
-        args: ['--profile', 'black', '--extend-skip', 'data/', '--src-path', 'pste']
+      - id: check-toml
+        name: check-toml
+        entry: poetry run check-toml
+        language: system
+        types: [toml]
+
+      - id: check-shebang-scripts-are-executable
+        name: check-shebang-scripts-are-executable
+        entry: poetry run check-shebang-scripts-are-executable
+        language: system
+        types: [text]
+
+      - id: shellcheck
+        name: shellcheck
+        entry: shellcheck
+        language: system
+        types: [shell]
+
+      - id: ruff-check
+        name: ruff-check
+        entry: poetry run ruff check --fix
+        language: system
+        types: [python]
+
+      - id: ruff-format
+        name: ruff-format
+        entry: poetry run ruff format --force-exclude
+        language: system
+        types: [python]

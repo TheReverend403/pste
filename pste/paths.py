@@ -12,8 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
-
-from distutils.dir_util import copy_tree
+import shutil
 from pathlib import Path
 
 from dynaconf import Dynaconf
@@ -31,5 +30,5 @@ DATA = Path(_paths_from_env.get("DATA", BASE.parent / "data"))
 for path in [STATIC, DATA]:
     path.mkdir(exist_ok=True)
 
-copy_tree(str(ASSETS / "img"), str(STATIC / "img"), update=1)
-copy_tree(str(ASSETS / "fonts"), str(STATIC / "fonts"), update=1)
+shutil.copytree(str(ASSETS / "img"), str(STATIC / "img"), dirs_exist_ok=True)
+shutil.copytree(str(ASSETS / "fonts"), str(STATIC / "fonts"), dirs_exist_ok=True)

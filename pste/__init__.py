@@ -17,17 +17,18 @@ import subprocess
 
 import sentry_sdk
 from flask import Flask
-from flask_session import SqlAlchemySessionInterface
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 from pste import paths
 from pste.extensions import assets, csrf, db, dynaconf, login, migrate
 
 try:
     PSTE_VERSION = (
-        "pste " + subprocess.check_output(["git", "describe"]).decode("UTF-8").strip()
+        "pste "
+        + subprocess.check_output(["/usr/bin/git", "describe"]).decode("UTF-8").strip()  # noqa: S603
     )
 except FileNotFoundError:
     # Not running from a git repo or git is not available.
@@ -46,6 +47,10 @@ def create_app():
     register_commands(app)
     register_blueprints(app)
     register_assets(app)
+
+    if not app.debug and not app.testing:
+        ProxyFix(app)
+
     return app
 
 
@@ -83,6 +88,7 @@ def load_configuration(app):
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
         SESSION_USE_SIGNER=True,
+        PERMANENT_SESSION_LIFETIME=604800,
     )
 
 
@@ -94,7 +100,7 @@ def register_extensions(app):
     assets.init_app(app)
     login.init_app(app)
 
-    app.session_interface = SqlAlchemySessionInterface(app, db, "sessions", "")
+    app.config.update(SESSION_SQLALCHEMY=db)
     login.login_view = "auth.login"
 
     from pste.extensions import debugbar

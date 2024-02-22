@@ -28,7 +28,7 @@ assets = Environment()
 debugbar = None
 
 try:
-    import flask_debugtoolbar
+    import flask_debugtoolbar  # noqa: F401
 except ImportError:
     pass
 else:

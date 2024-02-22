@@ -13,7 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import random
+import secrets
 import string
 
 from flask import flash
@@ -21,14 +21,13 @@ from flask_wtf import FlaskForm
 
 
 def random_string(length: int, extra_chars: str = "") -> str:
-    value = "".join(
-        random.choice(string.ascii_letters + string.digits + extra_chars)
+    return "".join(
+        secrets.choice(string.ascii_letters + string.digits + extra_chars)
         for _ in range(length)
     )
-    return value
 
 
 def flash_errors(form: FlaskForm):
-    for field, errors in form.errors.items():
+    for _, errors in form.errors.items():
         for error in errors:
             flash(error, category="error")

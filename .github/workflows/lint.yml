@@ -1,35 +1,39 @@
-name: Lint with pre-commit
+name: Lint
 
-on: [pull_request, push]
+on: [workflow_call]
+
+env:
+  RUFF_OUTPUT_FORMAT: "github"
+  RUFF_NO_CACHE: true
 
 jobs:
-  quality:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.9']
+        python-version: ["3.12"]
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Install Poetry
-        uses: Gr1N/setup-poetry@v4
+        uses: Gr1N/setup-poetry@v9
 
       - name: Cache virtualenv
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         id: cache
         with:
           path: ~/.cache/pypoetry/virtualenvs
           key: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
           restore-keys: poetry-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Lint
-        uses: pre-commit/action@v2.0.0
+        uses: pre-commit/action@v3.0.0
