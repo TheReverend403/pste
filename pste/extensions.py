@@ -17,11 +17,13 @@ from dynaconf import Dynaconf, FlaskDynaconf
 from flask_assets import Environment
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
 db = SQLAlchemy()
 migrate = Migrate(compare_type=True)
+session = Session()
 login = LoginManager()
 csrf = CSRFProtect()
 assets = Environment()

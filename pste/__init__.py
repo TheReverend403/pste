@@ -23,7 +23,7 @@ from webassets import Bundle
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from pste import paths
-from pste.extensions import assets, csrf, db, dynaconf, login, migrate
+from pste.extensions import assets, csrf, db, dynaconf, login, migrate, session
 
 try:
     PSTE_VERSION = (
@@ -87,6 +87,8 @@ def load_configuration(app):
         PSTE_VERSION=PSTE_VERSION,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
+        SESSION_TYPE="sqlalchemy",
+        SESSION_SQLALCHEMY=db,
         SESSION_USE_SIGNER=True,
         PERMANENT_SESSION_LIFETIME=604800,
     )
@@ -95,12 +97,12 @@ def load_configuration(app):
 def register_extensions(app):
     init_sentry(app)
     db.init_app(app)
+    session.init_app(app)
     migrate.init_app(app, db, directory=paths.BASE / "migrations")
     csrf.init_app(app)
     assets.init_app(app)
     login.init_app(app)
 
-    app.config.update(SESSION_SQLALCHEMY=db)
     login.login_view = "auth.login"
 
     from pste.extensions import debugbar
