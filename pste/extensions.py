@@ -13,6 +13,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
+from importlib.util import find_spec
+
 from dynaconf import Dynaconf, FlaskDynaconf
 from flask_assets import Environment
 from flask_login import LoginManager
@@ -29,15 +31,10 @@ csrf = CSRFProtect()
 assets = Environment()
 debugbar = None
 
-try:
-    import flask_debugtoolbar  # noqa: F401
-except ImportError:
-    pass
-else:
+if find_spec("flask_debugtoolbar"):
     from flask_debugtoolbar import DebugToolbarExtension
 
     debugbar = DebugToolbarExtension()
-
 
 dynaconf = FlaskDynaconf(
     dynaconf_instance=Dynaconf(

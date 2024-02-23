@@ -115,7 +115,8 @@ RUN addgroup --gid 1000 --system $APP_USER && \
 
 WORKDIR /app
 
-ENV FLASK_ENV="development"
+ENV FLASK_DEBUG=1 \
+    FLASK_ENV="development"
 
 VOLUME ["/static", "/config", "/data"]
 EXPOSE 5000
