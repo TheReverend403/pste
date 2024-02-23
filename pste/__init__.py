@@ -49,7 +49,7 @@ def create_app():
     register_assets(app)
 
     if not app.debug and not app.testing:
-        ProxyFix(app)
+        app.wsgi_app = ProxyFix(app.wsgi_app)
 
     return app
 
