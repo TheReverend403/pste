@@ -91,6 +91,7 @@ def load_configuration(app):
         SESSION_SQLALCHEMY=db,
         SESSION_USE_SIGNER=True,
         PERMANENT_SESSION_LIFETIME=604800,
+        SESSION_COOKIE_SECURE=not (app.debug or app.testing),
     )
 
 
