@@ -12,7 +12,7 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
-
+import shutil
 import subprocess
 
 import sentry_sdk
@@ -42,11 +42,16 @@ def create_app():
         template_folder=str(paths.TEMPLATES),
     )
 
+    for path in [paths.STATIC, paths.DATA]:
+        path.mkdir(exist_ok=True, parents=True)
+
     load_configuration(app)
     register_extensions(app)
     register_commands(app)
     register_blueprints(app)
-    register_assets(app)
+
+    with app.app_context():
+        register_assets(app)
 
     if not app.debug and not app.testing:
         app.wsgi_app = ProxyFix(app.wsgi_app)
@@ -104,8 +109,6 @@ def register_extensions(app):
     assets.init_app(app)
     login.init_app(app)
 
-    login.login_view = "auth.login"
-
     from pste.extensions import debugbar
 
     if app.debug and debugbar is not None:
@@ -159,11 +162,17 @@ def register_assets(app):
         ),
     }
 
-    with app.app_context():
-        assets.directory = app.static_folder
-        assets.append_path(paths.ASSETS)
+    assets.directory = app.static_folder
+    assets.auto_build = app.debug or app.testing
+    assets.append_path(paths.ASSETS)
 
     for name, bundle in bundles.items():
         assets.register(name, bundle)
+
+    precompiled_assets = ["img", "fonts"]
+    for asset_type in precompiled_assets:
+        shutil.copytree(
+            paths.ASSETS / asset_type, paths.STATIC / asset_type, dirs_exist_ok=True
+        )
 
     app.logger.debug("Assets registered.")

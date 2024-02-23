@@ -15,7 +15,7 @@
 
 from importlib.util import find_spec
 
-from dynaconf import Dynaconf, FlaskDynaconf
+from dynaconf import FlaskDynaconf
 from flask_assets import Environment
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -23,10 +23,14 @@ from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 
+from pste import config
+
+dynaconf = FlaskDynaconf(dynaconf_instance=config.dynaconf)
 db = SQLAlchemy()
 migrate = Migrate(compare_type=True)
 session = Session()
 login = LoginManager()
+login.login_view = "auth.login"
 csrf = CSRFProtect()
 assets = Environment()
 debugbar = None
@@ -35,10 +39,3 @@ if find_spec("flask_debugtoolbar"):
     from flask_debugtoolbar import DebugToolbarExtension
 
     debugbar = DebugToolbarExtension()
-
-dynaconf = FlaskDynaconf(
-    dynaconf_instance=Dynaconf(
-        environments=False,
-        envvar_prefix="FLASK",
-    ),
-)
