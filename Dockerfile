@@ -97,8 +97,9 @@ COPY poetry.lock pyproject.toml ./
 RUN --mount=type=cache,target=/root/.cache \
     poetry install --no-root
 
-ENV FLASK_DEBUG=1 \
-    ENV_FOR_DYNACONF=development \
+ENV ENV_FOR_DYNACONF=development \
+    FLASK_ENV=development \
+    FLASK_DEBUG=1 \
     GUNICORN_OPTS="--reload --reload-extra-file /config" \
     # Don't compile assets on startup as built-in autobuild is used in dev/testing environments.
     SKIP_ASSETS=true
@@ -107,6 +108,7 @@ ENV FLASK_DEBUG=1 \
 ## Production image
 FROM flask-base as production
 
-ENV ENV_FOR_DYNACONF=production
+ENV ENV_FOR_DYNACONF=production \
+    FLASK_ENV=production
 
 HEALTHCHECK --start-interval=1s --start-period=10s --interval=10s --timeout=5s CMD ["/docker-healthcheck.sh"]

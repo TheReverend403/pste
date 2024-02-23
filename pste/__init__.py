@@ -78,7 +78,6 @@ def init_sentry(app):
         app.logger.info("Sentry enabled.")
         sentry_sdk.init(
             dsn=dsn,
-            environment="production",
             release=PSTE_VERSION.replace("pste ", ""),
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )
