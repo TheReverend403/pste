@@ -15,4 +15,4 @@
 
 from passlib.context import CryptContext
 
-hasher = CryptContext(schemes=["argon2", "bcrypt"], deprecated=["bcrypt"])
+hasher = CryptContext(schemes=["argon2"])
