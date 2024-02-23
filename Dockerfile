@@ -37,9 +37,11 @@ ENV PATHS_NODE_MODULES=$NODE_MODULES \
 
 FROM python-base as s6-base
 
-RUN apt-get update && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && \
     apt-get install --no-install-recommends -y \
-        xz-utils
+    xz-utils \
+    && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
 ARG S6_OVERLAY_VERSION="3.0.0.2"
 
@@ -53,22 +55,26 @@ RUN mkdir -p "$S6_DOWNLOAD_PATH" && \
 ## Python builder
 FROM python-base as python-builder-base
 
-RUN apt-get update && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && \
     apt-get install --no-install-recommends -y \
-        curl \
-        build-essential \
-        libffi-dev \
-        libpq-dev
+    curl \
+    build-essential \
+    libffi-dev \
+    libpq-dev \
+    && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
 # Install poetry - respects $POETRY_VERSION & $POETRY_HOME
-RUN curl -sSL https://install.python-poetry.org | python -
+RUN --mount=type=cache,target=/root/.cache \
+    curl -sSL https://install.python-poetry.org | python -
 
 # Copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
 COPY poetry.lock pyproject.toml ./
 
 # Install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
-RUN poetry install --only main
+RUN --mount=type=cache,target=/root/.cache \
+    poetry install --no-root --only main
 
 
 ## JS builder
@@ -78,18 +84,19 @@ ENV NODE_MODULES="/opt/node"
 WORKDIR $NODE_MODULES
 
 COPY yarn.lock package.json ./
-RUN yarn install
+RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
+    yarn install
 
 
 ## Dev image
 FROM python-base as development
 
-RUN apt-get update && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && \
     apt-get install --no-install-recommends -y \
-        libpq5 \
-        libmagic1
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    libpq5 \
+    libmagic1 \
+    && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR $PYSETUP_PATH
 
@@ -97,7 +104,8 @@ COPY --from=python-builder-base $PYSETUP_PATH $PYSETUP_PATH
 COPY --from=python-builder-base $POETRY_HOME $POETRY_HOME
 COPY --from=node-builder-base $NODE_MODULES/node_modules $NODE_MODULES/
 
-RUN poetry install
+RUN --mount=type=cache,target=/root/.cache \
+    poetry install --no-root
 
 COPY --from=s6-base $S6_DOWNLOAD_PATH /
 COPY docker/rootfs /
@@ -118,13 +126,13 @@ ENTRYPOINT ["/init"]
 ## Production image
 FROM python-base as production
 
-RUN apt-get update && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && \
     apt-get install --no-install-recommends -y \
-        curl \
-        libpq5 \
-        libmagic1
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+    curl \
+    libpq5 \
+    libmagic1 \
+    && apt-get autoclean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=python-builder-base $PYSETUP_PATH $PYSETUP_PATH
 COPY --from=node-builder-base $NODE_MODULES/node_modules $NODE_MODULES/

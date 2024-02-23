@@ -1,8 +1,8 @@
 # pste
 
 ![GitHub](https://img.shields.io/github/license/TheReverend403/pste?style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/TheReverend403/pste/ci?style=flat-square)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/TheReverend403/pste/build-docker-image.yml?branch=main&style=flat-square)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg?style=flat-square)](https://github.com/astral-sh/ruff)
 
 Just a simple file hosting application inspired by the likes of pomf.se and teknik.io.
 
@@ -15,7 +15,7 @@ Very early alpha, 100% definitely not ready whatsoever for production use. Not e
 First, install [Poetry](https://poetry.eustace.io/).
 
 ```sh
-git clone https://github.com/FoxDev/pste
+git clone https://github.com/TheReverend403/pste
 cd pste
 poetry install
 yarn install # or `npm install` if you're a caveman.
