@@ -44,8 +44,10 @@ extend-exclude = [
 [tool.ruff.lint]
 select = [
     "A",
+    "ARG",
     "B",
     "BLE",
+    "C4",
     "C90",
     "DTZ",
     "E",
@@ -57,12 +59,16 @@ select = [
     "N",
     "PL",
     "PTH",
+    "Q",
     "RET",
     "RSE",
     "RUF",
     "S",
     "SIM",
+    "SLF",
+    "T10",
     "T20",
+    "TID",
     "UP",
     "W",
     "YTT",
@@ -75,7 +81,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
-"pste/migrations/*" = ["ERA001"]
+"pste/migrations/*" = ["ERA001", "ARG001"]
 
 [tool.ruff.format]
 line-ending = "lf"

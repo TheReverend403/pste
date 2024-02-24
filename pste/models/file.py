@@ -91,7 +91,7 @@ class File(db.Model):
         }
 
 
-def after_delete(mapper, connection, target: File):
+def after_delete(mapper, connection, target: File):  # noqa: ARG001
     with contextlib.suppress(OSError):
         Path(target.path).unlink()
 

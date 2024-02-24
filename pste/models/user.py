@@ -103,11 +103,11 @@ class User(db.Model, UserMixin):
         return quota
 
 
-def after_delete(mapper, connection, target: User):
+def after_delete(mapper, connection, target: User):  # noqa: ARG001
     shutil.rmtree(target.storage_directory, ignore_errors=True)
 
 
-def after_insert(mapper, connection, target: User):
+def after_insert(mapper, connection, target: User):  # noqa: ARG001
     Path(target.storage_directory).mkdir(parents=True, exist_ok=True)
 
 
