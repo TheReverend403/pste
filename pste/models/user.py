@@ -14,7 +14,9 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import shutil
+from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from flask import Request
 from flask import current_app as app
@@ -23,18 +25,21 @@ from humanize import naturalsize
 from sqlalchemy import (
     BigInteger,
     Boolean,
-    Column,
     DateTime,
-    Integer,
     String,
     event,
     func,
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from pste import paths, utils
 from pste.extensions import db, login
 from pste.security import hasher
+
+if TYPE_CHECKING:
+    from pste.models import File
+else:
+    File = "File"
 
 
 @login.request_loader
@@ -63,14 +68,22 @@ def generate_api_key() -> str:
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
-    email = Column(String(255), nullable=False, unique=True)
-    password = Column(String(255), nullable=False, server_default="")
-    api_key = Column(String(64), nullable=False, unique=True, default=generate_api_key)
-    is_admin = Column(Boolean, default=False)
-    storage_quota = Column(BigInteger)
-    created_at = Column(DateTime, nullable=False, server_default=func.now())
-    files = relationship("File", back_populates="user", cascade="all,delete")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(
+        String(255), nullable=False, unique=True, index=True
+    )
+    password: Mapped[str] = mapped_column(
+        String(255), nullable=False, server_default=""
+    )
+    api_key: Mapped[str] = mapped_column(
+        String(64), nullable=False, unique=True, default=generate_api_key
+    )
+    is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
+    storage_quota: Mapped[int | None] = mapped_column(BigInteger)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, nullable=False, server_default=func.now()
+    )
+    files = relationship(File, back_populates="user", cascade="all,delete")
 
     def set_password(self, password: str):
         self.password = hasher.hash(password)

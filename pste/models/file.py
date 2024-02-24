@@ -14,7 +14,9 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import contextlib
+from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from flask import current_app as app
 from pygments import highlight
@@ -24,19 +26,22 @@ from pygments.lexers.special import TextLexer
 from pygments.util import ClassNotFound
 from sqlalchemy import (
     BigInteger,
-    Column,
     DateTime,
     ForeignKey,
-    Integer,
     String,
     Text,
     event,
     func,
 )
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from pste import db
 from pste.utils import random_string
+
+if TYPE_CHECKING:
+    from pste.models import User
+else:
+    User = "User"
 
 
 def generate_slug() -> str:
@@ -52,16 +57,20 @@ def generate_slug() -> str:
 class File(db.Model):
     __tablename__ = "files"
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
-    name = Column(String(255), nullable=False)
-    size = Column(BigInteger, nullable=False)
-    client_mimetype = Column(String(128))
-    server_mimetype = Column(String(128))
-    slug = Column(Text, nullable=False, unique=True)
-    file_hash = Column(String(64), nullable=False)
-    created_at = Column(DateTime, nullable=False, server_default=func.now())
-    user = relationship("User", back_populates="files")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
+    name: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
+    size: Mapped[int] = mapped_column(BigInteger, nullable=False)
+    client_mimetype: Mapped[str | None] = mapped_column(String(128))
+    server_mimetype: Mapped[str | None] = mapped_column(String(128))
+    slug: Mapped[str] = mapped_column(Text, nullable=False, unique=True, index=True)
+    file_hash: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, nullable=False, server_default=func.now()
+    )
+    user: Mapped[User] = relationship(User, back_populates="files")
 
     @property
     def path(self) -> Path:
