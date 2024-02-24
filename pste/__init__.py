@@ -89,7 +89,6 @@ def load_configuration(app):
     dynaconf.init_app(app)
     app.config.update(
         PSTE_VERSION=PSTE_VERSION,
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
         SESSION_TYPE="sqlalchemy",
         SESSION_SQLALCHEMY=db,
