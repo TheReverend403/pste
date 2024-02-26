@@ -78,6 +78,7 @@ COPY --from=node-builder-base /opt/node /opt/node
 COPY --from=python-builder-base ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 COPY docker/rootfs /
 COPY pste ./pste
+COPY alembic.ini .
 
 ENV ROOT_PATH_FOR_DYNACONF="/config" \
     GUNICORN_HOST="0.0.0.0" \

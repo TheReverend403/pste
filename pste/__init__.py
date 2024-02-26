@@ -157,7 +157,6 @@ def register_assets(app):
     assets.directory = app.static_folder
     assets.auto_build = app.debug or app.testing
     assets.append_path(paths.ASSETS)
-    assets.config["LIBSASS_INCLUDES"] = [paths.NODE_MODULES.absolute()]
 
     for name, bundle in bundles.items():
         assets.register(name, bundle)
