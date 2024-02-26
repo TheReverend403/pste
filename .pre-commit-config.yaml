@@ -33,7 +33,7 @@ repos:
 
       - id: shellcheck
         name: shellcheck
-        entry: shellcheck
+        entry: poetry run shellcheck
         language: system
         types: [shell]
 
