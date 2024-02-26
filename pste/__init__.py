@@ -89,6 +89,7 @@ def load_configuration(app):
         SESSION_USE_SIGNER=True,
         PERMANENT_SESSION_LIFETIME=timedelta(days=7).total_seconds(),
         SESSION_COOKIE_SECURE=not (app.debug or app.testing),
+        SQLALCHEMY_RECORD_QUERIES=app.debug,  # for debugbar
     )
 
 
