@@ -15,8 +15,8 @@
  * along with pste.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-@import "/opt/node/node_modules/bootstrap/scss/functions";
-@import "/opt/node/node_modules/bootstrap/scss/variables";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
 
 $enable-rounded: false;
 
@@ -27,7 +27,7 @@ $theme-colors: (
 $input-focus-border-color: theme-color("primary");
 $input-focus-box-shadow: 0;
 
-@import "/opt/node/node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 .navbar {
   margin-bottom: 20px;
