@@ -7,7 +7,7 @@ if [ -z "$(find "${ROOT_PATH_FOR_DYNACONF}" -type f -mindepth 1 -maxdepth 1)" ];
 fi
 
 if [ "${SKIP_MIGRATIONS:-false}" = "false" ]; then
-    flask db upgrade
+    flask db migrate
 else
     echo "Skipping migrations due to SKIP_MIGRATIONS=${SKIP_MIGRATIONS}"
 fi

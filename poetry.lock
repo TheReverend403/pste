@@ -343,6 +343,25 @@ Flask = ">=0.8"
 webassets = ">=2.0"
 
 [[package]]
+name = "flask-db"
+version = "0.4.1"
+description = "A Flask CLI extension to help migrate and manage your SQL database."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "Flask-DB-0.4.1.tar.gz", hash = "sha256:016c003715cf0afb12b763aa6ca125a9e6de47a6bdd846fd7a94ec0e819afc63"},
+    {file = "Flask_DB-0.4.1-py3-none-any.whl", hash = "sha256:5b748a7be75a7e86f5aaeff6148d54bd08064fa55b65f0c73bf280101abb69cb"},
+]
+
+[package.dependencies]
+alembic = ">=1.3"
+Flask = ">=1.0"
+Flask-SQLAlchemy = ">=2.4"
+setuptools = "*"
+SQLAlchemy = ">=1.2"
+SQLAlchemy-Utils = "*"
+
+[[package]]
 name = "flask-debugtoolbar"
 version = "0.14.1"
 description = "A toolbar overlay for debugging Flask applications."
@@ -375,22 +394,6 @@ files = [
 [package.dependencies]
 Flask = ">=1.0.4"
 Werkzeug = ">=1.0.1"
-
-[[package]]
-name = "flask-migrate"
-version = "4.0.5"
-description = "SQLAlchemy database migrations for Flask applications using Alembic."
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "Flask-Migrate-4.0.5.tar.gz", hash = "sha256:d3f437a8b5f3849d1bb1b60e1b818efc564c66e3fefe90b62e5db08db295e1b1"},
-    {file = "Flask_Migrate-4.0.5-py3-none-any.whl", hash = "sha256:613a2df703998e78716cace68cd83972960834424457f5b67f56e74fff950aef"},
-]
-
-[package.dependencies]
-alembic = ">=1.9.0"
-Flask = ">=0.9"
-Flask-SQLAlchemy = ">=1.0"
 
 [[package]]
 name = "flask-session"
@@ -1254,6 +1257,34 @@ pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
+name = "sqlalchemy-utils"
+version = "0.41.1"
+description = "Various utility functions for SQLAlchemy."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "SQLAlchemy-Utils-0.41.1.tar.gz", hash = "sha256:a2181bff01eeb84479e38571d2c0718eb52042f9afd8c194d0d02877e84b7d74"},
+    {file = "SQLAlchemy_Utils-0.41.1-py3-none-any.whl", hash = "sha256:6c96b0768ea3f15c0dc56b363d386138c562752b84f647fb8d31a2223aaab801"},
+]
+
+[package.dependencies]
+SQLAlchemy = ">=1.3"
+
+[package.extras]
+arrow = ["arrow (>=0.3.4)"]
+babel = ["Babel (>=1.3)"]
+color = ["colour (>=0.0.4)"]
+encrypted = ["cryptography (>=0.6)"]
+intervals = ["intervals (>=0.7.1)"]
+password = ["passlib (>=1.6,<2.0)"]
+pendulum = ["pendulum (>=2.0.5)"]
+phone = ["phonenumbers (>=5.9.2)"]
+test = ["Jinja2 (>=2.3)", "Pygments (>=1.2)", "backports.zoneinfo", "docutils (>=0.10)", "flake8 (>=2.4.0)", "flexmock (>=0.9.7)", "isort (>=4.2.2)", "pg8000 (>=1.12.4)", "psycopg (>=3.1.8)", "psycopg2 (>=2.5.1)", "psycopg2cffi (>=2.8.1)", "pymysql", "pyodbc", "pytest (>=2.7.1)", "python-dateutil (>=2.6)", "pytz (>=2014.2)"]
+test-all = ["Babel (>=1.3)", "Jinja2 (>=2.3)", "Pygments (>=1.2)", "arrow (>=0.3.4)", "backports.zoneinfo", "colour (>=0.0.4)", "cryptography (>=0.6)", "docutils (>=0.10)", "flake8 (>=2.4.0)", "flexmock (>=0.9.7)", "furl (>=0.4.1)", "intervals (>=0.7.1)", "isort (>=4.2.2)", "passlib (>=1.6,<2.0)", "pendulum (>=2.0.5)", "pg8000 (>=1.12.4)", "phonenumbers (>=5.9.2)", "psycopg (>=3.1.8)", "psycopg2 (>=2.5.1)", "psycopg2cffi (>=2.8.1)", "pymysql", "pyodbc", "pytest (>=2.7.1)", "python-dateutil", "python-dateutil (>=2.6)", "pytz (>=2014.2)"]
+timezone = ["python-dateutil"]
+url = ["furl (>=0.4.1)"]
+
+[[package]]
 name = "typing-extensions"
 version = "4.10.0"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1431,4 +1462,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "60b61fd7b00e7d8512f307646eda411d6333621a713a53ddbd2cddd53855811d"
+content-hash = "be6462270562d290522b51df708a23c3ab9c865b0c4e6fb5427ec592375e2617"

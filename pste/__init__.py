@@ -24,7 +24,7 @@ from webassets import Bundle
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from pste import paths, version
-from pste.extensions import assets, csrf, db, dynaconf, login, migrate, session
+from pste.extensions import assets, csrf, db, dynaconf, login, session
 
 
 def create_app():
@@ -96,7 +96,6 @@ def register_extensions(app):
     init_sentry(app)
     db.init_app(app)
     session.init_app(app)
-    migrate.init_app(app, db, directory=paths.BASE / "migrations")
     csrf.init_app(app)
     assets.init_app(app)
     login.init_app(app)

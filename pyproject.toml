@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pste"
-version = "0.7.4"
+version = "0.7.5"
 description = "Just a simple file hosting application inspired by the likes of pomf.se and teknik.io."
 authors = ["Lee Watson <me@lwatson.dev>"]
 license = "GPL-3.0+"
@@ -10,7 +10,6 @@ python = "^3.12"
 flask = "^3.0.0"
 flask-login = "^0.6.3"
 flask-sqlalchemy = "^3.1.1"
-flask-migrate = "^4.0.5"
 flask-wtf = "^1.0.0"
 flask-assets = "^2.0"
 libsass = "^0.23.0"
@@ -27,6 +26,7 @@ email_validator = "^1.0.5"
 python-dotenv = "^1.0.1"
 python-box = "^7.1.1"
 Flask-Session = "^0.6.0"
+flask-db = "^0.4.1"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
@@ -81,7 +81,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.extend-per-file-ignores]
-"pste/migrations/*" = ["ERA001", "ARG001"]
+"pste/db/migrations/*" = ["ERA001", "ARG001"]
 
 [tool.ruff.format]
 line-ending = "lf"
