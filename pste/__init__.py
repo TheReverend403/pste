@@ -12,8 +12,9 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
+
 import shutil
-import subprocess
+from datetime import timedelta
 
 import sentry_sdk
 from flask import Flask
@@ -22,17 +23,8 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from pste import paths
+from pste import paths, version
 from pste.extensions import assets, csrf, db, dynaconf, login, migrate, session
-
-try:
-    PSTE_VERSION = (
-        "pste "
-        + subprocess.check_output(["/usr/bin/git", "describe"]).decode("UTF-8").strip()  # noqa: S603
-    )
-except FileNotFoundError:
-    # Not running from a git repo or git is not available.
-    PSTE_VERSION = "pste"
 
 
 def create_app():
@@ -41,6 +33,8 @@ def create_app():
         static_folder=str(paths.STATIC),
         template_folder=str(paths.TEMPLATES),
     )
+
+    app.logger.info(f"Starting {app.name} {version.VERSION}")
 
     for path in [paths.STATIC, paths.DATA]:
         path.mkdir(exist_ok=True, parents=True)
@@ -78,7 +72,7 @@ def init_sentry(app):
         app.logger.info("Sentry enabled.")
         sentry_sdk.init(
             dsn=dsn,
-            release=PSTE_VERSION.replace("pste ", ""),
+            release=version.VERSION,
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )
     else:
@@ -88,12 +82,12 @@ def init_sentry(app):
 def load_configuration(app):
     dynaconf.init_app(app)
     app.config.update(
-        PSTE_VERSION=PSTE_VERSION,
+        PSTE_VERSION=version.VERSION,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
         SESSION_TYPE="sqlalchemy",
         SESSION_SQLALCHEMY=db,
         SESSION_USE_SIGNER=True,
-        PERMANENT_SESSION_LIFETIME=604800,
+        PERMANENT_SESSION_LIFETIME=timedelta(days=7).total_seconds(),
         SESSION_COOKIE_SECURE=not (app.debug or app.testing),
     )
 
