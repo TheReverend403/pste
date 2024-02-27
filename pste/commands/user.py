@@ -13,10 +13,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import re
 import shutil
 
 import click
+import email_validator
 from flask.cli import AppGroup
 
 from pste.extensions import db
@@ -31,11 +31,12 @@ TERM_WIDTH_MAX = 40
 
 
 def validate_email(ctx, param, value):
-    if not re.match(r"[^@]+@[^@]+\.[^@]+", value):
+    try:
+        email_validator.validate_email(value, check_deliverability=False)
+    except email_validator.EmailNotValidError:
         click.secho("Not a valid email address.", fg=ERROR_FG)
         value = click.prompt(param.prompt)
         return validate_email(ctx, param, value)
-
     return value
 
 
