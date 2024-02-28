@@ -24,6 +24,10 @@
                     <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
                 </a>
                 {% if current_user.is_authenticated %}
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarText">
                         <div class="navbar-nav">
                             <a href="{{ url_for('auth.logout') }}" class="nav-item nav-link text-muted">Log out</a>
