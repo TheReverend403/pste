@@ -1,18 +1,12 @@
 {% extends 'base.html' %}
 
-{% block stylesheets %}
-    {% assets 'css-pygments' %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}">
-    {% endassets %}
-{% endblock %}
-
 {% block content %}
     <div class="row">
         <div class="col-sm-4">
             <h4 aria-label="File name">{{ name }}</h4>
         </div>
         <div class="col-sm-8 paste-info">
-            <ul class="list-inline text-secondary text-center float-md-right list-inline-separators">
+            <ul class="list-inline text-secondary float-md-end list-inline-separators">
                 <li class="list-inline-item">
                     <span aria-label="Plain text version">
                         <a href="{{ raw_url }}" class="text-primary">raw</a>

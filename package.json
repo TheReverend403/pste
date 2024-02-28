@@ -6,9 +6,9 @@
   "license": "GPL-3.0+",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.6.2",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3",
     "dropzone": "^5.9.3",
-    "jquery": "^3.7.1",
-    "popper.js": "^1.16.1"
+    "jquery": "^3.7.1"
   }
 }

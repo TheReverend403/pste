@@ -16,80 +16,90 @@
  */
 
 @import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
+
+$primary: #754dac;
+$info: $primary;
 
 $enable-rounded: false;
-
-$theme-colors: (
-    primary: #754DAC
-);
-
-$input-focus-border-color: theme-color("primary");
+$input-focus-border-color: $primary;
 $input-focus-box-shadow: 0;
 
+@import "bootstrap/scss/variables";
 @import "bootstrap/scss/bootstrap";
 
 .navbar {
-  margin-bottom: 20px;
-  border-bottom: 2px solid theme-color("primary");
+    border-bottom: 2px solid $primary;
 }
 
 .swg-r2d2-2 {
-  color: #5468B1;
+    color: #5468b1;
 }
 
 .swg-c3po-2 {
-  color: #EDA35C;
+    color: #eda35c;
 }
 
 .dropzone {
-  background: $gray-200;
-  font-size: 1.2em;
-  border: none;
+    background-color: var(--bs-secondary-bg);
+    font-size: 1.2em;
+    border: none;
 }
 
 .dz-preview {
-  border: 1px solid theme-color("primary");
-  font-size: 0.9em;
+    border: 1px solid $primary;
+    font-size: 0.9em;
 }
 
 .dz-image {
-  border-radius: 0 !important;
-  background: none !important;
-  border-bottom: 1px solid theme-color("primary");
+    border-radius: 0 !important;
+    background: none !important;
+    border-bottom: 1px solid $primary;
 }
 
 .code {
-  padding-left: 10px;
+    padding-left: 10px;
 }
 
 .pre-scrollable {
-  max-height: 65vh;
-  border: 1px lightgray solid;
+    max-height: 75vh;
+    border: 1px lightgray solid;
 }
 
 .linenos {
-  vertical-align: top;
-  background: #F5F5F5;
-  padding-left: 5px;
-  padding-right: 10px;
+    vertical-align: top;
+    background-color: var(--bs-secondary-bg);
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.linenodiv > pre > span > a {
+    color: $pink-500;
+
+    &:not(:hover) {
+        text-decoration: none;
+    }
 }
 
 .paste-info {
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .list-inline-separators {
-  li:after {
-    content: '|';
-    padding-left: 8px;
-  }
+    li:after {
+        content: "|";
+        padding-left: 8px;
+    }
 
-  li:last-child:after {
-    content: '';
-    padding-left: 0;
-  }
+    li:last-child:after {
+        content: "";
+        padding-left: 0;
+    }
+}
+
+a:not(:hover),
+.btn-link:not(:hover) {
+    text-decoration: none;
 }

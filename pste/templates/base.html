@@ -18,16 +18,12 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <nav class="navbar navbar-light navbar-border navbar-expand-sm" role="navigation">
+        <div class="col-lg-8">
+            <nav class="navbar navbar-light navbar-border navbar-expand-sm mb-3" role="navigation">
                 <a class="navbar-brand" href="{{ url_for('web.index') }}">
                     <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
                 </a>
                 {% if current_user.is_authenticated %}
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarText">
                         <div class="navbar-nav">
                             <a href="{{ url_for('auth.logout') }}" class="nav-item nav-link text-muted">Log out</a>
@@ -78,15 +74,7 @@
     </div>
 </div>
 
-{% assets 'js-jquery' %}
-    <script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-
-{% assets 'js-popper' %}
-    <script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-
-{% assets 'js-bootstrap' %}
+{% assets 'js-app' %}
     <script src="{{ ASSET_URL }}"></script>
 {% endassets %}
 

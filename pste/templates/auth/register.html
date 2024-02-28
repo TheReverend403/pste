@@ -3,24 +3,22 @@
 {% block form %}
     <form action="" method="post" role="form">
         {{ form.hidden_tag() }}
-        <div class="form-group">
+        <div class="mb-3">
             <input type="email" class="form-control" id="email" name="email"
                    aria-label="{{ form.email.label.text }}" placeholder="{{ form.email.label.text }}">
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <input type="password" class="form-control" id="password" name="password"
                    aria-label="{{ form.password.label.text }}" placeholder="{{ form.password.label.text }}">
         </div>
-        <div class="form-group">
+        <div class="mb-3">
             <input type="password" class="form-control" id="password-confirm" name="confirm"
                    aria-label="{{ form.confirm.label.text }}" placeholder="{{ form.confirm.label.text }}">
         </div>
-        <div class="form-group form-check">
-            <div class="float-right">
-                <button type="button" class="btn btn-link" aria-label="Sign in"><a
-                        href="{{ url_for('auth.login') }}" class="text-primary">Sign in</a></button>
-                <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
-            </div>
+        <div class="float-end">
+            <button type="button" class="btn btn-link" aria-label="Sign in"><a
+                href="{{ url_for('auth.login') }}" class="text-primary">Sign in</a></button>
+            <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
         </div>
     </form>
 {% endblock %}

@@ -110,43 +110,19 @@ def register_extensions(app):
 
 def register_assets(app):
     bundles = {
-        "css-pygments": Bundle(
-            "css/pygments.css",
-            filters="cssmin",
-            output="css/pygments-%(version)s.css",
-        ),
-        "css-dropzone": Bundle(
-            f"{paths.NODE_MODULES}/dropzone/dist/dropzone.css",
-            filters="cssmin",
-            output="css/vendor/dropzone-%(version)s.css",
-        ),
         "css-app": Bundle(
-            "scss/app.scss",
+            "css/pygments.css",
             "css/starwars-glyphicons.css",
+            f"{paths.NODE_MODULES}/dropzone/dist/dropzone.css",
+            "scss/app.scss",
             filters="libsass,cssmin",
             output="css/app-%(version)s.css",
         ),
-        "js-jquery": Bundle(
-            f"{paths.NODE_MODULES}/jquery/dist/jquery.slim.js",
-            filters="rjsmin",
-            output="js/vendor/jquery-%(version)s.js",
-        ),
-        "js-popper": Bundle(
-            f"{paths.NODE_MODULES}/popper.js/dist/umd/popper.js",
-            filters="rjsmin",
-            output="js/vendor/popper-%(version)s.js",
-        ),
-        "js-bootstrap": Bundle(
-            f"{paths.NODE_MODULES}/bootstrap/dist/js/bootstrap.js",
-            filters="rjsmin",
-            output="js/vendor/bootstrap-%(version)s.js",
-        ),
-        "js-dropzone": Bundle(
-            f"{paths.NODE_MODULES}/dropzone/dist/dropzone.js",
-            filters="rjsmin",
-            output="js/vendor/dropzone-%(version)s.js",
-        ),
         "js-app": Bundle(
+            f"{paths.NODE_MODULES}/jquery/dist/jquery.slim.js",
+            f"{paths.NODE_MODULES}/@popperjs/core/dist/umd/popper.js",
+            f"{paths.NODE_MODULES}/bootstrap/dist/js/bootstrap.js",
+            f"{paths.NODE_MODULES}/dropzone/dist/dropzone.js",
             "js/app.js",
             filters="rjsmin",
             output="js/app-%(version)s.js",

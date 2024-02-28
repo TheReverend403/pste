@@ -1,21 +1,5 @@
 {% extends 'base.html' %}
 
-{% block stylesheets %}
-    {% assets 'css-dropzone' %}
-        <link rel="stylesheet" href="{{ ASSET_URL }}"/>
-    {% endassets %}
-{% endblock %}
-
-{% block scripts %}
-    {% assets 'js-dropzone' %}
-        <script src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-
-    {% assets 'js-app' %}
-        <script src="{{ ASSET_URL }}"></script>
-    {% endassets %}
-{% endblock %}
-
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-10">
