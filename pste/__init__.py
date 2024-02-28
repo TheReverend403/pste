@@ -14,7 +14,6 @@
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
 import shutil
-from datetime import timedelta
 
 import sentry_sdk
 from flask import Flask
@@ -23,7 +22,7 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from pste import paths, version
+from pste import meta, paths
 from pste.extensions import assets, csrf, db, dynaconf, login, session
 
 
@@ -34,7 +33,7 @@ def create_app():
         template_folder=str(paths.TEMPLATES),
     )
 
-    app.logger.info(f"Starting {app.name} {version.VERSION}")
+    app.logger.info(f"Starting {app.name} {meta.VERSION}")
 
     for path in [paths.STATIC, paths.DATA]:
         path.mkdir(exist_ok=True, parents=True)
@@ -43,6 +42,7 @@ def create_app():
     register_extensions(app)
     register_commands(app)
     register_blueprints(app)
+    inject_template_context(app)
 
     with app.app_context():
         register_assets(app)
@@ -72,7 +72,7 @@ def init_sentry(app):
         app.logger.info("Sentry enabled.")
         sentry_sdk.init(
             dsn=dsn,
-            release=version.VERSION,
+            release=meta.VERSION,
             integrations=[FlaskIntegration(), SqlalchemyIntegration()],
         )
     else:
@@ -82,12 +82,11 @@ def init_sentry(app):
 def load_configuration(app):
     dynaconf.init_app(app)
     app.config.update(
-        PSTE_VERSION=version.VERSION,
+        PSTE_VERSION=meta.VERSION,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
         SESSION_TYPE="sqlalchemy",
         SESSION_SQLALCHEMY=db,
         SESSION_USE_SIGNER=True,
-        PERMANENT_SESSION_LIFETIME=timedelta(days=7).total_seconds(),
         SESSION_COOKIE_SECURE=not (app.debug or app.testing),
         SQLALCHEMY_RECORD_QUERIES=app.debug,  # for debugbar
     )
@@ -169,3 +168,9 @@ def register_assets(app):
         )
 
     app.logger.debug("Assets registered.")
+
+
+def inject_template_context(app):
+    @app.context_processor
+    def inject_meta():
+        return {"meta": meta}
