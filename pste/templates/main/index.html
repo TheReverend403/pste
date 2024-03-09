@@ -7,16 +7,16 @@
                 <form action="{{ url_for('api.upload') }}" class="dropzone text-center text-muted"
                       id="pste-upload"></form>
             </div>
-            <hr>
+            <hr class="border-1">
             <div class="text-muted"><p>...or use the command line.</p></div>
             <div>
                 <code>curl -H "Authorization: Bearer {{ current_user.api_key }}" -F
                     file=@/path/to/file {{ url_for('api.upload', _external=True) }}</code>
-                <hr>
+                <hr class="border-1">
                 <div class="text-muted"><p>Delete a file by slug.</p></div>
                 <code>curl -X DELETE -H "Authorization:
                     Bearer {{ current_user.api_key }}" {{ url_for('api.delete', slug='example.png', _external=True) }}</code>
-                <hr>
+                <hr class="border-1">
                 <div class="text-muted"><p>List your uploaded files. Supports optional ?page parameter for
                     pagination.</p></div>
                 <code>curl -H "Authorization:

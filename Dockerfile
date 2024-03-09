@@ -62,7 +62,7 @@ WORKDIR /opt/node
 
 COPY yarn.lock package.json ./
 RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
-    yarn install
+    yarn install --frozen-lockfile --prod
 
 
 ## Base image

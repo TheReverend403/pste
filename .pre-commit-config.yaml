@@ -37,6 +37,12 @@ repos:
         language: system
         types: [shell]
 
+      - id: stylelint
+        name: stylelint
+        entry: yarn run lint --formatter github
+        language: system
+        types_or: [css, scss, sass]
+
       - id: ruff-check
         name: ruff-check
         entry: poetry run ruff check --fix

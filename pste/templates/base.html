@@ -19,7 +19,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <nav class="navbar navbar-light navbar-border navbar-expand-sm mb-3" role="navigation">
+            <nav class="navbar navbar-light navbar-expand-sm border-bottom border-primary border-2 mb-3"
+                 role="navigation">
                 <a class="navbar-brand" href="{{ url_for('web.index') }}">
                     <img src="{{ url_for('static', filename='img/favicon.png') }}" width="30" height="30" alt="">
                 </a>
@@ -50,7 +51,7 @@
                                     {% endif %}
 
                                     <div class="alert alert-{{ category }} text-center" role="alert"><span
-                                            class="sr-only">{{ category }}</span>{{ message|safe }}</div>
+                                        class="sr-only">{{ category }}</span>{{ message|safe }}</div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -58,21 +59,19 @@
                 {%- endwith %}
             {% endblock %}
             {% block content %}{% endblock %}
-            <hr>
-            <div class="text-muted">
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="p-2">
-                        <a href="{{ meta.SOURCE }}" class="text-muted"
-                           target="_blank">pste {{ meta.VERSION }}</a>
-                    </div>
-                    {% if current_user.is_authenticated %}
-                        <div class="p-2">
-                            <span>Files: {{ current_user.file_count }}</span>
-                            <span> | </span>
-                            <span>Storage: {{ current_user.disk_usage(humanize=True) }}/{{ current_user.quota(humanize=True) }}</span>
-                        </div>
-                    {% endif %}
+            <hr class="border-2">
+            <div class="d-flex justify-content-between text-muted">
+                <div class="p-2">
+                    <a href="{{ meta.SOURCE }}" class="text-muted"
+                       target="_blank">pste {{ meta.VERSION }}</a>
                 </div>
+                {% if current_user.is_authenticated %}
+                    <div class="p-2">
+                        <span>Files: {{ current_user.file_count }}</span>
+                        <span> | </span>
+                        <span>Storage: {{ current_user.disk_usage(humanize=True) }}/{{ current_user.quota(humanize=True) }}</span>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
