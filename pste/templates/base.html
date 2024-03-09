@@ -42,16 +42,23 @@
                         <div class="row justify-content-center">
                             <div class="col-md-8 col-lg-8">
                                 {% for category, message in messages %}
+                                    {% if category not in ('message', 'primary', 'secondary', 'info', 'success', 'warning', 'error') %}
+                                        {% set category = 'message' %}
+                                    {% endif %}
+
+                                    {% set alert_class = category %}
+                                    {% set aria_label = category %}
+
                                     {% if category == 'error' %}
-                                        {% set category = 'danger' %}
+                                        {% set alert_class = 'danger' %}
                                     {% endif %}
 
-                                    {% if category == 'message' or not category %}
-                                        {% set category = 'primary' %}
+                                    {% if category == 'message' %}
+                                        {% set alert_class = 'primary' %}
                                     {% endif %}
 
-                                    <div class="alert alert-{{ category }} text-center" role="alert"><span
-                                        class="visually-hidden">{{ category }}</span>{{ message|safe }}</div>
+                                    <div class="alert alert-{{ alert_class }} text-center" role="alert"
+                                         aria-label="{{ aria_label }}">{{ message|safe }}</div>
                                 {% endfor %}
                             </div>
                         </div>
