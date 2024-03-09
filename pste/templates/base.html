@@ -31,7 +31,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarText">
                         <div class="navbar-nav">
-                            <a href="{{ url_for('auth.logout') }}" class="nav-item nav-link text-muted">Log out</a>
+                            <a href="{{ url_for('auth.logout') }}" class="nav-item nav-link">Log out</a>
                         </div>
                     </div>
                 {% endif %}
@@ -67,9 +67,9 @@
             {% endblock %}
             {% block content %}{% endblock %}
             <hr class="border-2">
-            <div class="d-flex justify-content-between text-muted">
+            <div class="d-flex justify-content-between">
                 <div class="p-2">
-                    <a href="{{ meta.SOURCE }}" class="text-muted"
+                    <a href="{{ meta.SOURCE }}" class="text-body"
                        target="_blank">pste {{ meta.VERSION }}</a>
                 </div>
                 {% if current_user.is_authenticated %}

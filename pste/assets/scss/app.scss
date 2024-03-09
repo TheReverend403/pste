@@ -83,11 +83,6 @@ a:not(:hover),
     }
 }
 
-.paste-info {
-    white-space: nowrap;
-    overflow: hidden;
-}
-
 .list-inline-separators {
     li::after {
         content: "|";
