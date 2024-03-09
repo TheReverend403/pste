@@ -29,6 +29,7 @@ db = SQLAlchemy()
 session = Session()
 login = LoginManager()
 login.login_view = "auth.login"
+login.login_message_category = "danger"
 csrf = CSRFProtect()
 assets = Environment()
 debugbar = None
