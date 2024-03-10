@@ -10,6 +10,10 @@ secret_key: ''
 # https://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls
 sqlalchemy_database_uri: ''
 
+# Redis
+# https://redis.readthedocs.io/en/stable/connections.html#redis.Redis.from_url
+redis_url: ''
+
 # File extensions that will be displayed as plaintext regardless of the file's mimetype.
 plaintext_types: [
     'txt', 'php', 'rb', 'sh', 'py',

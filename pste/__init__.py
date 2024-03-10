@@ -17,6 +17,7 @@ import shutil
 
 import sentry_sdk
 from flask import Flask
+from redis import Redis
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
@@ -38,8 +39,7 @@ def create_app():
     for path in [paths.STATIC, paths.DATA]:
         path.mkdir(exist_ok=True, parents=True)
 
-    load_configuration(app)
-    register_extensions(app)
+    init_extensions(app)
     register_commands(app)
     register_blueprints(app)
     inject_template_context(app)
@@ -79,29 +79,36 @@ def init_sentry(app):
         app.logger.debug("Sentry disabled.")
 
 
-def load_configuration(app):
+def init_extensions(app):
     dynaconf.init_app(app)
-    app.config.update(
-        DEBUG_TB_INTERCEPT_REDIRECTS=False,
-        SESSION_TYPE="sqlalchemy",
-        SESSION_SQLALCHEMY=db,
-        SESSION_USE_SIGNER=True,
-        SESSION_COOKIE_SECURE=not (app.debug or app.testing),
-        SQLALCHEMY_RECORD_QUERIES=app.debug,  # for debugbar
-    )
-
-
-def register_extensions(app):
     init_sentry(app)
     db.init_app(app)
+
+    sessions_redis = Redis.from_url(
+        app.config.get("redis_url", "redis://localhost:6379")
+    )
+    app.config.update(
+        SESSION_TYPE="redis",
+        SESSION_REDIS=sessions_redis,
+        SESSION_USE_SIGNER=True,
+        SESSION_COOKIE_SECURE=not (app.debug or app.testing),
+    )
     session.init_app(app)
+
     csrf.init_app(app)
     assets.init_app(app)
+
+    login.login_view = "auth.login"
+    login.login_message_category = "error"
     login.init_app(app)
 
     from pste.extensions import debugbar
 
     if app.debug and debugbar is not None:
+        app.config.update(
+            DEBUG_TB_INTERCEPT_REDIRECTS=False,
+            SQLALCHEMY_RECORD_QUERIES=True,
+        )
         debugbar.init_app(app)
 
     app.logger.debug("Extensions registered.")
