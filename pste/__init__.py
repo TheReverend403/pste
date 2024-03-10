@@ -82,6 +82,10 @@ def init_sentry(app):
 def init_extensions(app):
     dynaconf.init_app(app)
     init_sentry(app)
+
+    app.config.update(
+        SQLALCHEMY_RECORD_QUERIES=app.debug,  # debugbar
+    )
     db.init_app(app)
 
     sessions_redis = Redis.from_url(
@@ -107,7 +111,6 @@ def init_extensions(app):
     if app.debug and debugbar is not None:
         app.config.update(
             DEBUG_TB_INTERCEPT_REDIRECTS=False,
-            SQLALCHEMY_RECORD_QUERIES=True,
         )
         debugbar.init_app(app)
 
