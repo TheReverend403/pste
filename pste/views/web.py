@@ -33,7 +33,7 @@ def index():
 @blueprint.route("/f/<string:slug>")
 def file(slug):
     file_instance = File.query.filter_by(slug=slug).first_or_404()
-    relative_path = file_instance.path.relative_to(paths.DATA)
+    relative_path = file_instance.path.relative_to(paths.UPLOADS)
 
     response = make_response()
     response.headers["Content-Type"] = file_instance.response_mimetype

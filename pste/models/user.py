@@ -100,7 +100,7 @@ class User(db.Model, UserMixin):
 
     @property
     def storage_directory(self) -> Path:
-        return paths.DATA / "uploads" / str(self.id)
+        return paths.UPLOADS / str(self.id)
 
     def disk_usage(self, humanize: bool = False) -> int | str:
         total = sum(file.size for file in self.files)

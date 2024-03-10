@@ -82,7 +82,6 @@ def init_sentry(app):
 def load_configuration(app):
     dynaconf.init_app(app)
     app.config.update(
-        PSTE_VERSION=meta.VERSION,
         DEBUG_TB_INTERCEPT_REDIRECTS=False,
         SESSION_TYPE="sqlalchemy",
         SESSION_SQLALCHEMY=db,

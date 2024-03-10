@@ -13,7 +13,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with pste.  If not, see <https://www.gnu.org/licenses/>.
 
-import contextlib
 from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -101,8 +100,7 @@ class File(db.Model):
 
 
 def after_delete(mapper, connection, target: File):  # noqa: ARG001
-    with contextlib.suppress(OSError):
-        Path(target.path).unlink()
+    target.path.unlink(missing_ok=True)
 
 
 event.listen(File, "after_delete", after_delete)
