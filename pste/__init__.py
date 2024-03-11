@@ -15,9 +15,9 @@
 
 import shutil
 
+import redis
 import sentry_sdk
 from flask import Flask
-from redis import Redis
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
@@ -88,7 +88,7 @@ def init_extensions(app):
     )
     db.init_app(app)
 
-    sessions_redis = Redis.from_url(
+    sessions_redis = redis.from_url(
         app.config.get(
             "sessions_redis_url", app.config.get("redis_url", "redis://localhost:6379")
         )
