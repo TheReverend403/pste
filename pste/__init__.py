@@ -89,7 +89,9 @@ def init_extensions(app):
     db.init_app(app)
 
     sessions_redis = Redis.from_url(
-        app.config.get("redis_url", "redis://localhost:6379")
+        app.config.get(
+            "sessions_redis_url", app.config.get("redis_url", "redis://localhost:6379")
+        )
     )
     app.config.update(
         SESSION_TYPE="redis",
