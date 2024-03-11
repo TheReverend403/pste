@@ -2,8 +2,8 @@
 set -eu
 
 if [ -z "$(find "${ROOT_PATH_FOR_DYNACONF}" -type f -mindepth 1 -maxdepth 1)" ]; then
-    echo "Copying default settings.yml to ${ROOT_PATH_FOR_DYNACONF}"
-    cp -au "${FLASK_APP}/resources/config/settings.yml" "${ROOT_PATH_FOR_DYNACONF}"
+    echo "Copying default settings.toml to ${ROOT_PATH_FOR_DYNACONF}"
+    cp -au "${FLASK_APP}/resources/config/settings.toml" "${ROOT_PATH_FOR_DYNACONF}"
 fi
 
 if [ "${SKIP_MIGRATIONS:-false}" = "false" ]; then

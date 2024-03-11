@@ -19,7 +19,7 @@ git clone https://github.com/TheReverend403/pste
 cd pste
 poetry install
 yarn install # or `npm install` if you're a caveman.
-cp pste/resources/config/settings.yml config/settings.yml # Edit settings.yml
+cp pste/resources/config/settings.toml config/settings.toml # Edit settings.toml
 poetry shell
 
 echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv
