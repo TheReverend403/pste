@@ -25,7 +25,7 @@ gunicorn = { version = "^21.2.0", extras = ["gevent"] }
 email_validator = "^2.1.0"
 python-dotenv = "^1.0.1"
 python-box = "^7.1.1"
-Flask-Session = "^0.6.0"
+Flask-Session = "^0.7.0"
 flask-db = "^0.4.1"
 redis = {extras = ["hiredis"], version = "^5.0.3"}
 
