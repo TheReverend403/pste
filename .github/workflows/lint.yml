@@ -21,12 +21,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Set up Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "yarn"
-
       - name: Install Poetry
         uses: Gr1N/setup-poetry@v9
 
@@ -41,6 +35,12 @@ jobs:
       - name: Install Python dependencies
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Set up Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
 
       - name: Install Node dependencies
         run: yarn install --frozen-lockfile
