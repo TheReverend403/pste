@@ -95,8 +95,7 @@ def user_list():
         return
 
     term_width, _ = shutil.get_terminal_size()
-    if term_width > TERM_WIDTH_MAX:
-        term_width = TERM_WIDTH_MAX
+    term_width = min(term_width, TERM_WIDTH_MAX)
 
     seperator = "".join("-" for _ in range(term_width))
 
