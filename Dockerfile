@@ -52,7 +52,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 COPY poetry.lock pyproject.toml ./
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install --no-root --only main
+    poetry install --only main
 
 
 ## JS builder
@@ -103,7 +103,7 @@ COPY --from=python-builder-base ${POETRY_HOME} ${POETRY_HOME}
 COPY poetry.lock pyproject.toml ./
 
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install --no-root
+    poetry install
 
 ENV ENV_FOR_DYNACONF=development \
     FLASK_ENV=development \
