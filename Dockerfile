@@ -5,7 +5,7 @@ ARG PYTHON_VERSION=3.12
 ARG NODE_VERSION=20
 
 ## Base
-FROM python:${PYTHON_VERSION}-slim-${DEBIAN_VERSION} as python-base
+FROM python:${PYTHON_VERSION}-slim-${DEBIAN_VERSION} AS python-base
 
 ARG META_VERSION
 ARG META_VERSION_HASH
@@ -27,7 +27,7 @@ ENV PYTHONUNBUFFERED=1 \
     META_SOURCE="${META_SOURCE}"
 
 ENV PATH="${POETRY_HOME}/bin:${VIRTUAL_ENV}/bin:${PATH}" \
-    PYTHONPATH="/app:${PYTHONPATH}"
+    PYTHONPATH="/app:${PYTHONPATH:-}"
 
 RUN python -m venv "${VIRTUAL_ENV}"
 
@@ -35,7 +35,7 @@ WORKDIR /app
 
 
 ## Python builder
-FROM python-base as python-builder-base
+FROM python-base AS python-builder-base
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && \
@@ -56,7 +56,7 @@ RUN --mount=type=cache,target=/root/.cache \
 
 
 ## JS builder
-FROM node:${NODE_VERSION}-${DEBIAN_VERSION}-slim as node-builder-base
+FROM node:${NODE_VERSION}-${DEBIAN_VERSION}-slim AS node-builder-base
 
 WORKDIR /opt/node
 
@@ -66,7 +66,7 @@ RUN --mount=type=cache,target=/usr/local/share/.cache/yarn \
 
 
 ## Base image
-FROM python-base as flask-base
+FROM python-base AS flask-base
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && \
@@ -97,7 +97,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
 ## Dev image
-FROM flask-base as development
+FROM flask-base AS development
 
 COPY --from=python-builder-base ${POETRY_HOME} ${POETRY_HOME}
 COPY poetry.lock pyproject.toml ./
@@ -114,7 +114,7 @@ ENV ENV_FOR_DYNACONF=development \
 
 
 ## Production image
-FROM flask-base as production
+FROM flask-base AS production
 
 ENV ENV_FOR_DYNACONF=production \
     FLASK_ENV=production
