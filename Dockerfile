@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 ARG DEBIAN_VERSION=bookworm
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=20
 
 ## Base
