@@ -33,7 +33,7 @@ redis = { extras = ["hiredis"], version = "^5.0.3" }
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
 Flask-DebugToolbar = "^0.14.0"
-ruff = "^0.7.0"
+ruff = "^0.8.0"
 pre-commit-hooks = "^4.5.0"
 shellcheck-py = "^0.10.0.1"
 
