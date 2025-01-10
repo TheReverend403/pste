@@ -1,13 +1,18 @@
-[tool.poetry]
+[project]
 name = "pste"
-version = "0.9.3"
 description = "Just a simple file hosting application inspired by the likes of pomf.se and teknik.io."
-authors = ["Lee Watson <me@lwatson.dev>"]
-license = "GPL-3.0+"
+authors = [{ name = "Lee Watson", email = "<me@lwatson.dev>" }]
+version = "0.9.3"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12, <3.13"
+dynamic = ["dependencies"]
+
+[tool.poetry]
 package-mode = false
+requires-poetry = ">=2.0"
 
 [tool.poetry.dependencies]
-python = "^3.12"
 flask = "^3.0.0"
 flask-login = "^0.6.3"
 flask-sqlalchemy = "^3.1.1"
@@ -38,7 +43,6 @@ pre-commit-hooks = "^5.0.0"
 shellcheck-py = "^0.10.0.1"
 
 [tool.ruff]
-target-version = "py312"
 force-exclude = true
 extend-exclude = ["data/"]
 
@@ -85,5 +89,5 @@ ignore = ["E501"]
 line-ending = "lf"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0"]
 build-backend = "poetry.core.masonry.api"
