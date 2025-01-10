@@ -1,6 +1,7 @@
 /config
 /data
 /static
+/redis
 
 /.vscode
 /.idea
