@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 ARG DEBIAN_VERSION=bookworm
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.13
 ARG NODE_VERSION=20
 
 ## Base
@@ -50,9 +50,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN --mount=type=cache,target=/root/.cache \
     curl -sSL https://install.python-poetry.org | python3 -
 
-COPY poetry.lock pyproject.toml LICENSE README.md ./
+COPY poetry.lock pyproject.toml ./
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install --only main
+    poetry install
 
 
 ## JS builder
@@ -100,10 +100,10 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 FROM flask-base AS development
 
 COPY --from=python-builder-base ${POETRY_HOME} ${POETRY_HOME}
-COPY poetry.lock pyproject.toml LICENSE README.md ./
+COPY poetry.lock pyproject.toml ./
 
 RUN --mount=type=cache,target=/root/.cache \
-    poetry install
+    poetry install --extras dev
 
 ENV ENV_FOR_DYNACONF=development \
     FLASK_ENV=development \
