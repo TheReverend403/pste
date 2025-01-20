@@ -1,7 +1,7 @@
 [project]
 name = "pste"
 description = "Just a simple file hosting application inspired by the likes of pomf.se and teknik.io."
-authors = [{ name = "Lee Watson", email = "<me@lwatson.dev>" }]
+authors = [{ name = "Lee Watson", email = "me@lwatson.dev" }]
 version = "0.9.3"
 license = "GPL-3.0-only"
 requires-python = ">=3.13,<3.14"
@@ -23,7 +23,6 @@ dependencies = [
     "python-magic (>=0.4.0,<1.0.0)",
     "humanize (>=4.9.0,<5.0.0)",
     "pygments (>=2.7.0,<3.0.0)",
-    "sentry-sdk[flask] (>=2.8.0,<3.0.0)",
     "psycopg (>=3.1.18,<4.0.0)",
     "email_validator (>=2.1.0,<3.0.0)",
     "python-box (>=7.1.1,<8.0.0)",
