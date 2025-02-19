@@ -3,12 +3,15 @@
 /static
 /redis
 
-/.vscode
-/.idea
+docker-compose.*
 
-/docker-compose.*
+.vscode/
+.idea/
 
-/node_modules
+node_modules/
+
+.ruff_cache/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -76,6 +79,7 @@ db.sqlite3-journal
 # Flask stuff:
 instance/
 .webassets-cache
+.flaskenv
 
 # Scrapy stuff:
 .scrapy

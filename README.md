@@ -10,24 +10,32 @@ Very early alpha, 100% definitely not ready whatsoever for production use. Not e
 
 [Demo (latest dev)](https://dev.pste.pw)
 
-# Quick Installation (dev)
+## Setting up the development environment
 
-First, install [Poetry](https://poetry.eustace.io/).
+First, install [uv](https://docs.astral.sh/uv/getting-started/installation/).
 
 ```sh
 git clone https://github.com/TheReverend403/pste
 cd pste
-poetry install
-yarn install # or `npm install` if you're a caveman.
+
+uv sync --group dev
+uv run pre-commit install
+
+yarn install
+```
+
+## Running
+
+```sh
+mkdir config
 cp pste/resources/config/settings.toml config/settings.toml # Edit settings.toml
-poetry shell
 
 echo FLASK_APP=pste\nFLASK_ENV=development > .flaskenv
 
-flask assets build
-flask db upgrade
-flask user create # Or use /auth/register
+uv run flask assets build
+uv run flask db upgrade
+uv run flask user create # Or use /auth/register
 
 # Do not use this in production, use a WSGI server such as gunicorn with pste:create_app() as your entrypoint.
-flask run
+uv run flask run
 ```

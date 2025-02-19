@@ -3,37 +3,37 @@ repos:
     hooks:
       - id: end-of-file-fixer
         name: end-of-file-fixer
-        entry: poetry run end-of-file-fixer
+        entry: uv run end-of-file-fixer
         language: system
         types: [text]
 
       - id: trailing-whitespace-fixer
         name: trailing-whitespace-fixer
-        entry: poetry run trailing-whitespace-fixer
+        entry: uv run trailing-whitespace-fixer
         language: system
         types: [text]
 
       - id: check-yaml
         name: check-yaml
-        entry: poetry run check-yaml
+        entry: uv run check-yaml
         language: system
         types: [yaml]
 
       - id: check-toml
         name: check-toml
-        entry: poetry run check-toml
+        entry: uv run check-toml
         language: system
         types: [toml]
 
       - id: check-shebang-scripts-are-executable
         name: check-shebang-scripts-are-executable
-        entry: poetry run check-shebang-scripts-are-executable
+        entry: uv run check-shebang-scripts-are-executable
         language: system
         types: [text]
 
       - id: shellcheck
         name: shellcheck
-        entry: poetry run shellcheck
+        entry: uv run shellcheck
         language: system
         types: [shell]
 
@@ -45,12 +45,12 @@ repos:
 
       - id: ruff-check
         name: ruff-check
-        entry: poetry run ruff check --fix
+        entry: uv run ruff check --fix
         language: system
         types: [python]
 
       - id: ruff-format
         name: ruff-format
-        entry: poetry run ruff format --force-exclude
+        entry: uv run ruff format --force-exclude
         language: system
         types: [python]
