@@ -38,4 +38,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Lint
-        run: uv run pre-commit run --all-files
+        uses: pre-commit/action@v3.0.0
