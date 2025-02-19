@@ -2,7 +2,7 @@
 name = "pste"
 description = "Just a simple file hosting application inspired by the likes of pomf.se and teknik.io."
 authors = [{ name = "Lee Watson", email = "me@lwatson.dev" }]
-version = "0.9.3"
+version = "0.10.1"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.13,<3.14"
