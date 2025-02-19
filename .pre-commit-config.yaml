@@ -45,12 +45,12 @@ repos:
 
       - id: ruff-check
         name: ruff-check
-        entry: uv run ruff check --fix
+        entry: uv run ruff check --fix --config=pyproject.toml
         language: system
         types: [python]
 
       - id: ruff-format
         name: ruff-format
-        entry: uv run ruff format --force-exclude
+        entry: uv run ruff format --force-exclude --config=pyproject.toml
         language: system
         types: [python]
