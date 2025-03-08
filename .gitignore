@@ -1,9 +1,5 @@
-/config
-/data
-/static
-/redis
-
-docker-compose.*
+docker/data
+docker/config
 
 .vscode/
 .idea/
@@ -11,7 +7,6 @@ docker-compose.*
 node_modules/
 
 .ruff_cache/
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

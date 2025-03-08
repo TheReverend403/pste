@@ -1,0 +1,84 @@
+services:
+  pste:
+    container_name: pste
+    restart: "no"
+    init: true
+    read_only: true
+    user: ${PUID:-1000}:${PGID:-1000}
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      CFG_SECRET_KEY: ${CFG_SECRET_KEY:?}
+      CFG_SQLALCHEMY_DATABASE_URI: postgresql+psycopg://${DB_USER:-pste}:${DB_PASSWORD:-pste}@${DB_HOST:-db}/${DB_NAME:-pste}
+      CFG_REDIS_URL: ${CFG_REDIS_URL:-redis://redis:6379}
+    volumes:
+      - ${BASE_DIR:-.}/config/app:/config
+      - ${BASE_DIR:-.}/data/app:/data
+      - ../:/app:ro
+    tmpfs:
+      - /tmp
+    networks:
+      - pste
+    ports:
+      - "5000:5000"
+    build:
+      context: ../
+      target: development
+
+  db:
+    image: postgres:17-alpine
+    container_name: pste_db
+    restart: "no"
+    user: ${PUID:-1000}:${PGID:-1000}
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_NAME:-pste}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pste}
+      POSTGRES_USER: ${DB_USER:-pste}
+    volumes:
+      - ${BASE_DIR:-.}/data/postgresql:/var/lib/postgresql/data
+    networks:
+      - pste
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -q --username=$$POSTGRES_USER --host=$$POSTGRES_HOST",
+        ]
+      start_period: 5s
+      start_interval: 1s
+      interval: 10s
+      timeout: 1s
+
+  redis:
+    image: redis:latest
+    container_name: pste_redis
+    command:
+      - --dir /data
+      - --appendonly yes
+    restart: unless-stopped
+    init: true
+    user: ${PUID:-1000}:${PGID:-1000}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${BASE_DIR:-.}/data/redis:/data
+    networks:
+      - pste
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 10s
+      start_interval: 1s
+      interval: 10s
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: ${REDIS_CPU_LIMIT:-${CPU_LIMIT:-0}}
+          memory: ${REDIS_MEM_LIMIT:-${MEM_LIMIT:-0}}
+
+networks:
+  pste:

@@ -15,6 +15,7 @@
 
 import shutil
 
+import redis
 import sentry_sdk
 from flask import Flask
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -22,7 +23,6 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets import Bundle
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-import redis
 from pste import meta, paths
 from pste.extensions import assets, csrf, db, dynaconf, login, session
 

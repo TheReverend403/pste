@@ -41,7 +41,7 @@ dev = [
 
 [tool.ruff]
 force-exclude = true
-extend-exclude = ["data/"]
+extend-exclude = ["docker/data/", "docker/config/"]
 
 [tool.ruff.lint]
 select = [
