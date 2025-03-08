@@ -1,3 +1,5 @@
+name: pste
+
 services:
   pste:
     container_name: pste
