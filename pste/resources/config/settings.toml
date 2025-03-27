@@ -1,3 +1,9 @@
+##
+## Configuration can be done here or via env vars.
+## Env var formatting is documented here: https://www.dynaconf.com/envvars/
+## Env var prefix is set to 'CFG_' instead of 'DYNACONF_'.
+##
+
 # Site name
 name = "pste"
 
@@ -19,33 +25,33 @@ redis_url = ""
 
 # File extensions that will be displayed as plaintext regardless of the file's mimetype.
 plaintext_types = [
-  "txt",
-  "php",
-  "rb",
-  "sh",
-  "py",
-  "conf",
-  "c",
-  "cpp",
-  "java",
-  "rs",
-  "html",
-  "htm",
-  "js",
-  "xml",
-  "sql",
-  "lua",
-  "cs",
-  "pl",
-  "md",
-  "ini",
-  "shtml",
-  "yaml",
-  "cfg",
-  "go",
-  "fish",
-  "yml",
-  "bash"
+    "txt",
+    "php",
+    "rb",
+    "sh",
+    "py",
+    "conf",
+    "c",
+    "cpp",
+    "java",
+    "rs",
+    "html",
+    "htm",
+    "js",
+    "xml",
+    "sql",
+    "lua",
+    "cs",
+    "pl",
+    "md",
+    "ini",
+    "shtml",
+    "yaml",
+    "cfg",
+    "go",
+    "fish",
+    "yml",
+    "bash",
 ]
 
 # If disabled, users can only be created via 'flask user create'.
