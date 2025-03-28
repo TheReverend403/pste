@@ -15,8 +15,9 @@ services:
     env_file: .env
     environment:
       CFG_SECRET_KEY: ${CFG_SECRET_KEY:?}
-      CFG_SQLALCHEMY_DATABASE_URI: postgresql+psycopg://${DB_USER:-pste}:${DB_PASSWORD:-pste}@${DB_HOST:-db}/${DB_NAME:-pste}
-      CFG_REDIS_URL: ${CFG_REDIS_URL:-redis://redis:6379}
+      CFG_SQLALCHEMY_DATABASE_URI: postgresql+psycopg://${POSTGRES_USER:-pste}:${POSTGRES_PASSWORD:-pste}@${POSTGRES_HOST:-db}/${POSTGRES_DB:-pste}
+      CFG_REDIS_URL: redis://redis:6379
+      CFG_ENABLE_REGISTRATION: true
     volumes:
       - ${BASE_DIR:-.}/config/app:/config
       - ${BASE_DIR:-.}/data/app:/data
@@ -30,17 +31,24 @@ services:
     build:
       context: ../
       target: development
+    deploy:
+      resources:
+        limits:
+          cpus: ${PSTE_CPU_LIMIT:-${CPU_LIMIT:-0}}
+          memory: ${PSTE_MEM_LIMIT:-${MEM_LIMIT:-0}}
 
   db:
     image: postgres:17-alpine
     container_name: pste_db
     restart: "no"
+    init: true
     user: ${PUID:-1000}:${PGID:-1000}
     env_file: .env
     environment:
-      POSTGRES_DB: ${DB_NAME:-pste}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-pste}
-      POSTGRES_USER: ${DB_USER:-pste}
+      POSTGRES_HOST: db
+      POSTGRES_DB: pste
+      POSTGRES_PASSWORD: pste
+      POSTGRES_USER: pste
     volumes:
       - ${BASE_DIR:-.}/data/postgresql:/var/lib/postgresql/data
     networks:
@@ -49,12 +57,17 @@ services:
       test:
         [
           "CMD-SHELL",
-          "pg_isready -q --username=$$POSTGRES_USER --host=$$POSTGRES_HOST",
+          "pg_isready -q --dbname=$$POSTGRES_DB --username=$$POSTGRES_USER --host=$$POSTGRES_HOST",
         ]
       start_period: 5s
       start_interval: 1s
       interval: 10s
       timeout: 1s
+    deploy:
+      resources:
+        limits:
+          cpus: ${POSTGRES_CPU_LIMIT:-${CPU_LIMIT:-0}}
+          memory: ${POSTGRES_MEM_LIMIT:-${MEM_LIMIT:-0}}
 
   redis:
     image: redis:latest
